@@ -1,0 +1,15 @@
+malilib.gui.button.hovertext.add=Add
+malilib.gui.button.hovertext.remove=Remove
+
+config.enum.tooltip.available=Available
+config.enum.tooltip.default=Default
+config.enum.tooltip.current=Current
+
+config.enum.qualitycolor.blue.name=Blue
+config.enum.qualitycolor.aqua.name=Aqua
+config.enum.qualitycolor.light_purple.name=Light Purple
+
+config.enum.sortcategory.creative_inventory.name=Creative Inventory
+config.enum.sortcategory.translation_key.name=Translation Key
+config.enum.sortcategory.translation_result.name=Translation Result
+config.enum.sortcategory.pinyin.name=PinYin

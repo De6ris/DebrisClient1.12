@@ -1,0 +1,35 @@
+{
+  "package": "com.github.debris.debrisclient.mixins",
+  "required": true,
+  "refmap": "mixins.debrisclient.refmap.json",
+  "target": "@env(DEFAULT)",
+  "minVersion": "0.8.5",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "server": [
+  ],
+  "client": [
+    "client.ClientMixin",
+    "client.IClientMixin",
+    "client.IPlayerControllerMPMixin",
+    "client.LocaleMixin",
+    "client.PlayerControllerMixin",
+    "client.entity.ClientPlayerMixin",
+    "client.gui.GuiChatMixin",
+    "client.gui.GuiContainerCreativeMixin",
+    "client.gui.GuiContainerMixin",
+    "client.gui.GuiEnchantmentMixin",
+    "client.gui.GuiRepairMixin",
+    "client.gui.GuiTextFieldMixin",
+    "client.gui.IGuiScreenMixin",
+    "client.inventory.ContainerEnchantmentMixin",
+    "client.inventory.ContainerMixin",
+    "client.render.DebugRendererChunkBorderMixin",
+    "client.render.EntityRendererMixin",
+    "client.render.ParticleMixin",
+    "client.render.RenderGlobalMixin",
+    "client.render.RenderManagerMixin",
+    "client.render.RenderPlayerMixin"
+  ]
+}
