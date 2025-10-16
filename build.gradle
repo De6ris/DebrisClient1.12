@@ -152,6 +152,7 @@ dependencies {
     }
 
 
+    // copied from rlmixins
     implementation rfg.deobf("curse.maven:rustic-${rustic_version}")
     implementation rfg.deobf("curse.maven:forgottenitems-${forgottenitems_version}")
     implementation rfg.deobf("curse.maven:tschipplib-${tschipplib_version}")
@@ -172,18 +173,23 @@ dependencies {
     implementation rfg.deobf("curse.maven:itemphysics-${itemphysics_version}")
     implementation rfg.deobf("curse.maven:waystones-${waystones_version}")
 
+
+    // extra dependencies
+//    implementation rfg.deobf("curse.maven:entityculling-${entityculling_version}")//403forbidden
+    implementation rfg.deobf("curse.maven:jecharacters-${jecharacters_version}")
+    implementation rfg.deobf("curse.maven:xaeros-minimap-${xaerosminimap_version}")
+    implementation rfg.deobf("curse.maven:xaeros-world-map-${xaerosworldmap_version}")
+    implementation rfg.deobf("curse.maven:advanced-xray-${advancedxray_version}")
+    implementation rfg.deobf("curse.maven:hwyla-${hwyla_version}")
+//    implementation rfg.deobf("curse.maven:modularui-${modularui_version}")//can not find
+
     implementation(rfg.deobf("fi.dy.masa.malilib:malilib-forge-1.12.2:${malilib_version}")) {
         exclude group: '*', module: '*'
     }
 
-
+    // local dependencies, some not on maven, some failed to download from curse maven
     implementation rfg.deobf(files("libs/[3629]entityculling-1.12.2-1.6.3.jar"))
     implementation rfg.deobf(files("libs/[masa]tweakeroo-forge-1.12.2-0.10.0-dev.20201007.231650.jar"))
-    implementation rfg.deobf(files("libs/jecharacters-1.12.0-3.7.2.jar"))
-    implementation rfg.deobf(files("libs/Xaeros_Minimap_25.1.0_Forge_1.12.jar"))
-    implementation rfg.deobf(files("libs/XaerosWorldMap_1.39.4_Forge_1.12.jar"))
-    implementation rfg.deobf(files("libs/xray-1.12.2-1.6.0.jar"))
-    implementation rfg.deobf(files("libs/Hwyla-1.8.26-B41_1.12.2.jar"))
     compileOnly rfg.deobf(files("libs/modularui-2.5.0-rc4.jar"))
 }
 
