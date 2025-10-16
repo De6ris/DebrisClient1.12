@@ -1,0 +1,28 @@
+name: Release
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    name: Build and Upload Artifact
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4.1.4
+      - name: Grant Execute Permission for gradlew
+        run: chmod +x ./gradlew
+      - name: Setup Java
+        uses: actions/setup-java@v4.2.1
+        with:
+          java-version: '21'
+          distribution: 'zulu'
+          cache: gradle
+
+      - name: Build
+        run: ./gradlew build
+      - name: Create GitHub Release
+        uses: ncipollo/release-action@v1.14.0
+        with:
+          artifacts: "build/libs/*.jar"
+          generateReleaseNotes: true
