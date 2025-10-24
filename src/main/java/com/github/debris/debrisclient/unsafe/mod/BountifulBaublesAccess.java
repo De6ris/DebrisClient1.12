@@ -1,7 +1,7 @@
 package com.github.debris.debrisclient.unsafe.mod;
 
 import com.github.debris.debrisclient.inventory.section.EnumSection;
-import com.github.debris.debrisclient.mixins.client.gui.IGuiScreenMixin;
+import com.github.debris.debrisclient.util.AccessorUtil;
 import cursedflames.bountifulbaubles.block.ContainerReforger;
 import cursedflames.bountifulbaubles.block.GuiReforger;
 import net.minecraft.client.gui.GuiScreen;
@@ -21,6 +21,6 @@ public class BountifulBaublesAccess {
         if (!isReforgingGUI(screen)) return false;
         ItemStack bauble = EnumSection.BountifulBaublesReforging.get().getFirstSlot().getStack();
         if (bauble.isEmpty()) return false;
-        return ((IGuiScreenMixin) screen).getButtonList().get(0).enabled;
+        return AccessorUtil.getButtonList(screen).get(0).enabled;
     }
 }

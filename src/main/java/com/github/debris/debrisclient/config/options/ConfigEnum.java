@@ -38,4 +38,9 @@ public class ConfigEnum<T extends Enum<T>> extends ConfigOptionList implements I
         ConfigEnumEntryWrapper<T> entry = (ConfigEnumEntryWrapper<T>) this.getDefaultOptionListValue();
         return ConfigEnumEntryWrapper.getWrappers(entry.getEnumValue().getDeclaringClass());
     }
+
+    @Override
+    public void cycle(boolean forward) {
+        this.setOptionListValue(this.getOptionListValue().cycle(forward));
+    }
 }

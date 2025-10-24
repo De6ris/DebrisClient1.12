@@ -12,4 +12,6 @@ public interface IConfigEnum<T extends Enum<T>> {
     List<T> getAllEnumValues();
 
     List<ConfigEnumEntryWrapper<T>> getWrappers();
+
+    void cycle(boolean forward);
 }

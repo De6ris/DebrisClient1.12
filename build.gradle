@@ -178,7 +178,7 @@ dependencies {
 
 
     // extra dependencies
-//    implementation rfg.deobf("curse.maven:entityculling-${entityculling_version}")//403forbidden
+//    compileOnly rfg.deobf("curse.maven:entityculling-${entityculling_version}")//403forbidden
     implementation rfg.deobf("curse.maven:jecharacters-${jecharacters_version}")
     implementation rfg.deobf("curse.maven:xaeros-minimap-${xaerosminimap_version}")
     implementation rfg.deobf("curse.maven:xaeros-world-map-${xaerosworldmap_version}")
@@ -191,7 +191,7 @@ dependencies {
     }
 
     // local dependencies, some not on maven, some failed to download from curse maven
-    implementation rfg.deobf(files("libs/[3629]entityculling-1.12.2-1.6.3.jar"))
+    compileOnly rfg.deobf(files("libs/[3629]entityculling-1.12.2-1.6.3.jar"))
     implementation rfg.deobf(files("libs/[masa]tweakeroo-forge-1.12.2-0.10.0-dev.20201007.231650.jar"))
     compileOnly rfg.deobf(files("libs/modularui-2.5.0-rc4.jar"))
 }

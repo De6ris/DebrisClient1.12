@@ -23,7 +23,11 @@ public abstract class GuiEnchantmentMixin extends GuiContainer {
     }
 
     @SuppressWarnings("RedundantIfStatement")
-    @WrapWithCondition(method = "drawGuiContainerBackgroundLayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/FontRenderer;drawSplitString(Ljava/lang/String;IIII)V"))
+    @WrapWithCondition(
+            method = "drawGuiContainerBackgroundLayer",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/FontRenderer;drawSplitString(Ljava/lang/String;IIII)V"),
+            require = 0// crash with old versions of SME
+    )
     private boolean prevent(FontRenderer instance, String str, int x, int y, int wrapWidth, int textColor) {
         if (EnchantPreview.isCracked()) return false;
         return true;

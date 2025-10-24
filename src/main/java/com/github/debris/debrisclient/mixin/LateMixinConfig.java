@@ -1,6 +1,5 @@
 package com.github.debris.debrisclient.mixin;
 
-import com.github.debris.debrisclient.ModReference;
 import net.minecraftforge.fml.common.Loader;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
@@ -20,10 +19,10 @@ public class LateMixinConfig implements IMixinConfigPlugin {
         return null;
     }
 
+    @SuppressWarnings("RedundantIfStatement")
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        if (!modLoadedForMixin(mixinClassName)) return false;
-        if (mixinClassName.contains("CullTaskMixin")) return Loader.isModLoaded(ModReference.TWEAKEROO);// early here
+        if (!this.modLoadedForMixin(mixinClassName)) return false;
         return true;
     }
 
@@ -50,7 +49,6 @@ public class LateMixinConfig implements IMixinConfigPlugin {
     private boolean modLoadedForMixin(String mixinClassName) {
         String packagePath = mixinClassName.substring(0, mixinClassName.lastIndexOf("."));
         String packageName = packagePath.substring(packagePath.lastIndexOf(".") + 1);
-//        DebrisClientMod.LOGGER.info("checking mixin {} with package name {}", mixinClassName, packageName);
         return Loader.isModLoaded(packageName);
     }
 }
