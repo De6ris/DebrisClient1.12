@@ -152,6 +152,9 @@ dependencies {
     }
 
 
+    compileOnly rfg.deobf("curse.maven:fermiumbooter-${fermiumbooter_version}")
+
+
     // copied from rlmixins
     implementation rfg.deobf("curse.maven:rustic-${rustic_version}")
     implementation rfg.deobf("curse.maven:forgottenitems-${forgottenitems_version}")
