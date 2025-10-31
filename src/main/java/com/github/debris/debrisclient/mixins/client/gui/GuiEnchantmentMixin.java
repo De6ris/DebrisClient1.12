@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(GuiEnchantment.class)
+@Mixin(value = GuiEnchantment.class, priority = 1001)
 public abstract class GuiEnchantmentMixin extends GuiContainer {
     public GuiEnchantmentMixin(Container inventorySlotsIn) {
         super(inventorySlotsIn);

@@ -55,8 +55,4 @@ public class AutoReforging {
             }
         }
     }
-
-    public static void renderTooltip() {
-
-    }
 }

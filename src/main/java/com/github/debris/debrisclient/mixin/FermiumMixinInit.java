@@ -4,7 +4,6 @@ import com.github.debris.debrisclient.DebrisClient;
 import fermiumbooter.FermiumRegistryAPI;
 import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
-import org.spongepowered.asm.launch.MixinBootstrap;
 
 import javax.annotation.Nullable;
 import java.util.Map;
@@ -13,8 +12,6 @@ import java.util.Map;
 @IFMLLoadingPlugin.MCVersion(ForgeVersion.mcVersion)
 public class FermiumMixinInit implements IFMLLoadingPlugin {
     public FermiumMixinInit() {
-        MixinBootstrap.init();
-
         FermiumRegistryAPI.enqueueMixin(false, "mixins.debrisclient.json");
         FermiumRegistryAPI.enqueueMixin(true, "mixins.debrisclient_late.json");
     }

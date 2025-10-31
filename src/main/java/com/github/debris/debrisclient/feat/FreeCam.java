@@ -11,7 +11,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.stats.RecipeBook;
 import net.minecraft.stats.StatisticsManager;
-import net.minecraft.util.MovementInput;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
@@ -22,8 +21,6 @@ public class FreeCam {
     private static CameraEntity freeCamera = null;
 
     private static Entity cameraCache = null;
-    private static MovementInput movementInputCache = null;
-
 
     private static float forwardRamped;
     private static float strafeRamped;
@@ -58,13 +55,10 @@ public class FreeCam {
 
     private static void disable(Minecraft client) {
         freeCamera = null;
-        client.player.movementInput = movementInputCache;
     }
 
     private static void enable(Minecraft client) {
         freeCamera = createCamera(client);
-        movementInputCache = client.player.movementInput;
-        client.player.movementInput = new MovementInput();// dummy
     }
 
     private static CameraEntity createCamera(Minecraft client) {
@@ -171,7 +165,7 @@ public class FreeCam {
 
     private static class CameraEntity extends EntityPlayerSP {
         private CameraEntity(Minecraft client, World world, NetHandlerPlayClient netHandler,
-                            StatisticsManager stats, RecipeBook recipeBook) {
+                             StatisticsManager stats, RecipeBook recipeBook) {
             super(client, world, netHandler, stats, recipeBook);
         }
 

@@ -3,9 +3,12 @@
   "required": true,
   "refmap": "mixins.debrisclient.refmap.json",
   "target": "@env(DEFAULT)",
-  "minVersion": "0.8.5",
+  "minVersion": "0.8",
   "compatibilityLevel": "JAVA_8",
-  "server": [],
+  "mixins": [
+  ],
+  "server": [
+  ],
   "client": [
     "bountifulbaubles.GuiReforgerMixin",
     "enhancedvisuals.EVClientMixin",
