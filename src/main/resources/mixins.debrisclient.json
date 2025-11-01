@@ -17,6 +17,7 @@
     "client.MovementInputFromOptionsMixin",
     "client.PlayerControllerMixin",
     "client.entity.ClientPlayerMixin",
+    "client.entity.EntityMixin",
     "client.gui.GuiChatMixin",
     "client.gui.GuiContainerCreativeMixin",
     "client.gui.GuiContainerMixin",

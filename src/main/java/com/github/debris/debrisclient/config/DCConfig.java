@@ -62,7 +62,7 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigBoolean WheelMovingInvert = ofBoolean("滚轮移动反转", false);
     public static final ConfigBoolean BetterSwapHandsKey = ofBoolean("更好的副手键", true, "允许从容器切换, 但在退出GUI之前无法预览效果");
     public static final ConfigBoolean AnvilLevelView = ofBoolean("铁砧等级显示", true, "生存不可见40级以上");
-    public static final ConfigBoolean LibrarianGlowing = ofBoolean("图书管理员发光", false, "暂时失效");
+    public static final ConfigBoolean LibrarianGlowing = ofBoolean("图书管理员发光", false);
     public static final ConfigStringList IMBlockerWhiteList = ofStringList("输入法修复白名单", BUILT_IN_SCREENS, "在这些GUI中不会禁用输入法\n建议用按键添加而不是手动编辑");
     public static final ConfigBoolean EnchantPreview = ofBoolean("附魔预览", false, "暂时失效");
     public static final ConfigBoolean ExtraTooltip = ofBoolean("额外物品提示", true, "需按潜行查看,有以下功能\n附魔书成本,铁砧惩罚,附魔冲突");
