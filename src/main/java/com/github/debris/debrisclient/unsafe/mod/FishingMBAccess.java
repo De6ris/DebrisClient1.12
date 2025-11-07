@@ -1,8 +1,10 @@
 package com.github.debris.debrisclient.unsafe.mod;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
 import net.theawesomegem.fishingmadebetter.common.capability.fishing.FishingCapabilityProvider;
 import net.theawesomegem.fishingmadebetter.common.capability.fishing.IFishingData;
+import net.theawesomegem.fishingmadebetter.common.item.fishingrod.ItemBetterFishingRod;
 import net.theawesomegem.fishingmadebetter.common.networking.PrimaryPacketHandler;
 import net.theawesomegem.fishingmadebetter.common.networking.packet.PacketKeybindS;
 
@@ -32,5 +34,9 @@ public class FishingMBAccess {
             PrimaryPacketHandler.INSTANCE.sendToServer(new PacketKeybindS(PacketKeybindS.Keybind.REEL_OUT));
             pressing = PacketKeybindS.Keybind.REEL_OUT;
         }
+    }
+
+    public static boolean isFishingRod(ItemStack stack) {
+        return stack.getItem() instanceof ItemBetterFishingRod;
     }
 }
