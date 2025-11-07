@@ -9,6 +9,7 @@ public class ModReference {
     public static final String DISENCHANTER = "disenchanter";
     public static final String ENHANCEDVISUALS = "enhancedvisuals";
     public static final String ENTITYCULLING = "entityculling";
+    public static final String FISHINGMADEBETTER = "fishingmadebetter";
     public static final String FORGOTTENITEMS = "forgottenitems";
     public static final String ICEANDFIRE = "iceandfire";
     public static final String INVTWEAKS = "inventorytweaks";

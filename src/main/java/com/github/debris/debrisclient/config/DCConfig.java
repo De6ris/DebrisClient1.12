@@ -84,6 +84,7 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigEnum<QualityColor> ReforgingLevel = ofEnum("自动重铸等级:工具品质", QualityColor.BLUE, "其中金色与淡紫色同级");
     public static final ConfigStringList ReforgingWhiteList = ofStringList("自动重铸白名单:丰富的饰品", ImmutableList.of("hearty", "menacing", "violent"), "可查阅语言文件");
     public static final ConfigBoolean DisableSortingOutOfGUI = ofBoolean("禁止在GUI之外整理", false, "InvTweaks");
+    public static final ConfigBoolean AutoFish = ofBoolean("自动钓鱼", false, "fishing made better");
 
     public static final ConfigBoolean StrictMode = ofBoolean("严格模式");
     public static final ConfigBoolean Debug = ofBoolean("调试");
@@ -167,6 +168,7 @@ public class DCConfig implements IConfigHandler {
                 ReforgingLevel,
                 ReforgingWhiteList,
                 DisableSortingOutOfGUI,
+                AutoFish,
                 StrictMode,
                 Debug,
                 DebugX,

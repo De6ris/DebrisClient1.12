@@ -175,6 +175,7 @@ dependencies {
     implementation rfg.deobf("curse.maven:creativecore-${creativecore_version}")
     implementation rfg.deobf("curse.maven:itemphysics-${itemphysics_version}")
     implementation rfg.deobf("curse.maven:waystones-${waystones_version}")
+    compileOnly rfg.deobf("curse.maven:fishing-made-better-${fishingmadebetter_version}")
 
 
     // extra dependencies

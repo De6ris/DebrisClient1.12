@@ -2,6 +2,7 @@ package com.github.debris.debrisclient.event.malilib;
 
 import com.github.debris.debrisclient.config.DCConfig;
 import com.github.debris.debrisclient.feat.AutoClicker;
+import com.github.debris.debrisclient.feat.AutoFish;
 import com.github.debris.debrisclient.feat.FreeCam;
 import com.github.debris.debrisclient.feat.MiscFeat;
 import com.github.debris.debrisclient.util.Predicates;
@@ -16,5 +17,6 @@ public class TickListener implements IClientTickHandler {
         }
         FreeCam.onTick(client);
         AutoClicker.onTick(client);
+        AutoFish.onTick(client);
     }
 }
