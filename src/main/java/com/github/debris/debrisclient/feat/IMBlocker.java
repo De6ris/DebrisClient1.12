@@ -3,7 +3,6 @@ package com.github.debris.debrisclient.feat;
 import com.github.debris.debrisclient.config.DCConfig;
 import com.github.debris.debrisclient.unsafe.windows.WindowsImManager;
 import com.google.common.collect.ImmutableList;
-import com.sun.jna.Platform;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiScreenBook;
@@ -16,8 +15,6 @@ public class IMBlocker {
             "com.xray.gui.GuiSelectionScreen",
             "net.blay09.mods.waystones.client.gui.GuiEditWaystone"
     );
-
-    public static final boolean VALID = Platform.isWindows();
 
     public static boolean isActive() {
         return DCConfig.IMBlocker.getBooleanValue();
@@ -71,11 +68,11 @@ public class IMBlocker {
     }
 
     public static void enable() {
-        if (VALID) WindowsImManager.makeOn();
+        if (WindowsImManager.VALID) WindowsImManager.makeOn();
     }
 
     public static void disable() {
-        if (VALID) WindowsImManager.makeOff();
+        if (WindowsImManager.VALID) WindowsImManager.makeOff();
     }
 
     public static ImmutableList<String> getBuiltInScreenNames() {
@@ -100,11 +97,11 @@ public class IMBlocker {
     }
 
     public static void switchToEnglish() {
-        if (VALID) WindowsImManager.switchToEnglish();
+        if (WindowsImManager.VALID) WindowsImManager.switchToEnglish();
     }
 
     public static void switchToChinese() {
-        if (VALID) WindowsImManager.switchToChinese();
+        if (WindowsImManager.VALID) WindowsImManager.switchToChinese();
     }
 
     public enum Mode {

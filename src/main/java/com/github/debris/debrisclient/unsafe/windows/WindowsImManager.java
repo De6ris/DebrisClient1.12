@@ -1,6 +1,7 @@
 package com.github.debris.debrisclient.unsafe.windows;
 
 import com.sun.jna.Native;
+import com.sun.jna.Platform;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
 import com.sun.jna.platform.win32.WinNT;
@@ -9,6 +10,8 @@ public class WindowsImManager {
     private static final int WM_INPUTLANGCHANGEREQUEST = 0x0050;
     private static final int IME_CHINESE = 0x0804;
     private static final int IME_ENGLISH = 0x0409;
+
+    public static final boolean VALID;
 
     private static boolean status = true;
 
@@ -25,7 +28,16 @@ public class WindowsImManager {
     private static native boolean ImmDestroyContext(WinNT.HANDLE himc);
 
     static {
-        Native.register("imm32");
+        boolean temp = false;
+        if (Platform.isWindows()) {
+            try {
+                Native.register("imm32");
+                temp = true;
+            } catch (Throwable e) {
+            }
+        }
+
+        VALID = temp;
     }
 
     private static final User32 u = User32.INSTANCE;

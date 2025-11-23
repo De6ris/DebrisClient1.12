@@ -70,7 +70,7 @@ public class DCConfig implements IConfigHandler {
 
     public static final List<IConfigBase> COMPAT;
 
-    public static final ConfigBoolean IMBlocker = ofBoolean("输入法修复", true, "根据GUI的输入需求, 启用或禁用输入法");
+    public static final ConfigBoolean IMBlocker = ofBoolean("输入法修复", false, "根据GUI的输入需求, 启用或禁用输入法");
     public static final ConfigBoolean ForceASCII = ofBoolean("强制ASCII字体", true, "修改后需重载语言文件");
     public static final ConfigBoolean ProgressResuming = ofBoolean("进度保存", true, "masa菜单");
     public static final ConfigBoolean PinYinSearch = ofBoolean("拼音搜索", true, "需要jech, 支持由MaLiLib驱动的模组");
