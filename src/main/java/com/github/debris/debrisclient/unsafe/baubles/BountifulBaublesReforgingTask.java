@@ -32,6 +32,6 @@ public class BountifulBaublesReforgingTask extends AbstractReforgingTask {
     @Override
     protected boolean isGoodTag(NBTTagCompound tag) {
         String name = tag.getString("baubleModifier");
-        return DCConfig.ReforgingWhiteList.getStrings().stream().anyMatch(name::equals);
+        return DCConfig.ReforgingWhiteListBB.getStrings().stream().anyMatch(name::equals);
     }
 }

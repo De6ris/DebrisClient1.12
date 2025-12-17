@@ -82,7 +82,8 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigBoolean WayStoneTweak = ofBoolean("指路石功能", false, "waystones: 在GUI中将有一个创建xaero路径点的按钮");
     public static final ConfigBoolean AutoReforging = ofBoolean("自动重铸功能", false, "baubles&quality tools: 在GUI中添加按钮");
     public static final ConfigEnum<QualityColor> ReforgingLevel = ofEnum("自动重铸等级:工具品质", QualityColor.BLUE, "其中金色与淡紫色同级");
-    public static final ConfigStringList ReforgingWhiteList = ofStringList("自动重铸白名单:丰富的饰品", ImmutableList.of("hearty", "menacing", "violent"), "可查阅语言文件");
+    public static final ConfigStringList ReforgingWhiteListQT = ofStringList("自动重铸白名单:工具品质", ImmutableList.of("healthy", "quality.lucky.name"), "可查阅语言文件");
+    public static final ConfigStringList ReforgingWhiteListBB = ofStringList("自动重铸白名单:丰富的饰品", ImmutableList.of("hearty", "menacing", "violent"), "可查阅语言文件");
     public static final ConfigBoolean DisableSortingOutOfGUI = ofBoolean("禁止在GUI之外整理", false, "InvTweaks");
     public static final ConfigBoolean AutoFish = ofBoolean("自动钓鱼", false, "fishing made better\n含自动续杆\n停止只需切换空手");
 
@@ -166,7 +167,8 @@ public class DCConfig implements IConfigHandler {
                 WayStoneTweak,
                 AutoReforging,
                 ReforgingLevel,
-                ReforgingWhiteList,
+                ReforgingWhiteListQT,
+                ReforgingWhiteListBB,
                 DisableSortingOutOfGUI,
                 AutoFish,
                 StrictMode,

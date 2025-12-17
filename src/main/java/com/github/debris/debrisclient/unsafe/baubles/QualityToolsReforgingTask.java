@@ -30,6 +30,7 @@ public class QualityToolsReforgingTask extends AbstractReforgingTask {
         return QualityToolsAccess.canReforge(this.client.currentScreen);
     }
 
+    @SuppressWarnings("RedundantIfStatement")
     @Override
     protected boolean isGoodTag(NBTTagCompound tag) {
         String name = tag.getString("Name");
@@ -37,7 +38,7 @@ public class QualityToolsReforgingTask extends AbstractReforgingTask {
         QualityColor present = QualityColor.parse(color);
         QualityColor target = DCConfig.ReforgingLevel.getEnumValue();
         if (present.betterOrEqual(target)) return true;
-        if (name.contains("healthy")) return true;
+        if (DCConfig.ReforgingWhiteListQT.getStrings().stream().anyMatch(name::contains)) return true;
         return false;
     }
 }

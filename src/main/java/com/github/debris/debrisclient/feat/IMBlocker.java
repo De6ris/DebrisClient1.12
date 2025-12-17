@@ -75,15 +75,6 @@ public class IMBlocker {
         if (WindowsImManager.VALID) WindowsImManager.makeOff();
     }
 
-    public static ImmutableList<String> getBuiltInScreenNames() {
-        return ImmutableList.of(
-                "xaero.common.gui.GuiAddWaypoint",
-                "com.xray.gui.manage.GuiBlockListScrollable",
-                "com.xray.gui.GuiSelectionScreen",
-                "net.blay09.mods.waystones.client.gui.GuiEditWaystone"
-        );
-    }
-
     public static Mode getMode() {
         return Mode.ENGLISH;// TODO
     }

@@ -54,7 +54,8 @@ public class DCConfigScreen extends GuiConfigsBase {
         if (!ModReference.hasMod(ModReference.QUALITYTOOLS) || !ModReference.hasMod(ModReference.BOUNTIFULBAUBLES)) {
             mutable.remove(DCConfig.AutoReforging);
             mutable.remove(DCConfig.ReforgingLevel);
-            mutable.remove(DCConfig.ReforgingWhiteList);
+            mutable.remove(DCConfig.ReforgingWhiteListQT);
+            mutable.remove(DCConfig.ReforgingWhiteListBB);
         }
         if (!ModReference.hasMod(ModReference.INVTWEAKS)) mutable.remove(DCConfig.DisableSortingOutOfGUI);
         if (!ModReference.hasMod(ModReference.FISHINGMADEBETTER)) mutable.remove(DCConfig.AutoFish);
