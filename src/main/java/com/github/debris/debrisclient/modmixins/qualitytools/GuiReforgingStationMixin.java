@@ -48,6 +48,7 @@ public abstract class GuiReforgingStationMixin extends GuiContainer {
 
     @Inject(method = "drawScreen", at = @At("RETURN"))
     private void renderTooltip(int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
+        // is "mouse over" in fact
         if (this.autoButton.mousePressed(this.mc, mouseX, mouseY)) {
             this.drawHoveringText(
                     ImmutableList.of(

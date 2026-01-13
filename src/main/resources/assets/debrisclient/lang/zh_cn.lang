@@ -10,11 +10,16 @@ config.enum.tooltip.available=可用值
 config.enum.tooltip.default=默认值
 config.enum.tooltip.current=当前值
 
-config.enum.qualitycolor.blue.name=蓝
-config.enum.qualitycolor.aqua.name=青
-config.enum.qualitycolor.light_purple.name=浅紫
+config.enum.quality_color.blue.name=蓝
+config.enum.quality_color.aqua.name=青
+config.enum.quality_color.light_purple.name=浅紫
+config.enum.quality_color.no_color.name=无颜色
 
-config.enum.sortcategory.creative_inventory.name=创造模式物品栏
-config.enum.sortcategory.translation_key.name=翻译键
-config.enum.sortcategory.translation_result.name=翻译结果
-config.enum.sortcategory.pinyin.name=拼音
+config.enum.sort_category.creative_inventory.name=创造模式物品栏
+config.enum.sort_category.translation_key.name=翻译键
+config.enum.sort_category.translation_result.name=翻译结果
+config.enum.sort_category.pinyin.name=拼音
+
+config.enum.wheel_moving_mode.none.name=无
+config.enum.wheel_moving_mode.default.name=默认
+config.enum.wheel_moving_mode.invert.name=反向

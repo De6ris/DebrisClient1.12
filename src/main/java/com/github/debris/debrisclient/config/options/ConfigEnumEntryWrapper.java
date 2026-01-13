@@ -31,7 +31,11 @@ public class ConfigEnumEntryWrapper<T extends Enum<T>> implements IConfigOptionL
     @Override
     public String getDisplayName() {
         String name = this.getStringValue();
-        String key = String.format("config.enum.%s.%s.name", this.value.getDeclaringClass().getSimpleName().toLowerCase(), name.toLowerCase());
+        String key = String.format(
+                "config.enum.%s.%s.name",
+                StringUtil.convertEnumClassName(this.value.getDeclaringClass()),
+                name.toLowerCase()
+        );
         return StringUtil.translateFallback(key, name);
     }
 

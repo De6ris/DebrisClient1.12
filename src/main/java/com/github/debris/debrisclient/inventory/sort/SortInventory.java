@@ -7,7 +7,10 @@ import com.github.debris.debrisclient.inventory.section.EnumSection;
 import com.github.debris.debrisclient.inventory.section.SectionHandler;
 import com.github.debris.debrisclient.util.InventoryUtil;
 import com.github.debris.debrisclient.util.ItemUtil;
+import com.github.debris.debrisclient.util.Predicates;
+import com.github.debris.debrisclient.util.SoundUtil;
 import com.google.common.collect.ImmutableList;
+import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
@@ -24,11 +27,20 @@ public class SortInventory {
             EnumSection.Baubles
     );
 
-    public static boolean trySort() {
+    public static boolean onKey(Minecraft client) {
+        if (Predicates.notInGuiContainer(client)) return false;
+
         Optional<ContainerSection> optional = SectionHandler.getSectionMouseOver();
         if (!optional.isPresent()) return false;
+
         ContainerSection section = optional.get();
         if (!shouldSort(section)) return false;
+
+        SoundUtil.playClickSound(client);
+        return trySort(section);// this will block other click consumers
+    }
+
+    public static boolean trySort(ContainerSection section) {
         int before = InventoryUtil.getChangeCount();
         InventoryTweaks.makeSureNotHoldingItem(section);
         sortInternal(section);

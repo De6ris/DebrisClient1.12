@@ -3,6 +3,7 @@ package com.github.debris.debrisclient.config.gui;
 import com.github.debris.debrisclient.DebrisClient;
 import com.github.debris.debrisclient.ModReference;
 import com.github.debris.debrisclient.config.DCConfig;
+import com.github.debris.debrisclient.inventory.feat.AutoReforging;
 import com.google.common.collect.ImmutableList;
 import fi.dy.masa.malilib.config.gui.ConfigGuiTabBase;
 import fi.dy.masa.malilib.config.options.IConfigBase;
@@ -31,6 +32,7 @@ public class DCConfigScreen extends GuiConfigsBase {
 
     public DCConfigScreen() {
         super(10, 50, DebrisClient.MOD_ID, null, TABS, DebrisClient.MOD_NAME + " configs");
+        AutoReforging.makeConfigComments();
     }
 
     @Override

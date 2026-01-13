@@ -3,6 +3,7 @@ package com.github.debris.debrisclient.config;
 import com.github.debris.debrisclient.DebrisClient;
 import com.github.debris.debrisclient.config.options.ConfigEnum;
 import com.github.debris.debrisclient.feat.QualityColor;
+import com.github.debris.debrisclient.inventory.feat.WheelMovingMode;
 import com.github.debris.debrisclient.inventory.sort.SortCategory;
 import com.google.common.collect.ImmutableList;
 import fi.dy.masa.malilib.config.IConfigHandler;
@@ -58,14 +59,13 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigEnum<SortCategory> ItemSortingOrder = ofEnum("物品整理顺序", SortCategory.CREATIVE_INVENTORY, "1.翻译键顺序\n2.按创造模式物品栏顺序\n3.按翻译后名称顺序\n4.按拼音顺序(需要Rei)");
     public static final ConfigBoolean HoldInventoryMoving = ofBoolean("连续物品移动", true, "允许在按下Shift和左键时不断移动物品");
     public static final ConfigBoolean BetterQuickMoving = ofBoolean("更好的物品移动", true, "允许将物品送上工作台");
-    public static final ConfigBoolean WheelMoving = ofBoolean("滚轮移动", false);
-    public static final ConfigBoolean WheelMovingInvert = ofBoolean("滚轮移动反转", false);
-    public static final ConfigBoolean BetterSwapHandsKey = ofBoolean("更好的副手键", true, "允许从容器切换, 但在退出GUI之前无法预览效果");
-    public static final ConfigBoolean AnvilLevelView = ofBoolean("铁砧等级显示", true, "生存不可见40级以上");
+    public static final ConfigEnum<WheelMovingMode> WheelMoving = ofEnum("滚轮移动", WheelMovingMode.NONE);
+    public static final ConfigBoolean BetterSwapHandsKey = ofBoolean("更好的副手键", true, "允许在容器中切换");
+    public static final ConfigBoolean AnvilLevelView = ofBoolean("铁砧等级显示", true, "生存可见40级以上");
     public static final ConfigBoolean LibrarianGlowing = ofBoolean("图书管理员发光", false);
     public static final ConfigStringList IMBlockerWhiteList = ofStringList("输入法修复白名单", BUILT_IN_SCREENS, "在这些GUI中不会禁用输入法\n建议用按键添加而不是手动编辑");
     public static final ConfigBoolean EnchantPreview = ofBoolean("附魔预览", false, "暂时失效");
-    public static final ConfigBoolean ExtraTooltip = ofBoolean("额外物品提示", true, "需按潜行查看,有以下功能\n附魔书成本,铁砧惩罚,附魔冲突");
+    public static final ConfigBoolean ExtraTooltip = ofBoolean("额外物品提示", true, "需按Shift查看,有以下功能\n附魔书成本,铁砧惩罚,附魔冲突");
 
 
     public static final List<IConfigBase> COMPAT;
@@ -81,7 +81,7 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigBoolean XRayAutoColorSelection = ofBoolean("XRay自动取色", true, "");
     public static final ConfigBoolean WayStoneTweak = ofBoolean("指路石功能", false, "waystones: 在GUI中将有一个创建xaero路径点的按钮");
     public static final ConfigBoolean AutoReforging = ofBoolean("自动重铸功能", false, "baubles&quality tools: 在GUI中添加按钮");
-    public static final ConfigEnum<QualityColor> ReforgingLevel = ofEnum("自动重铸等级:工具品质", QualityColor.BLUE, "其中金色与淡紫色同级");
+    public static final ConfigEnum<QualityColor> ReforgingLevel = ofEnum("自动重铸等级:工具品质", QualityColor.BLUE, "其中金色与淡紫色同级\n无颜色表示仅允许白名单");
     public static final ConfigStringList ReforgingWhiteListQT = ofStringList("自动重铸白名单:工具品质", ImmutableList.of("healthy", "quality.lucky.name"), "可查阅语言文件");
     public static final ConfigStringList ReforgingWhiteListBB = ofStringList("自动重铸白名单:丰富的饰品", ImmutableList.of("hearty", "menacing", "violent"), "可查阅语言文件");
     public static final ConfigBoolean DisableSortingOutOfGUI = ofBoolean("禁止在GUI之外整理", false, "InvTweaks");
@@ -90,7 +90,7 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigBoolean StrictMode = ofBoolean("严格模式");
     public static final ConfigBoolean Debug = ofBoolean("调试");
     public static final ConfigInteger DebugX = ofInteger("调试X", 0, -200, 200);
-    public static final ConfigInteger DebugY = ofInteger("调试X", 0, -150, 150);
+    public static final ConfigInteger DebugY = ofInteger("调试Y", 0, -150, 150);
 
 
     public static final List<IConfigBase> LIST;
@@ -115,8 +115,8 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigHotkey CopyMeasureData = ofHotkey("复制测量数据", "");
     public static final ConfigHotkey AutoPickUp = ofHotkey("自动拾取", "", KeybindSettings.PRESS_ALLOWEXTRA, "ItemPhysic");
     public static final ConfigHotkey FreeCam = ofHotkey("灵魂出窍", "", "比tweakeroo好在\n玩家不会浮空\n渲染云不会闪烁\n兼容xaero地图");
-    public static final ConfigHotkey HoldAttack = ofHotkey("连续左键", "", "比tweakeroo好在关了会停");
-    public static final ConfigHotkey HoldUse = ofHotkey("连续右键", "", "比tweakeroo好在关了会停");
+    public static final ConfigHotkey HoldAttack = ofHotkey("长按左键", "", "比tweakeroo好在关了会停");
+    public static final ConfigHotkey HoldUse = ofHotkey("长按右键", "", "比tweakeroo好在关了会停");
     public static final ConfigHotkey AnvilEnchantPlan = ofHotkey("铁砧附魔规划", "", "手持需附魔物品,将附魔书置于背包\n仅供参考, 不一定最优");
 
     public static final ConfigHotkey ModifierMoveAll = ofHotkey("移动全部:修饰键", "SPACE", GUI_RELAXED, "按住时左键会移动当前区域全部");
@@ -147,7 +147,6 @@ public class DCConfig implements IConfigHandler {
                 HoldInventoryMoving,
                 BetterQuickMoving,
                 WheelMoving,
-                WheelMovingInvert,
                 BetterSwapHandsKey,
                 AnvilLevelView,
                 LibrarianGlowing,

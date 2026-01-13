@@ -5,11 +5,16 @@ config.enum.tooltip.available=Available
 config.enum.tooltip.default=Default
 config.enum.tooltip.current=Current
 
-config.enum.qualitycolor.blue.name=Blue
-config.enum.qualitycolor.aqua.name=Aqua
-config.enum.qualitycolor.light_purple.name=Light Purple
+config.enum.quality_color.blue.name=Blue
+config.enum.quality_color.aqua.name=Aqua
+config.enum.quality_color.light_purple.name=Light Purple
+config.enum.quality_color.no_color.name=No Color
 
-config.enum.sortcategory.creative_inventory.name=Creative Inventory
-config.enum.sortcategory.translation_key.name=Translation Key
-config.enum.sortcategory.translation_result.name=Translation Result
-config.enum.sortcategory.pinyin.name=PinYin
+config.enum.sort_category.creative_inventory.name=Creative Inventory
+config.enum.sort_category.translation_key.name=Translation Key
+config.enum.sort_category.translation_result.name=Translation Result
+config.enum.sort_category.pinyin.name=PinYin
+
+config.enum.wheel_moving_mode.none.name=None
+config.enum.wheel_moving_mode.default.name=Default
+config.enum.wheel_moving_mode.invert.name=Invert

@@ -81,14 +81,14 @@ public class WheelMoving {
     }
 
     public static boolean handleScroll(boolean up, int amount) {
-        if (DCConfig.WheelMoving.getBooleanValue()) {
-            boolean increase = up;
-            if (DCConfig.WheelMovingInvert.getBooleanValue()) increase = !increase;
-            Optional<Slot> optional = InventoryUtil.getSlotMouseOver();
-            if (optional.isPresent()) {
-                scrollSlot(optional.get(), increase);
-                return true;
-            }
+        WheelMovingMode mode = DCConfig.WheelMoving.getEnumValue();
+        if (mode == WheelMovingMode.NONE) return false;
+        boolean increase = up;
+        if (mode == WheelMovingMode.INVERT) increase = !increase;
+        Optional<Slot> optional = InventoryUtil.getSlotMouseOver();
+        if (optional.isPresent()) {
+            scrollSlot(optional.get(), increase);
+            return true;
         }
         return false;
     }

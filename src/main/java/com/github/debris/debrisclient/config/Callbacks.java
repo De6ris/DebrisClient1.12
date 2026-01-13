@@ -28,11 +28,7 @@ public class Callbacks {
 
         DCConfig.CopyTPCommand.getKeybind().setCallback((action, key) -> MiscFeat.copyTPCommand(client));
 
-        DCConfig.SortInventory.getKeybind().setCallback((action, key) -> {
-            if (Predicates.notInGuiContainer(client)) return false;
-            SoundUtil.playClickSound(client);
-            return SortInventory.trySort();// this will block other click consumers
-        });
+        DCConfig.SortInventory.getKeybind().setCallback((action, key) -> SortInventory.onKey(client));
 
         DCConfig.AutoContainerOperation.getKeybind().setCallback((action, key) -> {
             if (BrewingBarrelTweak.run(client)) {

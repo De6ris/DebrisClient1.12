@@ -2,6 +2,7 @@ package com.github.debris.debrisclient.util;
 
 import com.github.debris.debrisclient.config.api.IConfigEnum;
 import com.github.debris.debrisclient.config.options.ConfigEnumEntryWrapper;
+import com.google.common.base.CaseFormat;
 import fi.dy.masa.malilib.config.IConfigOptionListEntry;
 import fi.dy.masa.malilib.config.options.IConfigBase;
 import fi.dy.masa.malilib.config.options.IConfigOptionList;
@@ -126,5 +127,29 @@ public class StringUtil {
             name = TextFormatting.RED + name;
         }
         return level == 1 && enchantment.getMaxLevel() == 1 ? name : name + translate("enchantment.level." + level);
+    }
+
+    public static <T extends Enum<T>> String convertEnumClassName(Class<T> clazz) {
+        String simpleName = clazz.getSimpleName();
+        return CaseFormat.UPPER_CAMEL
+                .converterTo(CaseFormat.LOWER_UNDERSCORE)
+                .convert(simpleName);
+    }
+
+    public static List<String> joinToLines(List<String> strings, String separator, int lineCapacity) {
+        int size = strings.size();
+        List<String> lines = new ArrayList<>(size / lineCapacity + 1);
+
+        StringBuilder builder = new StringBuilder();
+        for (int i = 1; i <= size; i++) {
+            builder.append(strings.get(i - 1));
+            if (i % lineCapacity == 0 || i == size) {
+                lines.add(builder.toString());
+                builder = new StringBuilder();
+            } else {
+                builder.append(separator);
+            }
+        }
+        return lines;
     }
 }

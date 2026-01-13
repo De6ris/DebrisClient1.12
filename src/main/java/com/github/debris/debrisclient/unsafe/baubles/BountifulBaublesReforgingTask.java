@@ -29,9 +29,15 @@ public class BountifulBaublesReforgingTask extends AbstractReforgingTask {
         return BountifulBaublesAccess.canReforge(this.client.currentScreen);
     }
 
+    @SuppressWarnings("RedundantIfStatement")
     @Override
     protected boolean isGoodTag(NBTTagCompound tag) {
         String name = tag.getString("baubleModifier");
-        return DCConfig.ReforgingWhiteListBB.getStrings().stream().anyMatch(name::equals);
+        if (DCConfig.ReforgingWhiteListBB.getStrings().stream().anyMatch(name::equals)) return true;
+
+        String translate = BountifulBaublesAccess.translate(name);
+        if (DCConfig.ReforgingWhiteListBB.getStrings().stream().anyMatch(translate::equals)) return true;
+
+        return false;
     }
 }

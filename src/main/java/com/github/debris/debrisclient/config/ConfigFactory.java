@@ -10,12 +10,14 @@ import fi.dy.masa.malilib.util.InfoUtils;
 import java.util.function.BooleanSupplier;
 
 public class ConfigFactory {
+    private static final String DEFAULT_COMMENT = "no comment";
+
     public static ConfigBoolean ofBoolean(String name) {
         return ofBoolean(name, false);
     }
 
     public static ConfigBoolean ofBoolean(String name, boolean defaultValue) {
-        return new ConfigBoolean(name, defaultValue, "");
+        return ofBoolean(name, defaultValue, DEFAULT_COMMENT);
     }
 
     public static ConfigBoolean ofBoolean(String name, boolean defaultValue, String comment) {
@@ -23,11 +25,11 @@ public class ConfigFactory {
     }
 
     public static ConfigInteger ofInteger(String name, int defaultValue, int minValue, int maxValue) {
-        return new ConfigInteger(name, defaultValue, minValue, maxValue, "");
+        return ofInteger(name, defaultValue, minValue, maxValue, false);
     }
 
     public static ConfigInteger ofInteger(String name, int defaultValue, int minValue, int maxValue, boolean useSlider) {
-        return new ConfigInteger(name, defaultValue, minValue, maxValue, useSlider, "");
+        return ofInteger(name, defaultValue, minValue, maxValue, useSlider, DEFAULT_COMMENT);
     }
 
     public static ConfigInteger ofInteger(String name, int defaultValue, int minValue, int maxValue, boolean useSlider, String comment) {
@@ -39,11 +41,11 @@ public class ConfigFactory {
     }
 
     public static ConfigString ofString(String name, String defaultValue) {
-        return new ConfigString(name, defaultValue, "");
+        return new ConfigString(name, defaultValue, DEFAULT_COMMENT);
     }
 
     public static ConfigStringList ofStringList(String name, ImmutableList<String> defaultValue) {
-        return new ConfigStringList(name, defaultValue, "");
+        return ofStringList(name, defaultValue, DEFAULT_COMMENT);
     }
 
     public static ConfigStringList ofStringList(String name, ImmutableList<String> defaultValue, String comment) {
@@ -51,39 +53,23 @@ public class ConfigFactory {
     }
 
     public static ConfigHotkey ofHotkey(String name, String defaultStorageString) {
-        return new ConfigHotkey(name, defaultStorageString, "");
+        return ofHotkey(name, defaultStorageString, DEFAULT_COMMENT);
     }
 
     public static ConfigHotkey ofHotkey(String name, String defaultStorageString, String comment) {
-        return new ConfigHotkey(name, defaultStorageString, comment);
+        return ofHotkey(name, defaultStorageString, KeybindSettings.DEFAULT, comment);
     }
 
     public static ConfigHotkey ofHotkey(String name, String defaultStorageString, KeybindSettings settings) {
-        return new ConfigHotkey(name, defaultStorageString, settings, "");
+        return ofHotkey(name, defaultStorageString, settings, DEFAULT_COMMENT);
     }
 
     public static ConfigHotkey ofHotkey(String name, String defaultStorageString, KeybindSettings settings, String comment) {
         return new ConfigHotkey(name, defaultStorageString, settings, comment);
     }
 
-    public static ConfigBooleanHotkeyed ofBooleanHotkeyed(String name, boolean defaultValue, String defaultHotkey) {
-        return new ConfigBooleanHotkeyed(name, defaultValue, defaultHotkey, "");
-    }
-
-    public static ConfigBooleanHotkeyed ofBooleanHotkeyed(String name, boolean defaultValue, String defaultHotkey, String comment) {
-        return new ConfigBooleanHotkeyed(name, defaultValue, defaultHotkey, comment);
-    }
-
-    public static ConfigBooleanHotkeyed ofBooleanHotkeyed(String name, boolean defaultValue, String defaultHotkey, KeybindSettings settings) {
-        return new ConfigBooleanHotkeyed(name, defaultValue, defaultHotkey, settings, "", name);
-    }
-
-    public static ConfigBooleanHotkeyed ofBooleanHotkeyed(String name, boolean defaultValue, String defaultHotkey, KeybindSettings settings, String comment) {
-        return new ConfigBooleanHotkeyed(name, defaultValue, defaultHotkey, settings, comment, name);
-    }
-
     public static <T extends Enum<T>> ConfigEnum<T> ofEnum(String name, T defaultValue) {
-        return new ConfigEnum<>(name, defaultValue, "");
+        return new ConfigEnum<>(name, defaultValue, DEFAULT_COMMENT);
     }
 
     public static <T extends Enum<T>> ConfigEnum<T> ofEnum(String name, T defaultValue, String comment) {

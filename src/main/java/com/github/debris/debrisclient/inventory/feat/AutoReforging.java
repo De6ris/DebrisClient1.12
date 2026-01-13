@@ -9,11 +9,16 @@ import com.github.debris.debrisclient.unsafe.mod.BountifulBaublesAccess;
 import com.github.debris.debrisclient.unsafe.mod.QualityToolsAccess;
 import com.github.debris.debrisclient.util.AccessorUtil;
 import com.github.debris.debrisclient.util.SoundUtil;
+import com.github.debris.debrisclient.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class AutoReforging {
     /**
@@ -55,4 +60,35 @@ public class AutoReforging {
             }
         }
     }
+
+    public static void makeConfigComments() {
+        if (ModReference.hasMod(ModReference.BOUNTIFULBAUBLES)) {
+            List<String> lines = new ArrayList<>();
+            lines.add("请从以下关键词中选取:");
+            BountifulBaublesAccess.streamQualities()
+                    .map(name -> String.format(
+                                    "%s(%s)",
+                                    name,
+                                    BountifulBaublesAccess.translate(name)
+                            )
+                    )
+                    .forEach(lines::add);
+            DCConfig.ReforgingWhiteListBB.setComment(StringUtils.join(lines, "\n"));
+        }
+        if (ModReference.hasMod(ModReference.QUALITYTOOLS) && QualityToolsAccess.ready()) {
+            List<String> lines = new ArrayList<>();
+            lines.add("请从以下关键词中选取:");
+            List<String> entries = QualityToolsAccess.streamQualities()
+                    .distinct()
+                    .map(name -> String.format(
+                            "%s(%s)",
+                            name,
+                            StringUtil.translate(name)
+                    )).collect(Collectors.toList());
+            lines.addAll(StringUtil.joinToLines(entries, ", ", 3));
+            DCConfig.ReforgingWhiteListQT.setComment(StringUtils.join(lines, "\n"));
+        }
+    }
+
+
 }

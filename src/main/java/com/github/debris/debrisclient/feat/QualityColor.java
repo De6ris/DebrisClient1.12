@@ -8,6 +8,7 @@ public enum QualityColor {
     BLUE,
     AQUA,
     LIGHT_PURPLE,
+    NO_COLOR,
     ;
 
     public static final List<QualityColor> VALUES = ImmutableList.copyOf(values());
