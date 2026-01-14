@@ -16,13 +16,14 @@ public class AutoFish {
         if (!Predicates.inGameNoGui(client)) return;
         if (!DCConfig.AutoFish.getBooleanValue()) return;
         if (!ModReference.hasMod(ModReference.FISHINGMADEBETTER)) return;
+
         FishingMBAccess.onTick(client);
     }
 
     public static void onRetrieve() {
-        Minecraft client = Minecraft.getMinecraft();
-        if (!Predicates.inGameNoGui(client)) return;
+        if (!Predicates.inGameNoGui(Minecraft.getMinecraft())) return;
         if (!DCConfig.AutoFish.getBooleanValue()) return;
+        if (!ModReference.hasMod(ModReference.FISHINGMADEBETTER)) return;
 
         TaskQueue.schedule(getRethrowTask(), 10);// wait for fish to land
     }
