@@ -12,24 +12,38 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
 public class AutoFish {
+    private static final int RETHROW_DELAY_TICKS = 10;
+    private static boolean rethrowScheduled = false;
+
     public static void onTick(Minecraft client) {
-        if (!Predicates.inGameNoGui(client)) return;
-        if (!DCConfig.AutoFish.getBooleanValue()) return;
         if (!ModReference.hasMod(ModReference.FISHINGMADEBETTER)) return;
+
+        if (!DCConfig.AutoFish.getBooleanValue() || !Predicates.inGameNoGui(client)) {
+            FishingMBAccess.releasePressing(client);
+            return;
+        }
 
         FishingMBAccess.onTick(client);
     }
 
     public static void onRetrieve() {
-        if (!Predicates.inGameNoGui(Minecraft.getMinecraft())) return;
+        Minecraft client = Minecraft.getMinecraft();
+        if (!Predicates.inGameNoGui(client)) return;
         if (!DCConfig.AutoFish.getBooleanValue()) return;
         if (!ModReference.hasMod(ModReference.FISHINGMADEBETTER)) return;
+        if (rethrowScheduled) return;
 
-        TaskQueue.schedule(getRethrowTask(), 10);// wait for fish to land
+        rethrowScheduled = true;
+        TaskQueue.schedule(getRethrowTask(), RETHROW_DELAY_TICKS);// wait for fish to land
     }
 
     private static Task getRethrowTask() {
         return client -> {
+            rethrowScheduled = false;
+
+            if (!Predicates.inGameNoGui(client)) return TaskResult.FAIL;
+            if (client.player == null) return TaskResult.FAIL;
+
             ItemStack stack = client.player.getHeldItemMainhand();
             if (FishingMBAccess.isFishingRod(stack)) {
                 AccessorUtil.use(client);
