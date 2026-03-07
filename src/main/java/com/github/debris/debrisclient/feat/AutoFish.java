@@ -16,25 +16,20 @@ public class AutoFish {
     private static boolean rethrowScheduled = false;
 
     public static void onTick(Minecraft client) {
-        if (!ModReference.hasMod(ModReference.FISHINGMADEBETTER)) return;
-
-        if (!DCConfig.AutoFish.getBooleanValue() || !Predicates.inGameNoGui(client)) {
-            FishingMBAccess.releasePressing(client);
-            return;
-        }
+        if (!isActive(client)) return;
 
         FishingMBAccess.onTick(client);
     }
 
     public static void onRetrieve() {
         Minecraft client = Minecraft.getMinecraft();
-        if (!Predicates.inGameNoGui(client)) return;
-        if (!DCConfig.AutoFish.getBooleanValue()) return;
-        if (!ModReference.hasMod(ModReference.FISHINGMADEBETTER)) return;
+        if (!isActive(client)) return;
+
         if (rethrowScheduled) return;
 
         rethrowScheduled = true;
         TaskQueue.schedule(getRethrowTask(), RETHROW_DELAY_TICKS);// wait for fish to land
+        FishingMBAccess.release(client);// reset status
     }
 
     private static Task getRethrowTask() {
@@ -51,5 +46,13 @@ public class AutoFish {
             }
             return TaskResult.FAIL;
         };
+    }
+
+    @SuppressWarnings("RedundantIfStatement")
+    private static boolean isActive(Minecraft client) {
+        if (!Predicates.inGameNoGui(client)) return false;
+        if (!DCConfig.AutoFish.getBooleanValue()) return false;
+        if (!ModReference.hasMod(ModReference.FISHINGMADEBETTER)) return false;
+        return true;
     }
 }

@@ -12,15 +12,10 @@ public class FishingMBAccess {
     private static PacketKeybindS.Keybind pressing = PacketKeybindS.Keybind.NONE;
 
     public static void onTick(Minecraft client) {
-        if (client.player == null) {
-            pressing = PacketKeybindS.Keybind.NONE;
-            return;
-        }
-
         IFishingData fishingData = client.player.getCapability(FishingCapabilityProvider.FISHING_DATA_CAP, null);
 
         if (fishingData == null || !fishingData.isFishing()) {
-            releasePressing(client);
+            release(client);
             return;
         }
 
@@ -28,7 +23,7 @@ public class FishingMBAccess {
         int diff = fishingData.getReelAmount() - fishingData.getReelTarget();
 
         if (Math.abs(diff) < errorVariance) {
-            releasePressing(client);
+            release(client);
             return;
         }
         if (diff > 0) {
@@ -40,7 +35,7 @@ public class FishingMBAccess {
         }
     }
 
-    public static void releasePressing(Minecraft client) {
+    public static void release(Minecraft client) {
         if (pressing == PacketKeybindS.Keybind.NONE) return;
         if (client != null && client.player != null) {
             PrimaryPacketHandler.INSTANCE.sendToServer(new PacketKeybindS(PacketKeybindS.Keybind.NONE));
