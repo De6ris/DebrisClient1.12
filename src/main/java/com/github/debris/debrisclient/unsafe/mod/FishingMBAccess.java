@@ -12,28 +12,46 @@ public class FishingMBAccess {
     private static PacketKeybindS.Keybind pressing = PacketKeybindS.Keybind.NONE;
 
     public static void onTick(Minecraft client) {
+        if (client.player == null) {
+            pressing = PacketKeybindS.Keybind.NONE;
+            return;
+        }
+
         IFishingData fishingData = client.player.getCapability(FishingCapabilityProvider.FISHING_DATA_CAP, null);
 
-        if (fishingData == null) return;
-        if (!fishingData.isFishing()) return;
+        if (fishingData == null || !fishingData.isFishing()) {
+            releasePressing(client);
+            return;
+        }
 
         int errorVariance = fishingData.getErrorVariance();
         int diff = fishingData.getReelAmount() - fishingData.getReelTarget();
 
-        if (Math.abs(diff) < errorVariance && pressing != PacketKeybindS.Keybind.NONE) {
+        if (Math.abs(diff) < errorVariance) {
+            releasePressing(client);
+            return;
+        }
+        if (diff > 0) {
+            press(PacketKeybindS.Keybind.REEL_IN);
+            return;
+        }
+        if (diff < 0) {
+            press(PacketKeybindS.Keybind.REEL_OUT);
+        }
+    }
+
+    public static void releasePressing(Minecraft client) {
+        if (pressing == PacketKeybindS.Keybind.NONE) return;
+        if (client != null && client.player != null) {
             PrimaryPacketHandler.INSTANCE.sendToServer(new PacketKeybindS(PacketKeybindS.Keybind.NONE));
-            pressing = PacketKeybindS.Keybind.NONE;
-            return;
         }
-        if (diff > 0 && pressing != PacketKeybindS.Keybind.REEL_IN) {
-            PrimaryPacketHandler.INSTANCE.sendToServer(new PacketKeybindS(PacketKeybindS.Keybind.REEL_IN));
-            pressing = PacketKeybindS.Keybind.REEL_IN;
-            return;
-        }
-        if (diff < 0 && pressing != PacketKeybindS.Keybind.REEL_OUT) {
-            PrimaryPacketHandler.INSTANCE.sendToServer(new PacketKeybindS(PacketKeybindS.Keybind.REEL_OUT));
-            pressing = PacketKeybindS.Keybind.REEL_OUT;
-        }
+        pressing = PacketKeybindS.Keybind.NONE;
+    }
+
+    private static void press(PacketKeybindS.Keybind keybind) {
+        if (pressing == keybind) return;
+        PrimaryPacketHandler.INSTANCE.sendToServer(new PacketKeybindS(keybind));
+        pressing = keybind;
     }
 
     public static boolean isFishingRod(ItemStack stack) {
