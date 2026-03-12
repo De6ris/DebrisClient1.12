@@ -15,7 +15,7 @@ import java.util.List;
 
 public class DCConfigScreen extends GuiConfigsBase {
     private static final ConfigGuiTabBase VALUE = new ConfigGuiTabBase("值", 100, false, DCConfig.VALUE);
-    private static final ConfigGuiTabBase COMPAT = new ConfigGuiTabBase("兼容", 100, false, buildCompat());
+    private static final ConfigGuiTabBase COMPAT = new ConfigGuiTabBase("联动", 100, false, buildCompat());
     private static final ConfigGuiTabBase LIST = new ConfigGuiTabBase("列表", 100, false, DCConfig.LIST);
     private static final ConfigGuiTabBase HOTKEY = new ConfigGuiTabBase("热键", 204, true, DCConfig.HOTKEY);
     private static final ConfigGuiTabBase YEETS = new ConfigGuiTabBase("禁用", 100, false, DCConfig.YEETS);
@@ -49,7 +49,7 @@ public class DCConfigScreen extends GuiConfigsBase {
      * Hide those not loaded
      */
     private static ImmutableList<IConfigBase> buildCompat() {
-        List<IConfigBase> mutable = new ArrayList<>(DCConfig.COMPAT);
+        List<IConfigBase> mutable = new ArrayList<>(DCConfig.INTEGRATION);
         if (!ModReference.hasMod(ModReference.FORGOTTENITEMS)) mutable.remove(DCConfig.RuneTweak);
         if (!ModReference.hasMod(ModReference.XRAY)) mutable.remove(DCConfig.XRayAutoColorSelection);
         if (!ModReference.hasMod(ModReference.WAYSTONES)) mutable.remove(DCConfig.WayStoneTweak);

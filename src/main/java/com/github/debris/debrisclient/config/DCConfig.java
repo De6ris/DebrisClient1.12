@@ -43,7 +43,7 @@ public class DCConfig implements IConfigHandler {
         LinkedHashMap<String, List<? extends IConfigBase>> map = new LinkedHashMap<>();
 
         map.put("值", VALUE);
-        map.put("兼容", COMPAT);
+        map.put("联动", INTEGRATION);
         map.put("列表", LIST);
         map.put("热键", HOTKEY);
         map.put("禁用", YEETS);
@@ -69,7 +69,7 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigBoolean ExtraTooltip = ofBoolean("额外物品提示", true, "需按Shift查看,有以下功能\n附魔书成本,铁砧惩罚,附魔冲突");
 
 
-    public static final List<IConfigBase> COMPAT;
+    public static final List<IConfigBase> INTEGRATION;
 
     public static final ConfigBoolean IMBlocker = ofBoolean("输入法修复", false, "根据GUI的输入需求, 启用或禁用输入法");
     public static final ConfigBoolean ForceASCII = ofBoolean("强制ASCII字体", true, "修改后需重载语言文件");
@@ -156,7 +156,7 @@ public class DCConfig implements IConfigHandler {
                 EnchantPreview,
                 ExtraTooltip
         );
-        COMPAT = ImmutableList.of(
+        INTEGRATION = ImmutableList.of(
                 IMBlocker,
                 ForceASCII,
                 ProgressResuming,
