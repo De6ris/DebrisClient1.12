@@ -176,11 +176,14 @@ dependencies {
     implementation rfg.deobf("curse.maven:itemphysics-${itemphysics_version}")
     implementation rfg.deobf("curse.maven:waystones-${waystones_version}")
     compileOnly rfg.deobf("curse.maven:fishing-made-better-${fishingmadebetter_version}")
+    compileOnly rfg.deobf("curse.maven:defiled-lands-${defiled_version}")
+    compileOnly rfg.deobf("curse.maven:familiar-fauna-${familiar_fauna_version}")
 
 
     // extra dependencies
 //    compileOnly rfg.deobf("curse.maven:entityculling-${entityculling_version}")//403forbidden
     implementation rfg.deobf("curse.maven:jecharacters-${jecharacters_version}")
+    implementation rfg.deobf("curse.maven:xaerolib-${xaerolib_version}")
     implementation rfg.deobf("curse.maven:xaeros-minimap-${xaerosminimap_version}")
     implementation rfg.deobf("curse.maven:xaeros-world-map-${xaerosworldmap_version}")
     implementation rfg.deobf("curse.maven:advanced-xray-${advancedxray_version}")

@@ -15,17 +15,19 @@ import java.util.List;
 
 public class DCConfigScreen extends GuiConfigsBase {
     private static final ConfigGuiTabBase VALUE = new ConfigGuiTabBase("值", 100, false, DCConfig.VALUE);
-    private static final ConfigGuiTabBase COMPAT = new ConfigGuiTabBase("联动", 100, false, buildCompat());
+    private static final ConfigGuiTabBase INTEGRATION = new ConfigGuiTabBase("联动", 100, false, buildCompat());
     private static final ConfigGuiTabBase LIST = new ConfigGuiTabBase("列表", 100, false, DCConfig.LIST);
     private static final ConfigGuiTabBase HOTKEY = new ConfigGuiTabBase("热键", 204, true, DCConfig.HOTKEY);
     private static final ConfigGuiTabBase YEETS = new ConfigGuiTabBase("禁用", 100, false, DCConfig.YEETS);
+    private static final ConfigGuiTabBase GLOWS = new ConfigGuiTabBase("发光", 100, false, DCConfig.GLOWS);
 
     private static final ImmutableList<IConfigGuiTab> TABS = ImmutableList.of(
             VALUE,
-            COMPAT,
+            INTEGRATION,
             LIST,
             HOTKEY,
-            YEETS
+            YEETS,
+            GLOWS
     );
 
     private static IConfigGuiTab tab = VALUE;

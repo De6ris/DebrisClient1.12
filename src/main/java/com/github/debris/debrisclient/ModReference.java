@@ -6,9 +6,11 @@ public class ModReference {
     public static final String BAUBLES = "baubles";
     public static final String BOUNTIFULBAUBLES = "bountifulbaubles";
     public static final String CHARM = "charm";
+    public static final String DEFILED_LANDS = "defiledlands";
     public static final String DISENCHANTER = "disenchanter";
     public static final String ENHANCEDVISUALS = "enhancedvisuals";
     public static final String ENTITYCULLING = "entityculling";
+    public static final String FAMILIAR_FAUNA = "familiarfauna";
     public static final String FISHINGMADEBETTER = "fishingmadebetter";
     public static final String FORGOTTENITEMS = "forgottenitems";
     public static final String ICEANDFIRE = "iceandfire";

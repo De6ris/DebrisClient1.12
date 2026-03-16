@@ -47,6 +47,7 @@ public class DCConfig implements IConfigHandler {
         map.put("列表", LIST);
         map.put("热键", HOTKEY);
         map.put("禁用", YEETS);
+        map.put("高亮", GLOWS);
 
         return map;
     }
@@ -62,8 +63,6 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigEnum<WheelMovingMode> WheelMoving = ofEnum("滚轮移动", WheelMovingMode.NONE);
     public static final ConfigBoolean BetterSwapHandsKey = ofBoolean("更好的副手键", true, "允许在容器中切换");
     public static final ConfigBoolean AnvilLevelView = ofBoolean("铁砧等级显示", true, "生存可见40级以上");
-    public static final ConfigBoolean LibrarianGlowing = ofBoolean("图书管理员发光", false);
-    public static final ConfigBoolean BossGlowing = ofBoolean("Boss发光", false);
     public static final ConfigStringList IMBlockerWhiteList = ofStringList("输入法修复白名单", BUILT_IN_SCREENS, "在这些GUI中不会禁用输入法\n建议用按键添加而不是手动编辑");
     public static final ConfigBoolean EnchantPreview = ofBoolean("附魔预览", false, "暂时失效");
     public static final ConfigBoolean ExtraTooltip = ofBoolean("额外物品提示", true, "需按Shift查看,有以下功能\n附魔书成本,铁砧惩罚,附魔冲突");
@@ -140,6 +139,15 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigBoolean MuteAnvil = ofBoolean("铁砧静音", false);
     public static final ConfigBoolean MuteAegis = ofBoolean("宙斯盾静音", false);
 
+
+    public static final List<IConfigBase> GLOWS;
+
+    public static final ConfigBoolean LibrarianGlowing = ofBoolean("图书管理员发光", false);
+    public static final ConfigBoolean BossGlowing = ofBoolean("Boss发光", false);
+    public static final ConfigBoolean GoldenWyrmGlowing = ofBoolean("金色书卷龙发光", false);
+    public static final ConfigBoolean PixieGlowingFF = ofBoolean("精灵发光(FF)", false, "Familiar Fauna");
+    public static final ConfigBoolean PixieGlowingIAF = ofBoolean("精灵发光(IAF)", false, "Ice and fire");
+
     static {
         VALUE = ImmutableList.of(
                 SortingContainersLast,
@@ -150,8 +158,6 @@ public class DCConfig implements IConfigHandler {
                 WheelMoving,
                 BetterSwapHandsKey,
                 AnvilLevelView,
-                LibrarianGlowing,
-                BossGlowing,
                 IMBlockerWhiteList,
                 EnchantPreview,
                 ExtraTooltip
@@ -214,6 +220,13 @@ public class DCConfig implements IConfigHandler {
                 DisableSignatureWarning,
                 MuteAnvil,
                 MuteAegis
+        );
+        GLOWS = ImmutableList.of(
+                LibrarianGlowing,
+                BossGlowing,
+                GoldenWyrmGlowing,
+                PixieGlowingFF,
+                PixieGlowingIAF
         );
         Instance.load();
     }
