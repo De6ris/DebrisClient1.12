@@ -94,9 +94,10 @@ public class DCConfig implements IConfigHandler {
 
 
     public static final List<IConfigBase> LIST;
-    public static final ConfigStringList CullEntityList = ofStringList("剔除实体渲染列表", ImmutableList.of(), "见EntityTypes");
+    public static final ConfigStringList CullEntityList = ofStringList("剔除实体渲染列表", ImmutableList.of(), "见EntityTypes\n可通过waila查看");
     public static final ConfigStringList MuteSoundList = ofStringList("静音音效列表", ImmutableList.of(), "见SoundEvents");
     public static final ConfigStringList CullParticleList = ofStringList("剔除粒子列表", ImmutableList.of(), "见ParticleTypes");
+    public static final ConfigStringList GlowEntityList = ofStringList("发光实体列表", ImmutableList.of(), "见EntityTypes\n可通过waila查看");
 
 
     public static final List<ConfigHotkey> HOTKEY;
@@ -142,11 +143,14 @@ public class DCConfig implements IConfigHandler {
 
     public static final List<IConfigBase> GLOWS;
 
+    public static final ConfigBoolean ListGlowing = ofBoolean("列表发光", false, "需编辑列表配置");
     public static final ConfigBoolean LibrarianGlowing = ofBoolean("图书管理员发光", false);
     public static final ConfigBoolean BossGlowing = ofBoolean("Boss发光", false);
     public static final ConfigBoolean GoldenWyrmGlowing = ofBoolean("金色书卷龙发光", false);
     public static final ConfigBoolean PixieGlowingFF = ofBoolean("精灵发光(FF)", false, "Familiar Fauna");
     public static final ConfigBoolean PixieGlowingIAF = ofBoolean("精灵发光(IAF)", false, "Ice and fire");
+    public static final ConfigBoolean StoneLingGlowing = ofBoolean("石精灵发光", false);
+    public static final ConfigBoolean SpectreGlowing = ofBoolean("幽灵发光", false, "Charm");
 
     static {
         VALUE = ImmutableList.of(
@@ -186,7 +190,8 @@ public class DCConfig implements IConfigHandler {
         LIST = ImmutableList.of(
                 CullEntityList,
                 MuteSoundList,
-                CullParticleList
+                CullParticleList,
+                GlowEntityList
         );
         HOTKEY = ImmutableList.of(
                 OpenWindow,
@@ -222,11 +227,14 @@ public class DCConfig implements IConfigHandler {
                 MuteAegis
         );
         GLOWS = ImmutableList.of(
+                ListGlowing,
                 LibrarianGlowing,
                 BossGlowing,
                 GoldenWyrmGlowing,
                 PixieGlowingFF,
-                PixieGlowingIAF
+                PixieGlowingIAF,
+                StoneLingGlowing,
+                SpectreGlowing
         );
         Instance.load();
     }

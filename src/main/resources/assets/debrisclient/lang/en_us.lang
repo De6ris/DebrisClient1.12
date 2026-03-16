@@ -18,3 +18,7 @@ config.enum.sort_category.pinyin.name=PinYin
 config.enum.wheel_moving_mode.none.name=None
 config.enum.wheel_moving_mode.default.name=Default
 config.enum.wheel_moving_mode.invert.name=Invert
+
+
+# waila
+option.debrisclient.showEntityRegistryKey=Show Entity Registry Key

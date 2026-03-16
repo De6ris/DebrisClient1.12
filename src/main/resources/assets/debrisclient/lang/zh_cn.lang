@@ -23,3 +23,6 @@ config.enum.sort_category.pinyin.name=拼音
 config.enum.wheel_moving_mode.none.name=无
 config.enum.wheel_moving_mode.default.name=默认
 config.enum.wheel_moving_mode.invert.name=反向
+
+# waila
+option.debrisclient.showEntityRegistryKey=显示实体注册名
