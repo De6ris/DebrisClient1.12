@@ -38,7 +38,6 @@ public class EntityGlowing {
         return false;
     }
 
-    @SuppressWarnings("SameParameterValue")
     private static void register(ConfigBoolean config, Predicate<Entity> predicate) {
         register(entity -> config.getBooleanValue() && predicate.test(entity));
     }

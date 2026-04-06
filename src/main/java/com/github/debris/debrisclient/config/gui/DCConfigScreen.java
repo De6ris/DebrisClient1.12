@@ -63,6 +63,7 @@ public class DCConfigScreen extends GuiConfigsBase {
         }
         if (!ModReference.hasMod(ModReference.INVTWEAKS)) mutable.remove(DCConfig.DisableSortingOutOfGUI);
         if (!ModReference.hasMod(ModReference.FISHINGMADEBETTER)) mutable.remove(DCConfig.AutoFish);
+        if (!ModReference.hasMod(ModReference.LOCKS)) mutable.remove(DCConfig.LocksTweak);
         return ImmutableList.copyOf(mutable);
     }
 }

@@ -15,6 +15,7 @@ public class ModReference {
     public static final String FORGOTTENITEMS = "forgottenitems";
     public static final String ICEANDFIRE = "iceandfire";
     public static final String INVTWEAKS = "inventorytweaks";
+    public static final String LOCKS = "locks";
     public static final String LYCANITESMOBS = "lycanitesmobs";
     public static final String POTIONCORE = "potioncore";
     public static final String JECH = "jecharacters";

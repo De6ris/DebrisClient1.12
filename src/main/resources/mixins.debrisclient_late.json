@@ -15,6 +15,7 @@
     "entityculling.CullTaskMixin",
     "iceandfire.EntityEffectClientHandlerMixin",
     "invtweaks.InvTweaksMixin",
+    "locks.LockPickingGuiMixin",
     "malilib.ConfigButtonOptionListMixin",
     "malilib.DisableSignatureWarningMixin",
     "malilib.GuiConfigsBaseMixin",

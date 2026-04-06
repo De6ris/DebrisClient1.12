@@ -86,6 +86,7 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigStringList ReforgingWhiteListBB = ofStringList("自动重铸白名单:丰富的饰品", ImmutableList.of("hearty", "menacing", "violent"), "可查阅语言文件");
     public static final ConfigBoolean DisableSortingOutOfGUI = ofBoolean("禁止在GUI之外整理", false, "InvTweaks");
     public static final ConfigBoolean AutoFish = ofBoolean("自动钓鱼", false, "fishing made better\n含自动续杆\n停止只需切换空手");
+    public static final ConfigBoolean LocksTweak = ofBoolean("开锁功能", false);
 
     public static final ConfigBoolean StrictMode = ofBoolean("严格模式");
     public static final ConfigBoolean Debug = ofBoolean("调试");
@@ -182,6 +183,7 @@ public class DCConfig implements IConfigHandler {
                 ReforgingWhiteListBB,
                 DisableSortingOutOfGUI,
                 AutoFish,
+                LocksTweak,
                 StrictMode,
                 Debug,
                 DebugX,

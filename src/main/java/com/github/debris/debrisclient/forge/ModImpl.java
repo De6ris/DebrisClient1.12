@@ -1,7 +1,7 @@
 package com.github.debris.debrisclient.forge;
 
 import com.github.debris.debrisclient.DebrisClient;
-import com.github.debris.debrisclient.event.forge.DrawScreenListener;
+import com.github.debris.debrisclient.event.forge.ScreenEventListener;
 import com.github.debris.debrisclient.event.forge.PlaySoundListener;
 import com.github.debris.debrisclient.event.forge.TooltipListener;
 import com.github.debris.debrisclient.event.malilib.InitListener;
@@ -28,7 +28,7 @@ public class ModImpl {
     public void preInit(FMLPreInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(TooltipListener.class);
         MinecraftForge.EVENT_BUS.register(PlaySoundListener.class);
-        MinecraftForge.EVENT_BUS.register(DrawScreenListener.class);
+        MinecraftForge.EVENT_BUS.register(ScreenEventListener.class);
         InitializationHandler.getInstance().registerInitializationHandler(new InitListener());
     }
 }
