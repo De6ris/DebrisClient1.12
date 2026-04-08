@@ -1,25 +1,11 @@
 package com.github.debris.debrisclient.util;
 
 import com.github.debris.debrisclient.config.DCConfig;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
 
 public class CullingUtil {
-    public static boolean shouldCullEntity(Entity entity) {
-        if (DCConfig.CullRidingEntity.getBooleanValue() && Minecraft.getMinecraft().player.getRidingEntity() == entity)
-            return true;
-
-        String entityString = EntityList.getEntityString(entity);
-        if (entityString == null) return false;
-
-        if (DCConfig.CullEntityList.getStrings().stream().anyMatch(entityString::contains)) return true;
-
-        return false;
-    }
 
     public static boolean shouldMuteSound(ISound sound) {
         ResourceLocation identifier = sound.getSoundLocation();

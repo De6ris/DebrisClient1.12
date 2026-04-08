@@ -90,7 +90,7 @@ public class FreeCam {
     }
 
     public static void onTick(Minecraft client) {
-        if (!Predicates.inGameNoGui(client)) return;
+        if (Predicates.notInGame(client)) return;
         if (!STATE) return;
         CameraEntity camera = freeCamera;
 
@@ -100,28 +100,30 @@ public class FreeCam {
         float vertical = 0;
         float strafe = 0;
 
-        GameSettings options = client.gameSettings;
-        if (options.keyBindForward.isKeyDown()) {
-            forward++;
-        }
-        if (options.keyBindBack.isKeyDown()) {
-            forward--;
-        }
-        if (options.keyBindLeft.isKeyDown()) {
-            strafe++;
-        }
-        if (options.keyBindRight.isKeyDown()) {
-            strafe--;
-        }
-        if (options.keyBindJump.isKeyDown()) {
-            vertical++;
-        }
-        if (options.keyBindSneak.isKeyDown()) {
-            vertical--;
-        }
+        if (client.currentScreen == null) {
+            GameSettings options = client.gameSettings;
+            if (options.keyBindForward.isKeyDown()) {
+                forward++;
+            }
+            if (options.keyBindBack.isKeyDown()) {
+                forward--;
+            }
+            if (options.keyBindLeft.isKeyDown()) {
+                strafe++;
+            }
+            if (options.keyBindRight.isKeyDown()) {
+                strafe--;
+            }
+            if (options.keyBindJump.isKeyDown()) {
+                vertical++;
+            }
+            if (options.keyBindSneak.isKeyDown()) {
+                vertical--;
+            }
 
-        if (options.keyBindSprint.isKeyDown()) {
-            if (forward != 0) camera.setSprinting(true);
+            if (options.keyBindSprint.isKeyDown()) {
+                if (forward != 0) camera.setSprinting(true);
+            }
         }
 
         if (forward == 0) camera.setSprinting(false);

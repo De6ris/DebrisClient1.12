@@ -1,5 +1,6 @@
 package com.github.debris.debrisclient.modmixins.entityculling;
 
+import com.github.debris.debrisclient.feat.EntityCulling;
 import com.github.debris.debrisclient.feat.FreeCam;
 import dev.tr7zw.entityculling.CullTask;
 import net.minecraft.client.Minecraft;
@@ -27,6 +28,6 @@ public class CullTaskMixin {
 
     @Inject(method = "isSkippableArmorstand", at = @At("HEAD"), cancellable = true)
     private void skipPlayer(Entity entity, CallbackInfoReturnable<Boolean> cir) {
-        if (this.client.player == entity) cir.setReturnValue(true);
+        if (EntityCulling.shouldSkipCulling(this.client, entity)) cir.setReturnValue(true);
     }
 }

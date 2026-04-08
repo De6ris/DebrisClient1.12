@@ -22,9 +22,11 @@ public class EntityGlowing {
     }
 
     private static boolean isInList(Entity entity) {
+        List<String> list = DCConfig.GlowEntityList.getStrings();
+        if (list.isEmpty()) return false;
         ResourceLocation key = EntityList.getKey(entity.getClass());
         if (key == null) return false;
-        return DCConfig.GlowEntityList.getStrings().contains(key.toString());
+        return list.contains(key.toString());
     }
 
     @SuppressWarnings("RedundantIfStatement")

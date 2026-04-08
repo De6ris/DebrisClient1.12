@@ -1,6 +1,6 @@
 package com.github.debris.debrisclient.mixins.client.render;
 
-import com.github.debris.debrisclient.util.CullingUtil;
+import com.github.debris.debrisclient.feat.EntityCulling;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,6 +12,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class RenderManagerMixin {
     @Inject(method = "renderEntity", at = @At("HEAD"), cancellable = true)
     private void cullEntity(Entity entityIn, double x, double y, double z, float yaw, float partialTicks, boolean p_188391_10_, CallbackInfo ci) {
-        if (CullingUtil.shouldCullEntity(entityIn)) ci.cancel();
+        if (EntityCulling.shouldCullEntity(entityIn)) ci.cancel();
     }
 }

@@ -144,7 +144,8 @@ public class DCConfig implements IConfigHandler {
 
     public static final List<IConfigBase> GLOWS;
 
-    public static final ConfigBoolean ListGlowing = ofBoolean("列表发光", false, "需编辑列表配置");
+    public static final ConfigBoolean ListGlowing = ofBoolean("列表发光", true, "需编辑列表配置");
+    public static final ConfigBoolean SkipCullingGlowingEntity = ofBoolean("跳过剔除发光实体", true, "EntityCulling");
     public static final ConfigBoolean LibrarianGlowing = ofBoolean("图书管理员发光", false);
     public static final ConfigBoolean BossGlowing = ofBoolean("Boss发光", false);
     public static final ConfigBoolean GoldenWyrmGlowing = ofBoolean("金色书卷龙发光", false);
@@ -230,6 +231,7 @@ public class DCConfig implements IConfigHandler {
         );
         GLOWS = ImmutableList.of(
                 ListGlowing,
+                SkipCullingGlowingEntity,
                 LibrarianGlowing,
                 BossGlowing,
                 GoldenWyrmGlowing,
