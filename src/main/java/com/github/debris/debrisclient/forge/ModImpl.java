@@ -1,8 +1,8 @@
 package com.github.debris.debrisclient.forge;
 
 import com.github.debris.debrisclient.DebrisClient;
-import com.github.debris.debrisclient.event.forge.ScreenEventListener;
 import com.github.debris.debrisclient.event.forge.PlaySoundListener;
+import com.github.debris.debrisclient.event.forge.ScreenEventListener;
 import com.github.debris.debrisclient.event.forge.TooltipListener;
 import com.github.debris.debrisclient.event.malilib.InitListener;
 import fi.dy.masa.malilib.event.InitializationHandler;

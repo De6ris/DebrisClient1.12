@@ -30,6 +30,7 @@
     "waila.RayTracingMixin",
     "waystones.GuiWaystoneListMixin",
     "xaerominimap.GuiAddWaypointMixin",
+    "xaerominimap.InfoDisplaysMixin",
     "xaerominimap.MinimapRendererMixin",
     "xaeroworldmap.GuiMapMixin",
     "xray.EventsMixin",

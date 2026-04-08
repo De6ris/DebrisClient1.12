@@ -26,3 +26,22 @@ config.enum.wheel_moving_mode.invert.name=反向
 
 # waila
 option.debrisclient.showEntityRegistryKey=显示实体注册名
+
+# xaero
+gui.xaero_infodisplay.sub_season=季节
+
+# serene seasons
+sereneseasons.early_spring.name=早春
+sereneseasons.mid_spring.name=中春
+sereneseasons.late_spring.name=晚春
+sereneseasons.early_summer.name=早夏
+sereneseasons.mid_summer.name=中夏
+sereneseasons.late_summer.name=晚夏
+sereneseasons.early_autumn.name=早秋
+sereneseasons.mid_autumn.name=中秋
+sereneseasons.late_autumn.name=晚秋
+sereneseasons.early_winter.name=早冬
+sereneseasons.mid_winter.name=中冬
+sereneseasons.late_winter.name=晚冬
+
+gui.sub_season.info=%s(%d%%)

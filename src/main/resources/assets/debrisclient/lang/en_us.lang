@@ -19,6 +19,24 @@ config.enum.wheel_moving_mode.none.name=None
 config.enum.wheel_moving_mode.default.name=Default
 config.enum.wheel_moving_mode.invert.name=Invert
 
-
 # waila
 option.debrisclient.showEntityRegistryKey=Show Entity Registry Key
+
+# xaero
+gui.xaero_infodisplay.sub_season=Season
+
+# serene seasons
+sereneseasons.early_spring.name=Early spring
+sereneseasons.mid_spring.name=Mid spring
+sereneseasons.late_spring.name=Late spring
+sereneseasons.early_summer.name=Early summer
+sereneseasons.mid_summer.name=Mid summer
+sereneseasons.late_summer.name=Late summer
+sereneseasons.early_autumn.name=Early autumn
+sereneseasons.mid_autumn.name=Mid autumn
+sereneseasons.late_autumn.name=Late autumn
+sereneseasons.early_winter.name=Early winter
+sereneseasons.mid_winter.name=Mid winter
+sereneseasons.late_winter.name=Late winter
+
+gui.sub_season.info=%s(%d%%)

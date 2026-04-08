@@ -1,8 +1,9 @@
 package com.github.debris.debrisclient.modmixins.waystones;
 
-import com.github.debris.debrisclient.gui.button.GuiBetterButton;
+import com.github.debris.debrisclient.ModReference;
 import com.github.debris.debrisclient.config.DCConfig;
 import com.github.debris.debrisclient.feat.Waystone2Xaero;
+import com.github.debris.debrisclient.gui.button.GuiBetterButton;
 import com.github.debris.debrisclient.unsafe.mod.XaeroMiniMapAccess;
 import net.blay09.mods.waystones.client.gui.GuiWaystoneList;
 import net.blay09.mods.waystones.util.WaystoneEntry;
@@ -51,7 +52,7 @@ public class GuiWaystoneListMixin extends GuiScreen {
 
     @Inject(method = "actionPerformed", at = @At("HEAD"), remap = true, cancellable = true)
     private void onClick(GuiButton button, CallbackInfo ci) {
-        if (button.id == Waystone2Xaero.BUTTON_ID) {
+        if (button.id == Waystone2Xaero.BUTTON_ID && ModReference.hasMod(ModReference.XAERO_MINI_MAP)) {
             XaeroMiniMapAccess.createWayPoint(this.fromWaystone.getDimensionId(), this.fromWaystone.getPos(), this.fromWaystone.getName());
             ci.cancel();
         }
