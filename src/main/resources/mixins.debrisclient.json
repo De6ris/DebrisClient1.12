@@ -22,6 +22,7 @@
     "client.gui.GuiContainerCreativeMixin",
     "client.gui.GuiContainerMixin",
     "client.gui.GuiEnchantmentMixin",
+    "client.gui.GuiMerchantMixin",
     "client.gui.GuiRepairMixin",
     "client.gui.GuiScreenMixin",
     "client.gui.GuiTextFieldMixin",

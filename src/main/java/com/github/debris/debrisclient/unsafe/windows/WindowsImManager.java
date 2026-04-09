@@ -43,6 +43,7 @@ public class WindowsImManager {
     private static final User32 u = User32.INSTANCE;
 
     public static void makeOn() {
+        if (!VALID) return;
         if (status) {
             return;
         }
@@ -57,6 +58,7 @@ public class WindowsImManager {
     }
 
     public static void makeOff() {
+        if (!VALID) return;
         if (!status) {
             return;
         }
@@ -70,6 +72,7 @@ public class WindowsImManager {
     }
 
     public static void switchToChinese() {
+        if (!VALID) return;
         WinDef.HWND hwnd = u.GetForegroundWindow();
         WinDef.WPARAM wParam = new WinDef.WPARAM(IME_CHINESE);
         WinDef.LPARAM lParam = new WinDef.LPARAM(0);
@@ -77,6 +80,7 @@ public class WindowsImManager {
     }
 
     public static void switchToEnglish() {
+        if (!VALID) return;
         WinDef.HWND hwnd = u.GetForegroundWindow();
         WinDef.WPARAM wParam = new WinDef.WPARAM(IME_ENGLISH);
         WinDef.LPARAM lParam = new WinDef.LPARAM(0);

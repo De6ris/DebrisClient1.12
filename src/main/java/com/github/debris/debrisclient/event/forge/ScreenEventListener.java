@@ -29,7 +29,8 @@ public class ScreenEventListener {
 
     @SubscribeEvent
     public static void onActionPerformed(GuiScreenEvent.ActionPerformedEvent.Post event) {
-        if (event.getButton().id == LocksTweak.BUTTON_ID) {
+        int id = event.getButton().id;
+        if (id == LocksTweak.BUTTON_ID) {
             LocksTweak.auto();
         }
     }

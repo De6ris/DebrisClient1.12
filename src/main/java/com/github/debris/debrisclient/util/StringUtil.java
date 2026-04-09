@@ -104,8 +104,8 @@ public class StringUtil {
         return StringUtils.join(strings, ", ");
     }
 
-    public static String translateEnchantmentDatas(Collection<EnchantmentData> enchantmentDatas) {
-        List<String> strings = enchantmentDatas.stream().map(StringUtil::translateEnchantmentData).collect(Collectors.toList());
+    public static String translateEnchantmentData(Collection<EnchantmentData> enchantmentData) {
+        List<String> strings = enchantmentData.stream().map(StringUtil::translateEnchantmentData).collect(Collectors.toList());
         return StringUtils.join(strings, ", ");
     }
 

@@ -79,7 +79,7 @@ public class DCConfig implements IConfigHandler {
 
     public static final ConfigBoolean RuneTweak = ofBoolean("符文功能", false, "forgotten items: 生存模式查看符文产出");
     public static final ConfigBoolean XRayAutoColorSelection = ofBoolean("XRay自动取色", true, "");
-    public static final ConfigBoolean WayStoneTweak = ofBoolean("指路石功能", false, "waystones: 在GUI中将有一个创建xaero路径点的按钮");
+    public static final ConfigBoolean FastWaypoint = ofBoolean("快速路径点", false, "xaero路径点: 在指路石和村民GUI添加按钮以快速创建");
     public static final ConfigBoolean AutoReforging = ofBoolean("自动重铸功能", false, "baubles&quality tools: 在GUI中添加按钮");
     public static final ConfigEnum<QualityColor> ReforgingLevel = ofEnum("自动重铸等级:工具品质", QualityColor.BLUE, "其中金色与淡紫色同级\n无颜色表示仅允许白名单");
     public static final ConfigStringList ReforgingWhiteListQT = ofStringList("自动重铸白名单:工具品质", ImmutableList.of("healthy", "quality.lucky.name"), "可查阅语言文件");
@@ -177,7 +177,7 @@ public class DCConfig implements IConfigHandler {
                 TranslationKeySearch,
                 RuneTweak,
                 XRayAutoColorSelection,
-                WayStoneTweak,
+                FastWaypoint,
                 AutoReforging,
                 ReforgingLevel,
                 ReforgingWhiteListQT,

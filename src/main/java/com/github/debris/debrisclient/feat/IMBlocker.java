@@ -9,6 +9,10 @@ import net.minecraft.client.gui.GuiScreenBook;
 import net.minecraft.client.gui.inventory.GuiEditSign;
 
 public class IMBlocker {
+    private static final OSType OS_TYPE = OSType.get();
+
+    private static final boolean VALID = OS_TYPE != OSType.NONE;
+
     public static final ImmutableList<String> BUILT_IN_SCREENS = ImmutableList.of(
             "xaero.common.gui.GuiAddWaypoint",
             "com.xray.gui.manage.GuiBlockListScrollable",
@@ -17,7 +21,7 @@ public class IMBlocker {
     );
 
     public static boolean isActive() {
-        return DCConfig.IMBlocker.getBooleanValue();
+        return VALID && DCConfig.IMBlocker.getBooleanValue();
     }
 
     public static void onNewScreen(GuiScreen guiScreenIn) {
@@ -68,11 +72,15 @@ public class IMBlocker {
     }
 
     public static void enable() {
-        if (WindowsImManager.VALID) WindowsImManager.makeOn();
+        if (OS_TYPE.isWindows()) {
+            WindowsImManager.makeOn();
+        }
     }
 
     public static void disable() {
-        if (WindowsImManager.VALID) WindowsImManager.makeOff();
+        if (OS_TYPE.isWindows()) {
+            WindowsImManager.makeOff();
+        }
     }
 
     public static Mode getMode() {
@@ -88,11 +96,15 @@ public class IMBlocker {
     }
 
     public static void switchToEnglish() {
-        if (WindowsImManager.VALID) WindowsImManager.switchToEnglish();
+        if (OS_TYPE.isWindows()) {
+            WindowsImManager.switchToEnglish();
+        }
     }
 
     public static void switchToChinese() {
-        if (WindowsImManager.VALID) WindowsImManager.switchToChinese();
+        if (OS_TYPE.isWindows()) {
+            WindowsImManager.switchToChinese();
+        }
     }
 
     public enum Mode {
