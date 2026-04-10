@@ -12,7 +12,8 @@ public class LocksTweak {
 
     /**
      * Say 4,5,1,2,6,0,3: The whole password
-     * Say 4,5,1,-1,-1,-1,-1: Part known
+     * <br>
+     * Say 4,5,1,-1,-1,-1,-1: Partly known
      */
     private static int[] password = null;
 

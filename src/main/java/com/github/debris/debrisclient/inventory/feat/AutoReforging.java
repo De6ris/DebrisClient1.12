@@ -8,6 +8,7 @@ import com.github.debris.debrisclient.unsafe.baubles.QualityToolsReforgingTask;
 import com.github.debris.debrisclient.unsafe.mod.BountifulBaublesAccess;
 import com.github.debris.debrisclient.unsafe.mod.QualityToolsAccess;
 import com.github.debris.debrisclient.util.AccessorUtil;
+import com.github.debris.debrisclient.util.Predicates;
 import com.github.debris.debrisclient.util.SoundUtil;
 import com.github.debris.debrisclient.util.StringUtil;
 import net.minecraft.client.Minecraft;
@@ -48,13 +49,14 @@ public class AutoReforging {
         return null;
     }
 
-    public static void onMouseClicked(GuiScreen screen, int mouseX, int mouseY, int mouseButton) {
-        if (ModReference.hasMod(ModReference.QUALITYTOOLS) && QualityToolsAccess.isReforgingGUI(screen) && mouseButton == 1) {
+    public static void onMouseClicked(Minecraft client, GuiScreen screen, int mouseX, int mouseY, int mouseButton) {
+        if (Predicates.notInGame(client)) return;
+        if (mouseButton == 1 && ModReference.hasMod(ModReference.QUALITYTOOLS) && QualityToolsAccess.isReforgingGUI(screen)) {
             for (GuiButton button : AccessorUtil.getButtonList(screen)) {
                 if (button.id != AutoReforging.BUTTON_ID) continue;
-                if (button.mousePressed(screen.mc, mouseX, mouseY)) {
+                if (button.mousePressed(client, mouseX, mouseY)) {
                     DCConfig.ReforgingLevel.cycle(true);
-                    SoundUtil.playClickSound(screen.mc);
+                    SoundUtil.playClickSound(client);
                     break;
                 }
             }

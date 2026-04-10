@@ -28,6 +28,7 @@ public class AutoUnlock {
         if (!active) return;
         int index = LocksAccess.getCurrentIndex(gui);
         if (index == pins.length) {
+            LocksAccess.release(gui);
             active = false;// success
             return;
         }
@@ -35,7 +36,7 @@ public class AutoUnlock {
         int order = password[index];
         int destination;
         if (order == -1) {
-            destination = find(pins, currentPin, index);
+            destination = findNear(pins, currentPin, index);
         } else {
             destination = order;
         }
@@ -47,7 +48,7 @@ public class AutoUnlock {
         pin(gui, currentPin, destination);
     }
 
-    private static int find(boolean[] pins, int currentPin, int index) {
+    private static int findNear(boolean[] pins, int currentPin, int index) {
         if (tryingIndex != index) {
             // update
             triedPins = new boolean[pins.length];

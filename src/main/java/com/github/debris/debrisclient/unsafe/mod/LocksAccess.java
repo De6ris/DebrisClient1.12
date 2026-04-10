@@ -37,10 +37,12 @@ public class LocksAccess {
     }
 
     public static void moveRight(GuiContainer screen) {
+        ((LockPickingGui) screen).keyReleased(screen.mc.gameSettings.keyBindLeft.getKeyCode());
         ((LockPickingGui) screen).keyPressed(screen.mc.gameSettings.keyBindRight.getKeyCode());
     }
 
     public static void moveLeft(GuiContainer screen) {
+        ((LockPickingGui) screen).keyReleased(screen.mc.gameSettings.keyBindRight.getKeyCode());
         ((LockPickingGui) screen).keyPressed(screen.mc.gameSettings.keyBindLeft.getKeyCode());
     }
 
