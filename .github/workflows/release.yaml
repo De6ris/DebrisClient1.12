@@ -22,7 +22,7 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v4.2.1
         with:
-          java-version: '21'
+          java-version: '25'
           distribution: 'zulu'
           cache: gradle
 
