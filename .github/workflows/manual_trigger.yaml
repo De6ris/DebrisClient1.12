@@ -1,13 +1,11 @@
-name: Release on tag
+name: Manual trigger
 
 permissions:
   contents: write
   issues: write
 
 on:
-  push:
-    tags:
-      - '*'
+  workflow_dispatch:
 
 jobs:
   build:
@@ -28,8 +26,8 @@ jobs:
 
       - name: Build
         run: ./gradlew assemble # skip test
-      - name: Create GitHub Release
-        uses: ncipollo/release-action@v1.14.0
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
         with:
-          artifacts: "build/libs/*.jar"
-          generateReleaseNotes: true
+          name: build-artifacts-${{ github.sha }}
+          path: build/libs/*.jar
