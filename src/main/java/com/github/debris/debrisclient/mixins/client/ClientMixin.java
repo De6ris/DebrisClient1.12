@@ -21,4 +21,9 @@ public class ClientMixin {
     private void onNewScreen(GuiScreen guiScreenIn, CallbackInfo ci) {
         IMBlocker.onNewScreen(guiScreenIn);
     }
+
+    @Inject(method = "setIngameFocus", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;displayGuiScreen(Lnet/minecraft/client/gui/GuiScreen;)V"))
+    private void onGameFocus(CallbackInfo ci) {
+        IMBlocker.disable();
+    }
 }

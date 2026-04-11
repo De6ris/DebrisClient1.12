@@ -8,6 +8,6 @@ public class MathUtil {
     }
 
     public static int asPercentage(double ratio) {
-        return MathHelper.clamp((int) ratio * 100, 0, 100);
+        return MathHelper.clamp((int) (ratio * 100), 0, 100);
     }
 }

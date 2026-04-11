@@ -8,6 +8,8 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiScreenBook;
 import net.minecraft.client.gui.inventory.GuiEditSign;
 
+import javax.annotation.Nullable;
+
 public class IMBlocker {
     private static final OSType OS_TYPE = OSType.get();
 
@@ -24,7 +26,7 @@ public class IMBlocker {
         return VALID && DCConfig.IMBlocker.getBooleanValue();
     }
 
-    public static void onNewScreen(GuiScreen guiScreenIn) {
+    public static void onNewScreen(@Nullable GuiScreen guiScreenIn) {
         if (isActive()) {
             if (IMBlocker.handleIndividually(guiScreenIn)) return;
             IMBlocker.setState(IMBlocker.shouldUseIM(guiScreenIn));
@@ -50,7 +52,7 @@ public class IMBlocker {
     /**
      * If true, skip the default behavior, at handle this at {@link GuiScreen#initGui()}
      */
-    public static boolean handleIndividually(GuiScreen guiScreenIn) {
+    public static boolean handleIndividually(@Nullable GuiScreen guiScreenIn) {
         if (guiScreenIn instanceof GuiChat) return true;
         return false;
     }

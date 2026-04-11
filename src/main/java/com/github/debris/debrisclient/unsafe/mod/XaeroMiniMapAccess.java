@@ -5,6 +5,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import xaero.common.minimap.waypoints.Waypoint;
 import xaero.hud.minimap.BuiltInHudModules;
+import xaero.hud.minimap.MinimapLogs;
+import xaero.hud.minimap.common.config.option.MinimapProfiledConfigOptions;
 import xaero.hud.minimap.info.InfoDisplay;
 import xaero.hud.minimap.info.widget.InfoDisplayCommonWidgetFactories;
 import xaero.hud.minimap.module.MinimapSession;
@@ -12,6 +14,8 @@ import xaero.hud.minimap.waypoint.WaypointColor;
 import xaero.hud.minimap.world.MinimapWorld;
 import xaero.hud.minimap.world.MinimapWorldManager;
 import xaero.lib.common.config.option.value.io.serialization.BuiltInConfigValueIOCodecs;
+
+import java.io.IOException;
 
 public class XaeroMiniMapAccess {
     public static void createWayPoint(int dimensionId, BlockPos pos, String name) {
@@ -26,7 +30,15 @@ public class XaeroMiniMapAccess {
                 WaypointColor.getRandom()
         );
 
-        currentWorld.getCurrentWaypointSet().add(waypoint);
+        boolean front = !session.getModMain().getHudConfigs().getClientConfigManager().getEffective(MinimapProfiledConfigOptions.NEW_WAYPOINTS_TO_BOTTOM);
+
+        currentWorld.getCurrentWaypointSet().add(waypoint, front);
+
+        try {
+            session.getWorldManagerIO().saveWorld(currentWorld);
+        } catch (IOException e) {
+            MinimapLogs.LOGGER.error("suppressed exception", e);
+        }
     }
 
     public static InfoDisplay<Boolean> getSubSeasonInfo() {
