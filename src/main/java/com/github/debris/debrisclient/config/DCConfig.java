@@ -62,6 +62,7 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigBoolean BetterQuickMoving = ofBoolean("更好的物品移动", true, "允许将物品送上工作台");
     public static final ConfigEnum<WheelMovingMode> WheelMoving = ofEnum("滚轮移动", WheelMovingMode.NONE);
     public static final ConfigBoolean BetterSwapHandsKey = ofBoolean("更好的副手键", true, "允许在容器中切换");
+    public static final ConfigBoolean BetterHoldingItem = ofBoolean("更好的物品拿取", true, "自动在关闭容器时将拿取的物品放回物品栏");
     public static final ConfigBoolean AnvilLevelView = ofBoolean("铁砧等级显示", true, "生存可见40级以上");
     public static final ConfigStringList IMBlockerWhiteList = ofStringList("输入法修复白名单", BUILT_IN_SCREENS, "在这些GUI中不会禁用输入法\n建议用按键添加而不是手动编辑");
     public static final ConfigBoolean EnchantPreview = ofBoolean("附魔预览", false, "暂时失效");
@@ -116,7 +117,7 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigHotkey AlignWithEnderEye = ofHotkey("对齐末影之眼", "");
     public static final ConfigHotkey CopyMeasureData = ofHotkey("复制测量数据", "");
     public static final ConfigHotkey AutoPickUp = ofHotkey("自动拾取", "", KeybindSettings.PRESS_ALLOWEXTRA, "ItemPhysic");
-    public static final ConfigHotkey FreeCam = ofHotkey("灵魂出窍", "", "比tweakeroo好在\n玩家不会浮空\n渲染云不会闪烁\n兼容xaero地图");
+    public static final ConfigHotkey FreeCam = ofHotkey("灵魂出窍", "", "比tweakeroo好在\n玩家不会浮空\n渲染云不会闪烁\n兼容更多模组");
     public static final ConfigHotkey HoldAttack = ofHotkey("长按左键", "", "比tweakeroo好在关了会停");
     public static final ConfigHotkey HoldUse = ofHotkey("长按右键", "", "比tweakeroo好在关了会停");
     public static final ConfigHotkey AnvilEnchantPlan = ofHotkey("铁砧附魔规划", "", "手持需附魔物品,将附魔书置于背包\n仅供参考, 不一定最优");
@@ -137,7 +138,7 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigBoolean DisablePotionCore = ofBoolean("禁用药水核心客户端效果", false);
     public static final ConfigBoolean DisableSiren = ofBoolean("禁用塞壬效果", false);
     public static final ConfigBoolean CullRidingEntity = ofBoolean("剔除坐骑渲染", false);
-    public static final ConfigBoolean DisableSignatureWarning = ofBoolean("禁用签名警告", false, "masa系");
+    public static final ConfigBoolean DisableSignatureWarning = ofBoolean("禁用签名警告", true, "masa系");
     public static final ConfigBoolean MuteAnvil = ofBoolean("铁砧静音", false);
     public static final ConfigBoolean MuteAegis = ofBoolean("宙斯盾静音", false);
 
@@ -147,12 +148,16 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigBoolean ListGlowing = ofBoolean("列表发光", true, "需编辑列表配置");
     public static final ConfigBoolean SkipCullingGlowingEntity = ofBoolean("跳过剔除发光实体", true, "EntityCulling");
     public static final ConfigBoolean LibrarianGlowing = ofBoolean("图书管理员发光", false);
-    public static final ConfigBoolean BossGlowing = ofBoolean("Boss发光", false);
+    public static final ConfigBoolean ElderGuardianGlowing = ofBoolean("远古守卫者发光", false);
+    public static final ConfigBoolean BossGlowing = ofBoolean("Boss发光", false, "Lycanites' mobs");
+    public static final ConfigBoolean DragonGlowing = ofBoolean("龙发光(IAF)", false, "Ice and fire");
+    public static final ConfigBoolean SeaSerpentGlowing = ofBoolean("海蟒发光", false);
     public static final ConfigBoolean GoldenWyrmGlowing = ofBoolean("金色书卷龙发光", false);
     public static final ConfigBoolean PixieGlowingFF = ofBoolean("精灵发光(FF)", false, "Familiar Fauna");
     public static final ConfigBoolean PixieGlowingIAF = ofBoolean("精灵发光(IAF)", false, "Ice and fire");
     public static final ConfigBoolean StoneLingGlowing = ofBoolean("石精灵发光", false);
     public static final ConfigBoolean SpectreGlowing = ofBoolean("幽灵发光", false, "Charm");
+    public static final ConfigBoolean BlightMobGlowing = ofBoolean("瘟疫生物发光", false, "Scaling Health");
 
     static {
         VALUE = ImmutableList.of(
@@ -163,6 +168,7 @@ public class DCConfig implements IConfigHandler {
                 BetterQuickMoving,
                 WheelMoving,
                 BetterSwapHandsKey,
+                BetterHoldingItem,
                 AnvilLevelView,
                 IMBlockerWhiteList,
                 EnchantPreview,
@@ -233,12 +239,16 @@ public class DCConfig implements IConfigHandler {
                 ListGlowing,
                 SkipCullingGlowingEntity,
                 LibrarianGlowing,
+                ElderGuardianGlowing,
                 BossGlowing,
+                DragonGlowing,
+                SeaSerpentGlowing,
                 GoldenWyrmGlowing,
                 PixieGlowingFF,
                 PixieGlowingIAF,
                 StoneLingGlowing,
-                SpectreGlowing
+                SpectreGlowing,
+                BlightMobGlowing
         );
         Instance.load();
     }

@@ -79,9 +79,9 @@ public class SectionHandler {
         ((IContainer) playerContainer).dc$setSectionHandler(sectionHandler);
     }
 
-    public static void updateSection(GuiContainer guiContainer) {
+    public static void markDirty(GuiContainer guiContainer) {
         Container container = InventoryUtil.getContainer(guiContainer);
-        ((IContainer) container).dc$setSectionHandler(new SectionHandler(guiContainer));
+        ((IContainer) container).dc$setSectionHandler(null);
     }
 
     public static SectionHandler getSectionHandler() {

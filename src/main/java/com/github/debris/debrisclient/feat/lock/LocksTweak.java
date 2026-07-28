@@ -51,8 +51,8 @@ public class LocksTweak {
     public static GuiBetterButton createButton(GuiContainer gui) {
         return new GuiBetterButton(
                 BUTTON_ID,
-                gui.guiLeft + 40,
-                gui.guiTop - 16,
+                gui.getGuiLeft() + 40,
+                gui.getGuiTop() - 16,
                 30,
                 16,
                 "自动"

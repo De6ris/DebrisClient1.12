@@ -63,6 +63,17 @@ public class AutoReforging {
         }
     }
 
+    public static void renderTooltip(GuiScreen screen, int mouseX, int mouseY) {
+        List<String> tooltip = new ArrayList<>();
+        tooltip.add("右键切换目标颜色:");
+        tooltip.addAll(StringUtil.createOptionListTooltip(DCConfig.ReforgingLevel));
+        screen.drawHoveringText(
+                tooltip,
+                mouseX,
+                mouseY
+        );
+    }
+
     public static void makeConfigComments() {
         if (ModReference.hasMod(ModReference.BOUNTIFULBAUBLES)) {
             List<String> lines = new ArrayList<>();

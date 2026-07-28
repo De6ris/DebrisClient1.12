@@ -12,13 +12,13 @@ import java.util.Comparator;
 
 public enum SortCategory {
     CREATIVE_INVENTORY(SortCategory::compareByCreativeInventory),
-    TRANSLATION_KEY(Comparator.comparing(Item::getTranslationKey)),
-    TRANSLATION_RESULT(Comparator.comparing(StringUtil::translateItem)),
+    TRANSLATION_KEY(Comparator.comparing(ItemStack::getTranslationKey)),
+    TRANSLATION_RESULT(Comparator.comparing(StringUtil::translateItemStack)),
     PINYIN(SortCategory::compareByPinyin);
 
-    private final Comparator<Item> order;// this assumes they are distinct
+    private final Comparator<ItemStack> order;// this assumes they are distinct
 
-    SortCategory(Comparator<Item> order) {
+    SortCategory(Comparator<ItemStack> order) {
         this.order = order;
     }
 
@@ -31,37 +31,38 @@ public enum SortCategory {
      * Thus, if you want a comes before b, you should let a be smaller than b in the comparator.
      * */
     public static Comparator<ItemStack> getItemStackSorter() {
-        Comparator<Item> itemOrderByConfig = getCategory().order;
-        Comparator<ItemStack> itemTypeComparator = (c1, c2) -> {
-            if (ItemStack.areItemsEqual(c1, c2)) {
-                return 0;
-            }
-            return itemOrderByConfig.compare(c1.getItem(), c2.getItem());
-        };
+        Comparator<ItemStack> itemOrderByConfig = getCategory().order;
 
-        return itemTypeComparator
+        return itemOrderByConfig
+                .thenComparing(ItemStack::getDisplayName)
                 .thenComparing(ItemStackComparators.META)
-                .thenComparing(ItemStackComparators.COUNT.reversed())// large stacks come first
                 .thenComparing(ItemStackComparators.SHULKER_BOX)
                 .thenComparing(ItemStackComparators.CHARM_CRATE)
                 .thenComparing(ItemStackComparators.ENCHANTMENT.reversed())// more enchantments come first
-                .thenComparing(ItemStackComparators.DAMAGE)// here damage is lost durability, so lossless items come first
-                .thenComparing(ItemStack::getDisplayName)
+                .thenComparing(ItemStackComparators.WINE_QUALITY.reversed())// better quality come first
+                // 1.12: damage is meta
+//                .thenComparing(ItemStackComparators.DAMAGE)// here damage is lost durability, so lossless items come first
+                .thenComparing(ItemStackComparators.COUNT.reversed())// large stacks come first
                 ;
     }
 
-    private static int compareByCreativeInventory(Item c1, Item c2) {
-        @Nullable CreativeTabs tab1 = c1.getCreativeTab();
-        @Nullable CreativeTabs tab2 = c2.getCreativeTab();
+    private static int compareByCreativeInventory(ItemStack c1, ItemStack c2) {
+        @Nullable CreativeTabs tab1 = c1.getItem().getCreativeTab();
+        @Nullable CreativeTabs tab2 = c2.getItem().getCreativeTab();
+        if (tab1 == null && tab2 == null) return 0;
         if (tab1 == null) return 1;
         if (tab2 == null) return -1;
-        return Integer.compare(tab1.getIndex(), tab2.getIndex());
+        int compare = Integer.compare(tab1.getIndex(), tab2.getIndex());
+        if (compare != 0) return compare;
+        int id1 = Item.REGISTRY.getIDForObject(c1.getItem());
+        int id2 = Item.REGISTRY.getIDForObject(c2.getItem());
+        return Integer.compare(id1, id2);
     }
 
-    private static int compareByPinyin(Item c1, Item c2) {
+    private static int compareByPinyin(ItemStack c1, ItemStack c2) {
         if (PinYinSupport.available()) {
-            String translate1 = StringUtil.translateItem(c1);
-            String translate2 = StringUtil.translateItem(c2);
+            String translate1 = StringUtil.translateItemStack(c1);
+            String translate2 = StringUtil.translateItemStack(c2);
             return PinYinSupport.compareString(translate1, translate2, () -> TRANSLATION_KEY.order.compare(c1, c2));
         }
 

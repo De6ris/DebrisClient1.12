@@ -6,6 +6,7 @@ import com.github.debris.debrisclient.unsafe.mod.*;
 import fi.dy.masa.malilib.config.options.ConfigBoolean;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.monster.EntityElderGuardian;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
@@ -55,11 +56,15 @@ public class EntityGlowing {
     static {
         register(DCConfig.ListGlowing, EntityGlowing::isInList);
         register(DCConfig.LibrarianGlowing, EntityGlowing::isLibrarian);
+        register(DCConfig.ElderGuardianGlowing, entity -> entity instanceof EntityElderGuardian);
         register(DCConfig.BossGlowing, ModReference.LYCANITESMOBS, LycanitesmobsAccess::isBoss);
+        register(DCConfig.DragonGlowing, ModReference.ICEANDFIRE, IceAndFireAccess::isDragon);
+        register(DCConfig.SeaSerpentGlowing, ModReference.ICEANDFIRE, IceAndFireAccess::isSeaSerpent);
         register(DCConfig.GoldenWyrmGlowing, ModReference.DEFILED_LANDS, DefiledLandAccess::isGoldenWyrm);
         register(DCConfig.PixieGlowingFF, ModReference.FAMILIAR_FAUNA, FamiliarFaunaAccess::isPixie);
         register(DCConfig.PixieGlowingIAF, ModReference.ICEANDFIRE, IceAndFireAccess::isPixie);
         register(DCConfig.StoneLingGlowing, ModReference.QUARK, QuarkAccess::isStoneLing);
         register(DCConfig.SpectreGlowing, ModReference.CHARM, CharmAccess::isSpectre);
+        register(DCConfig.BlightMobGlowing, ModReference.SCALING_HEALTH, ScalingHealthAccess::isBlight);
     }
 }

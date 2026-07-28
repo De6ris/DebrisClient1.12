@@ -18,45 +18,45 @@ public class BrewingBarrelTweak {
         if (!ModReference.hasMod(ModReference.RUSTIC)) return false;
         GuiScreen screen = client.currentScreen;
         if (!RusticAccess.isBrewingBarrelGui(screen)) return false;
+
+        takeWineItem();
+
         if (RusticAccess.isOnBrewingProcess(screen)) return false;
 
         ContainerSection inventory = EnumSection.InventoryWhole.get();
-        InventoryTweaks.makeSureNotHoldingItem(inventory);
+        InventoryTweaks.clearCursor(inventory);
 
         takeAuxiliary(screen, inventory);
-        takeWine(screen, inventory);
+        takeWineFluid(screen, inventory);
         putJuice(screen, inventory);
 
         return true;
     }
 
+    private static void takeWineItem() {
+        InventoryUtil.quickMoveIfPossible(EnumSection.BrewingBarrelOutputDown.get().getFirstSlot());
+    }
+
     private static void takeAuxiliary(GuiScreen screen, ContainerSection inventory) {
         Slot up = EnumSection.BrewingBarrelAuxiliaryUp.get().getFirstSlot();
         InventoryUtil.quickMoveIfPossible(up);
-
         Slot down = EnumSection.BrewingBarrelAuxiliaryDown.get().getFirstSlot();
-        if (down.getHasStack()) {
-            if (down.getStack().getItem() == Items.GLASS_BOTTLE) {
-                InventoryUtil.leftClick(down);
-                InventoryUtil.leftClick(up);
-            } else {
-                InventoryUtil.quickMove(down);
-            }
-            return;
-        }
+        InventoryUtil.quickMoveIfPossible(down);
 
         Optional<Float> optional = getAuxiliaryQuality(screen);
         if (!optional.isPresent()) return;
         if (optional.get() >= 1.0F) return;
 
+        if (up.getHasStack()) return;
+
         inventory.findItem(Items.GLASS_BOTTLE).ifPresent(slot -> InventoryUtil.moveOneItem(up, slot));
     }
 
-    private static void takeWine(GuiScreen screen, ContainerSection inventory) {
+    private static void takeWineFluid(GuiScreen screen, ContainerSection inventory) {
         Slot outputUp = EnumSection.BrewingBarrelOutputUp.get().getFirstSlot();
-        Slot outputDown = EnumSection.BrewingBarrelOutputDown.get().getFirstSlot();
         InventoryUtil.quickMoveIfPossible(outputUp);
-        InventoryUtil.quickMoveIfPossible(outputDown);
+
+        if (outputUp.getHasStack()) return;
 
         FluidStack output = RusticAccess.getOutputFluid(screen);
         if (output == null) return;

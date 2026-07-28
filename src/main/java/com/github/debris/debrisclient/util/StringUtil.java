@@ -11,6 +11,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -38,6 +39,10 @@ public class StringUtil {
 
     public static String translateItem(Item item) {
         return translate(item.getTranslationKey() + ".name");
+    }
+
+    public static String translateItemStack(ItemStack stack) {
+        return translate(stack.getTranslationKey() + ".name");
     }
 
     public static String translate(String key) {

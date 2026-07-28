@@ -18,6 +18,6 @@ public abstract class GuiContainerCreativeMixin extends InventoryEffectRenderer 
 
     @Inject(method = "setCurrentCreativeTab", at = @At("RETURN"))
     private void update(CreativeTabs par1CreativeTabs, CallbackInfo ci) {
-        SectionHandler.updateSection(this);
+        SectionHandler.markDirty(this);
     }
 }

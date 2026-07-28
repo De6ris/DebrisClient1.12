@@ -6,7 +6,6 @@ import com.github.debris.debrisclient.util.EnchantUtil;
 import com.github.debris.debrisclient.util.StringUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Items;
@@ -19,12 +18,11 @@ import java.util.List;
 import java.util.Map;
 
 public class TooltipListener {
-    private static final KeyBinding SNEAK = Minecraft.getMinecraft().gameSettings.keyBindSneak;
 
     @SubscribeEvent
     public static void onItemTooltip(ItemTooltipEvent event) {
         if (!DCConfig.ExtraTooltip.getBooleanValue()) return;
-        if (!GameSettings.isKeyDown(SNEAK)) return;
+        if (!GameSettings.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindSneak)) return;
 
         ItemStack itemStack = event.getItemStack();
         if (itemStack.isEmpty()) return;

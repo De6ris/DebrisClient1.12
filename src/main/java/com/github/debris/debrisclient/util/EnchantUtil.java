@@ -2,6 +2,7 @@ package com.github.debris.debrisclient.util;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentData;
 
 import java.util.HashMap;
 import java.util.List;
@@ -51,5 +52,12 @@ public class EnchantUtil {
     public static Enchantment getFirstEnchantment(Map<Enchantment, Integer> enchantments) {
         assert !enchantments.isEmpty();
         return enchantments.entrySet().stream().findFirst().get().getKey();
+    }
+
+    public static EnchantmentData getFirstEnchantmentData(Map<Enchantment, Integer> enchantments) {
+        assert !enchantments.isEmpty();
+        return enchantments.entrySet().stream()
+                .map(x -> new EnchantmentData(x.getKey(), x.getValue()))
+                .findFirst().get();
     }
 }

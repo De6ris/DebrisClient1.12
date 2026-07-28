@@ -26,7 +26,7 @@ public class XaeroMiniMapAccess {
 
         Waypoint waypoint = new Waypoint(pos.getX(), pos.getY(), pos.getZ(),
                 name,
-                name.isEmpty() ? "X" : name.substring(0, 1),
+                name.isEmpty() ? "X" : name.substring(0, 2),
                 WaypointColor.getRandom()
         );
 

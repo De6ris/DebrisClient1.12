@@ -8,12 +8,7 @@ import com.github.debris.debrisclient.util.Predicates;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.entity.item.EntityEnderEye;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.MovementInput;
 import net.minecraft.util.math.AxisAlignedBB;
 
 import java.awt.*;
@@ -104,23 +99,7 @@ public class MiscFeat {
         return true;
     }
 
-    public static void runAutoPickUp(Minecraft client) {
-        EntityPlayerSP player = client.player;
-        if (DCConfig.StrictMode.getBooleanValue()) {
-            MovementInput movementInput = player.movementInput;
-            if (movementInput.moveForward != 0 || movementInput.moveStrafe != 0) return;// avoid jitter
-        }
-        PlayerControllerMP playerController = client.playerController;
-        double reach = player.getEntityAttribute(EntityPlayer.REACH_DISTANCE).getAttributeValue();
-        AxisAlignedBB box = player.getEntityBoundingBox().grow(reach);
-        List<EntityItem> entityItems = client.world.getEntitiesWithinAABB(EntityItem.class, box);
-        if (entityItems.isEmpty()) return;
-        float yaw = player.rotationYaw;
-        float pitch = player.rotationPitch;
-        entityItems.forEach(x -> {
-            PlayerRotation.lookAtEntity(player, x);
-            playerController.interactWithEntity(player, x, EnumHand.MAIN_HAND);
-        });
-        PlayerRotation.lookAtAngles(player, yaw, pitch);
+    public static boolean debug(Minecraft client) {
+        return false;
     }
 }

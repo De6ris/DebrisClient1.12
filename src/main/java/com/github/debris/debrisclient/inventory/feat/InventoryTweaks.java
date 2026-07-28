@@ -10,13 +10,12 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import org.lwjgl.input.Mouse;
 
 import java.util.Optional;
 
 public class InventoryTweaks {
     // try to put held item to this section, if fail then drop
-    public static void makeSureNotHoldingItem(ContainerSection section) {
+    public static void clearCursor(ContainerSection section) {
         ItemStack heldStack = InventoryUtil.getHeldStack();
         if (InventoryUtil.isEmpty(heldStack)) return;
         Optional<Slot> mergeSlot = section.absorbsOneScroll(heldStack);
@@ -59,20 +58,22 @@ public class InventoryTweaks {
                 ItemStack template = InventoryUtil.getStack(slot).copy();
                 ContainerSection section = SectionHandler.getSection(slot);
                 section = expandSectionIfPossible(section);
-                section.predicateRun(ItemUtil.predicateIDMeta(template), InventoryUtil::quickMove);
+                section.predicateRun(ItemUtil.predicateIDNBT(template), InventoryUtil::quickMove);
             }
         });
     }
 
-    public static void tryThrowSimilar() {
-        InventoryUtil.getSlotMouseOver().ifPresent(slot -> {
+    public static boolean tryThrowSimilar() {
+        Optional<Slot> optional = InventoryUtil.getSlotMouseOver();
+        optional.ifPresent(slot -> {
             if (InventoryUtil.hasItem(slot)) {
                 ItemStack template = InventoryUtil.getStack(slot).copy();
                 ContainerSection section = SectionHandler.getSection(slot);
                 section = expandSectionIfPossible(section);
-                section.predicateRun(ItemUtil.predicateIDMeta(template), InventoryUtil::dropStack);
+                section.predicateRun(ItemUtil.predicateIDNBT(template), InventoryUtil::dropStack);
             }
         });
+        return optional.isPresent();
     }
 
     public static boolean tryThrowSection() {

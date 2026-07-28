@@ -43,12 +43,12 @@ public class EntityRendererMixin {
 
     @Inject(method = "renderWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/EntityRenderer;getMouseOver(F)V", shift = At.Shift.AFTER))
     private void preRenderWorld(float partialTicks, long finishTimeNano, CallbackInfo ci) {
-        FreeCam.preRenderWorld(this.mc);
+        FreeCam.preRender(this.mc);
     }
 
     @Inject(method = "renderWorld", at = @At("RETURN"))
     private void postRenderWorld(float partialTicks, long finishTimeNano, CallbackInfo ci) {
-        FreeCam.postRenderWorld(this.mc);
+        FreeCam.postRender(this.mc);
     }
 
     @ModifyReceiver(method = "updateCameraAndRender", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityPlayerSP;turn(FF)V"))

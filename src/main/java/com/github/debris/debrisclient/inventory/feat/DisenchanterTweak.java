@@ -16,7 +16,7 @@ public class DisenchanterTweak {
         GuiScreen screen = client.currentScreen;
         if (!DisenchanterAccess.isDisenchantmentGUI(screen)) return false;
 
-        InventoryTweaks.makeSureNotHoldingItem(EnumSection.InventoryWhole.get());
+        InventoryTweaks.clearCursor(EnumSection.InventoryWhole.get());
         tryAddBook();
         tryDisenchant();
         tryRemoveResidue();

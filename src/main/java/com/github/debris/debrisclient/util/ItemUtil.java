@@ -22,16 +22,16 @@ public class ItemUtil {
         return ItemStack.areItemsEqual(itemStack, other);
     }
 
-    public static boolean compareMeta(ItemStack itemStack, ItemStack other) {
-        return itemStack.getMetadata() == other.getMetadata();
+    public static boolean compareNBT(ItemStack itemStack, ItemStack other) {
+        return ItemStack.areItemStackShareTagsEqual(itemStack, other);
     }
 
-    public static boolean compareIDMeta(ItemStack itemStack, ItemStack other) {
-        return compareID(itemStack, other) && compareMeta(itemStack, other);
+    public static boolean compareIDNBT(ItemStack itemStack, ItemStack other) {
+        return compareID(itemStack, other) && compareNBT(itemStack, other);
     }
 
-    public static Predicate<ItemStack> predicateIDMeta(ItemStack template) {
-        return x -> compareIDMeta(x, template);
+    public static Predicate<ItemStack> predicateIDNBT(ItemStack template) {
+        return x -> compareIDNBT(x, template);
     }
 
     public static boolean isFullStack(ItemStack itemStack) {
@@ -40,7 +40,7 @@ public class ItemUtil {
 
     public static boolean canMerge(ItemStack to, ItemStack from) {
         if (isFullStack(to)) return false;// full slot can not merge
-        return compareIDMeta(to, from);
+        return compareIDNBT(to, from);
     }
 
     public static List<ItemStack> filterNonEmpty(List<ItemStack> list) {

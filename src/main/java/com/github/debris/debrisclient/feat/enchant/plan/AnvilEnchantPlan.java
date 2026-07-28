@@ -16,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,9 +25,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class AnvilEnchantPlan {
-    static final Enchantment UPGRADED_POTENTIALS = Enchantment.REGISTRY.getObject(
-            new ResourceLocation("somanyenchantments", "upgradedpotentials")
-    );
+    @Nullable
+    static final Enchantment UPGRADED_POTENTIALS = findUpgrade();
     private static final Logger LOGGER = LogManager.getLogger(AnvilEnchantPlan.class);
 
     public static boolean run(Minecraft client) {
@@ -159,6 +159,20 @@ public class AnvilEnchantPlan {
 
     private static void actionBar(String message) {
         ChatUtil.setActionBar("铁砧附魔规划: " + message);
+    }
+
+    @SuppressWarnings("RedundantIfStatement")
+    @Nullable
+    private static Enchantment findUpgrade() {
+        Enchantment enchantment = Enchantment.REGISTRY.getObject(
+                new ResourceLocation("somanyenchantments", "upgradedpotentials")
+        );
+        if (enchantment != null) return enchantment;// sme 1.0.0+
+        enchantment = Enchantment.REGISTRY.getObject(
+                new ResourceLocation("somanyenchantments", "upgrade")
+        );
+        if (enchantment != null) return enchantment;// sme 1.0.0-
+        return null;
     }
 
     private static boolean isUpgrade(ItemStack book) {

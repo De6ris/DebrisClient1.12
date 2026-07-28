@@ -29,7 +29,7 @@ public class FreeCam {
     public static void clear(Minecraft client) {
         if (STATE) {
             disable(client);
-            STATE = !STATE;
+            STATE = false;
         }
     }
 
@@ -76,14 +76,14 @@ public class FreeCam {
         return camera;
     }
 
-    public static void preRenderWorld(Minecraft client) {
+    public static void preRender(Minecraft client) {
         if (STATE) {
             cameraCache = client.getRenderViewEntity();
             client.setRenderViewEntity(freeCamera);
         }
     }
 
-    public static void postRenderWorld(Minecraft client) {
+    public static void postRender(Minecraft client) {
         if (STATE) {
             client.setRenderViewEntity(cameraCache);
         }

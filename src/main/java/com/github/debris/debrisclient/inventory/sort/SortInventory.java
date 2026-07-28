@@ -42,7 +42,7 @@ public class SortInventory {
 
     public static boolean trySort(ContainerSection section) {
         int before = InventoryUtil.getChangeCount();
-        InventoryTweaks.makeSureNotHoldingItem(section);
+        InventoryTweaks.clearCursor(section);
         sortInternal(section);
         int after = InventoryUtil.getChangeCount();
         return after != before;// seen as sort success

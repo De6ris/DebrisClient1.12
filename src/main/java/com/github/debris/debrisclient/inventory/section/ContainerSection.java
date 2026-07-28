@@ -4,6 +4,7 @@ package com.github.debris.debrisclient.inventory.section;
 import com.github.debris.debrisclient.util.InventoryUtil;
 import com.github.debris.debrisclient.util.ItemUtil;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -119,7 +120,7 @@ public class ContainerSection {
     }
 
     public Optional<Slot> findItem(ItemStack itemStack) {
-        return this.findItem(x -> ItemUtil.compareIDMeta(x, itemStack));
+        return this.findItem(x -> ItemUtil.compareIDNBT(x, itemStack));
     }
 
     public Optional<Slot> findItem(Item item) {
@@ -244,6 +245,10 @@ public class ContainerSection {
         builder.addAll(this.slots);
         builder.addAll(other.slots);
         return new ContainerSection(builder.build());
+    }
+
+    public ContainerSection reverse() {
+        return new ContainerSection(Lists.reverse(this.slots));
     }
 
     public boolean isOf(EnumSection section) {

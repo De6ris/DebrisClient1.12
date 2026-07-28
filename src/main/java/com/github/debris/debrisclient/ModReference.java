@@ -25,6 +25,7 @@ public class ModReference {
     public static final String QUARK = "quark";
     public static final String RETRO_SOPHISTICATED_BACKPACKS = "retro_sophisticated_backpacks";
     public static final String RUSTIC = "rustic";
+    public static final String SCALING_HEALTH = "scalinghealth";
     public static final String SERENE_SEASONS = "sereneseasons";
     public static final String TWEAKEROO = "tweakeroo";
     public static final String WAYSTONES = "waystones";

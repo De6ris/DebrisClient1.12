@@ -63,6 +63,7 @@ dependencies {
     compileOnly rfg.deobf("curse.maven:familiar-fauna-${familiar_fauna_version}")
     compileOnly rfg.deobf("curse.maven:locks-${locks_version}")
     compileOnly rfg.deobf("curse.maven:serene-seasons-${serene_version}")
+    compileOnly rfg.deobf("curse.maven:scaling-health-${scalinghealth_version}")
 
 
     // extra dependencies

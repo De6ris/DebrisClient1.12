@@ -1,6 +1,5 @@
 package com.github.debris.debrisclient.modmixins.waystones;
 
-import com.github.debris.debrisclient.config.DCConfig;
 import com.github.debris.debrisclient.feat.FastWaypoint;
 import net.blay09.mods.waystones.client.gui.GuiWaystoneList;
 import net.blay09.mods.waystones.util.WaystoneEntry;
@@ -25,8 +24,8 @@ public class GuiWaystoneListMixin extends GuiScreen {
                     remap = false),
             remap = true)
     private void addButton(CallbackInfo ci) {
-        if (DCConfig.FastWaypoint.getBooleanValue()) {
-            this.buttonList.add(FastWaypoint.createButton());
+        if (FastWaypoint.isActive()) {
+            this.buttonList.add(FastWaypoint.createButtonWaystone(this));
         }
     }
 

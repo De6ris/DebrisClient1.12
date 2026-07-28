@@ -16,16 +16,16 @@ import net.minecraft.util.EnumHand;
 import java.util.Optional;
 
 public class BetterSwapHands {
-    public static void run(GuiContainer guiContainer) {
+    public static boolean run(GuiContainer guiContainer) {
         Optional<Slot> optional = InventoryUtil.getSlotMouseOver();
-        if (!optional.isPresent()) return;
+        if (!optional.isPresent()) return false;
         Slot slot = optional.get();
 
         if (guiContainer instanceof GuiInventory) {
-            if (ModReference.hasMod(ModReference.QUARK) && QuarkAccess.isBetterSwapHands()) return;
+            if (ModReference.hasMod(ModReference.QUARK) && QuarkAccess.isBetterSwapHands()) return false;
             Slot offHand = EnumSection.OffHand.get().getFirstSlot();
             InventoryUtil.swapSlots(slot, offHand);
-            return;
+            return true;
         }
 
         // set items client side
@@ -45,5 +45,7 @@ public class BetterSwapHands {
             InteractionUtil.swapHands();
             InventoryUtil.swapHotBar(slot, hotBar);
         }
+
+        return true;
     }
 }

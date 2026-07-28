@@ -3,7 +3,6 @@ package com.github.debris.debrisclient.modmixins.qualitytools;
 import com.github.debris.debrisclient.config.DCConfig;
 import com.github.debris.debrisclient.gui.button.GuiBetterButton;
 import com.github.debris.debrisclient.inventory.feat.AutoReforging;
-import com.google.common.collect.ImmutableList;
 import com.tmtravlr.qualitytools.reforging.GuiReforgingStation;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -14,8 +13,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import javax.annotation.Nullable;
+
 @Mixin(value = GuiReforgingStation.class, remap = false)
 public abstract class GuiReforgingStationMixin extends GuiContainer {
+    @Nullable
     @Unique
     private GuiButton autoButton;
 
@@ -46,18 +48,11 @@ public abstract class GuiReforgingStationMixin extends GuiContainer {
         }
     }
 
-    @Inject(method = "drawScreen", at = @At("RETURN"))
+    @Inject(method = "drawScreen", at = @At("RETURN"), remap = true)
     private void renderTooltip(int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
         // is "mouse over" in fact
-        if (this.autoButton.mousePressed(this.mc, mouseX, mouseY)) {
-            this.drawHoveringText(
-                    ImmutableList.of(
-                            "右键切换目标颜色:",
-                            DCConfig.ReforgingLevel.getOptionListValue().getDisplayName()
-                    ),
-                    mouseX,
-                    mouseY
-            );
+        if (this.autoButton != null && this.autoButton.mousePressed(this.mc, mouseX, mouseY)) {
+            AutoReforging.renderTooltip(this, mouseX, mouseY);
         }
     }
 }
