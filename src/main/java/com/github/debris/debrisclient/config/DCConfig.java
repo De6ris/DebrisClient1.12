@@ -57,7 +57,7 @@ public class DCConfig implements IConfigHandler {
 
     public static final ConfigBoolean SortingContainersLast = ofBoolean("整理时容器置于末端", true, "潜影盒, 板条箱");
     public static final ConfigBoolean CachedSorting = ofBoolean("整理时使用缓存算法", true, "相比直接操作, 可减少发包");
-    public static final ConfigEnum<SortCategory> ItemSortingOrder = ofEnum("物品整理顺序", SortCategory.CREATIVE_INVENTORY, "1.翻译键顺序\n2.按创造模式物品栏顺序\n3.按翻译后名称顺序\n4.按拼音顺序(需要Rei)");
+    public static final ConfigEnum<SortCategory> ItemSortingOrder = ofEnum("物品整理顺序", SortCategory.CREATIVE_INVENTORY, "1.创造模式物品栏顺序\n2.翻译键顺序\n3.翻译文本顺序\n4.拼音顺序(需要Jech)");
     public static final ConfigBoolean HoldInventoryMoving = ofBoolean("连续物品移动", true, "允许在按下Shift和左键时不断移动物品");
     public static final ConfigBoolean BetterQuickMoving = ofBoolean("更好的物品移动", true, "允许将物品送上工作台");
     public static final ConfigEnum<WheelMovingMode> WheelMoving = ofEnum("滚轮移动", WheelMovingMode.NONE);
@@ -121,6 +121,8 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigHotkey HoldAttack = ofHotkey("长按左键", "", "比tweakeroo好在关了会停");
     public static final ConfigHotkey HoldUse = ofHotkey("长按右键", "", "比tweakeroo好在关了会停");
     public static final ConfigHotkey AnvilEnchantPlan = ofHotkey("铁砧附魔规划", "", "手持需附魔物品,将附魔书置于背包\n仅供参考, 不一定最优");
+    public static final ConfigHotkey FastSearch = ofHotkey("快速搜索", "F", KeybindSettings.GUI, "在RS终端中搜索Jei原料");
+    public static final ConfigHotkey ClearSearch = ofHotkey("清空搜索", "C", KeybindSettings.GUI, "清空RS终端的搜索栏");
 
     public static final ConfigHotkey ModifierMoveAll = ofHotkey("移动全部:修饰键", "SPACE", GUI_RELAXED, "按住时左键会移动当前区域全部");
     public static final ConfigHotkey ModifierSpreadItem = ofHotkey("分散物品:修饰键", "LMENU", GUI_RELAXED, "按住时点击会尝试将手中物品均分到点击区域全部槽位");
@@ -134,6 +136,7 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigBoolean NoReducedDebugInfo = ofBoolean("禁止简化调试信息", false);
     public static final ConfigBoolean DisableNausea = ofBoolean("禁用反胃", false);
     public static final ConfigBoolean DisableBlindness = ofBoolean("禁用失明", false);// TODO why still white fog
+    public static final ConfigBoolean DisableInvisibility = ofBoolean("禁用隐形", false, "不含玩家");
     public static final ConfigBoolean DisableEnhancedVisuals = ofBoolean("禁用增强视觉效果", false);
     public static final ConfigBoolean DisablePotionCore = ofBoolean("禁用药水核心客户端效果", false);
     public static final ConfigBoolean DisableSiren = ofBoolean("禁用塞壬效果", false);
@@ -145,7 +148,6 @@ public class DCConfig implements IConfigHandler {
 
     public static final List<IConfigBase> GLOWS;
 
-    public static final ConfigBoolean ListGlowing = ofBoolean("列表发光", true, "需编辑列表配置");
     public static final ConfigBoolean SkipCullingGlowingEntity = ofBoolean("跳过剔除发光实体", true, "EntityCulling");
     public static final ConfigBoolean LibrarianGlowing = ofBoolean("图书管理员发光", false);
     public static final ConfigBoolean ElderGuardianGlowing = ofBoolean("远古守卫者发光", false);
@@ -158,6 +160,7 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigBoolean StoneLingGlowing = ofBoolean("石精灵发光", false);
     public static final ConfigBoolean SpectreGlowing = ofBoolean("幽灵发光", false, "Charm");
     public static final ConfigBoolean BlightMobGlowing = ofBoolean("瘟疫生物发光", false, "Scaling Health");
+    public static final ConfigBoolean MimicGlowing = ofBoolean("宝箱怪发光", false, "Artifacts");
 
     static {
         VALUE = ImmutableList.of(
@@ -218,6 +221,8 @@ public class DCConfig implements IConfigHandler {
                 HoldAttack,
                 HoldUse,
                 AnvilEnchantPlan,
+                FastSearch,
+                ClearSearch,
                 DebugKey,
                 ModifierMoveAll,
                 ModifierSpreadItem,
@@ -227,6 +232,7 @@ public class DCConfig implements IConfigHandler {
                 NoReducedDebugInfo,
                 DisableNausea,
                 DisableBlindness,
+                DisableInvisibility,
                 DisableEnhancedVisuals,
                 DisablePotionCore,
                 DisableSiren,
@@ -236,7 +242,6 @@ public class DCConfig implements IConfigHandler {
                 MuteAegis
         );
         GLOWS = ImmutableList.of(
-                ListGlowing,
                 SkipCullingGlowingEntity,
                 LibrarianGlowing,
                 ElderGuardianGlowing,
@@ -248,7 +253,8 @@ public class DCConfig implements IConfigHandler {
                 PixieGlowingIAF,
                 StoneLingGlowing,
                 SpectreGlowing,
-                BlightMobGlowing
+                BlightMobGlowing,
+                MimicGlowing
         );
         Instance.load();
     }

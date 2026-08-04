@@ -33,11 +33,14 @@ public class AutoPickUp {
         if (entityItems.isEmpty()) return;
         float yaw = player.rotationYaw;
         float pitch = player.rotationPitch;
-        entityItems.forEach(x -> {
-//            if (!shouldSkip(x.getItem())) return;
-            PlayerRotation.lookAtEntity(player, x);
-            playerController.interactWithEntity(player, x, EnumHand.MAIN_HAND);
-        });
+        entityItems.stream()
+                .filter(player::canEntityBeSeen)
+//                .filter(x -> !shouldSkip(x.getItem()))
+                .limit(10)
+                .forEach(x -> {
+                    PlayerRotation.lookAtEntity(player, x);
+                    playerController.interactWithEntity(player, x, EnumHand.MAIN_HAND);
+                });
         PlayerRotation.lookAtAngles(player, yaw, pitch);
     }
 

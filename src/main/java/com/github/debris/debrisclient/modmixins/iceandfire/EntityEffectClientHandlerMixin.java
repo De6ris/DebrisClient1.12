@@ -16,7 +16,7 @@ public class EntityEffectClientHandlerMixin {
                     remap = false),
             remap = false)
     private static boolean disable(IEntityEffectCapability instance, Operation<Boolean> original) {
-        if (DCConfig.DisableSiren.getBooleanValue()) return true;
+        if (DCConfig.DisableSiren.getBooleanValue()) return false;
         return original.call(instance);
     }
 }

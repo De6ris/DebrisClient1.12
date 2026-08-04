@@ -113,6 +113,7 @@ repositories {
 
     maven { url = 'https://www.cursemaven.com' }
     maven { url = 'https://masa.dy.fi/maven' }
+    maven { url = 'https://modmaven.dev' }
 }
 
 dependencies {

@@ -88,7 +88,7 @@ public class InputListener implements IKeybindProvider, IMouseInputHandler, IKey
                 }
             }
 
-            if (DCConfig.HoldInventoryMoving.getBooleanValue() && HoldInventoryMoving.start()) {
+            if (DCConfig.HoldInventoryMoving.getBooleanValue() && !HoldInventoryMoving.isUnsafe(InventoryUtil.getGuiContainer()) && HoldInventoryMoving.start()) {
                 return true;
             }
         }

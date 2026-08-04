@@ -34,6 +34,7 @@ dependencies {
     // Include OSXNarratorBlocker by default for the dev env, for M1+ Macs
     runtimeOnly 'com.cleanroommc:osxnarratorblocker:1.0'
 
+    implementation rfg.deobf("mezz.jei:jei_1.12.2:4.16.1.1013")
 
     compileOnly rfg.deobf("curse.maven:fermiumbooter-${fermiumbooter_version}")
 
@@ -46,7 +47,7 @@ dependencies {
     compileOnly rfg.deobf("curse.maven:inventory-tweaks-${inventory_tweaks_version}")
     compileOnly rfg.deobf("curse.maven:creativecore-${creativecore_version}")
     compileOnly rfg.deobf("curse.maven:enhancedvisuals-${enhancedvisuals_version}")
-    implementation rfg.deobf("curse.maven:jei-${jei_version}")
+//    implementation rfg.deobf("curse.maven:jei-${jei_version}")
     compileOnly rfg.deobf("curse.maven:potioncore-${potioncore_version}")
     compileOnly rfg.deobf("curse.maven:quark-${quark_version}")
     compileOnly rfg.deobf("curse.maven:charm-${charm_version}")
@@ -75,6 +76,7 @@ dependencies {
     implementation rfg.deobf("curse.maven:advanced-xray-${advancedxray_version}")
     implementation rfg.deobf("curse.maven:hwyla-${hwyla_version}")
 //    implementation rfg.deobf("curse.maven:modularui-${modularui_version}")//can not find
+    compileOnly rfg.deobf("curse.maven:morerefinedstorage-${morerefinedstorage_version}")
 
     implementation(rfg.deobf("fi.dy.masa.malilib:malilib-forge-1.12.2:${malilib_version}")) {
         exclude group: '*', module: '*'

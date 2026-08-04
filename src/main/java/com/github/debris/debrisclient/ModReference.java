@@ -3,6 +3,7 @@ package com.github.debris.debrisclient;
 import net.minecraftforge.fml.common.Loader;
 
 public class ModReference {
+    public static final String ARTIFACTS = "artifacts";
     public static final String BAUBLES = "baubles";
     public static final String BOUNTIFULBAUBLES = "bountifulbaubles";
     public static final String CHARM = "charm";
@@ -23,6 +24,7 @@ public class ModReference {
     public static final String MODULARUI = "modularui";
     public static final String QUALITYTOOLS = "qualitytools";
     public static final String QUARK = "quark";
+    public static final String REFINED_STORAGE = "refinedstorage";
     public static final String RETRO_SOPHISTICATED_BACKPACKS = "retro_sophisticated_backpacks";
     public static final String RUSTIC = "rustic";
     public static final String SCALING_HEALTH = "scalinghealth";
