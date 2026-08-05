@@ -58,9 +58,7 @@ public class Callbacks {
             }
         });
 
-        DCConfig.IMBlocker.setValueChangeCallback(configBoolean -> {
-            if (!configBoolean.getBooleanValue()) IMBlocker.enable();
-        });
+        DCConfig.IMBlocker.setValueChangeCallback(IMBlocker::onConfigChange);
 
         DCConfig.AddToIMBlockerWhiteList.getKeybind().setCallback((action, key) -> MiscFeat.addToIMBlockerWhiteList(client));
 

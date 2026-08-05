@@ -113,7 +113,7 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigHotkey AutoContainerOperation = ofHotkey("自动容器操作", "SPACE", KeybindSettings.GUI, "Rustic:酿造桶\nDisenchanter:袪魔台");
     public static final ConfigHotkey ThrowSimilar = ofHotkey("丢出类似", "LSHIFT,Q", KeybindSettings.GUI, "会丢出当前区域类似物品");
     public static final ConfigHotkey ThrowSection = ofHotkey("清空区域", "SPACE,Q", KeybindSettings.GUI, "全部丢出");
-    public static final ConfigHotkey AddToIMBlockerWhiteList = ofHotkey("添加GUI至输入法修复白名单", "", KeybindSettings.GUI, "在GUI中按下");
+    public static final ConfigHotkey AddToIMBlockerWhiteList = ofHotkey("添加GUI至输入法修复白名单", "F5", KeybindSettings.GUI, "在GUI中按下");
     public static final ConfigHotkey AlignWithEnderEye = ofHotkey("对齐末影之眼", "");
     public static final ConfigHotkey CopyMeasureData = ofHotkey("复制测量数据", "");
     public static final ConfigHotkey AutoPickUp = ofHotkey("自动拾取", "", KeybindSettings.PRESS_ALLOWEXTRA, "ItemPhysic");

@@ -3,6 +3,7 @@ package com.github.debris.debrisclient.feat;
 import com.github.debris.debrisclient.config.DCConfig;
 import com.github.debris.debrisclient.unsafe.windows.WindowsImManager;
 import com.google.common.collect.ImmutableList;
+import fi.dy.masa.malilib.config.options.ConfigBoolean;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiScreenBook;
@@ -19,7 +20,8 @@ public class IMBlocker {
             "xaero.common.gui.GuiAddWaypoint",
             "com.xray.gui.manage.GuiBlockListScrollable",
             "com.xray.gui.GuiSelectionScreen",
-            "net.blay09.mods.waystones.client.gui.GuiEditWaystone"
+            "net.blay09.mods.waystones.client.gui.GuiEditWaystone",
+            "vazkii.quark.client.gui.GuiBetterEditSign"
     );
 
     public static boolean isActive() {
@@ -49,15 +51,26 @@ public class IMBlocker {
         if (isActive()) disable();
     }
 
+    public static void onGameFocus() {
+        if (isActive()) disable();
+    }
+
+    public static void onConfigChange(ConfigBoolean configBoolean) {
+        if (VALID && !configBoolean.getBooleanValue()) {
+            IMBlocker.enable();
+        }
+    }
+
+
     /**
      * If true, skip the default behavior, at handle this at {@link GuiScreen#initGui()}
      */
-    public static boolean handleIndividually(@Nullable GuiScreen guiScreenIn) {
+    private static boolean handleIndividually(@Nullable GuiScreen guiScreenIn) {
         if (guiScreenIn instanceof GuiChat) return true;
         return false;
     }
 
-    public static boolean shouldUseIM(GuiScreen guiScreenIn) {
+    private static boolean shouldUseIM(GuiScreen guiScreenIn) {
         if (guiScreenIn == null) return false;
         if (guiScreenIn instanceof GuiScreenBook) return true;
         if (guiScreenIn instanceof GuiEditSign) return true;
@@ -65,7 +78,7 @@ public class IMBlocker {
         return false;
     }
 
-    public static void setState(boolean state) {
+    private static void setState(boolean state) {
         if (state) {
             enable();
         } else {
@@ -73,13 +86,13 @@ public class IMBlocker {
         }
     }
 
-    public static void enable() {
+    private static void enable() {
         if (OS_TYPE.isWindows()) {
             WindowsImManager.makeOn();
         }
     }
 
-    public static void disable() {
+    private static void disable() {
         if (OS_TYPE.isWindows()) {
             WindowsImManager.makeOff();
         }
@@ -89,7 +102,7 @@ public class IMBlocker {
         return Mode.ENGLISH;// TODO
     }
 
-    public static void switchMode() {
+    private static void switchMode() {
         if (getMode() == Mode.ENGLISH) {
             switchToChinese();
         } else {
@@ -97,13 +110,13 @@ public class IMBlocker {
         }
     }
 
-    public static void switchToEnglish() {
+    private static void switchToEnglish() {
         if (OS_TYPE.isWindows()) {
             WindowsImManager.switchToEnglish();
         }
     }
 
-    public static void switchToChinese() {
+    private static void switchToChinese() {
         if (OS_TYPE.isWindows()) {
             WindowsImManager.switchToChinese();
         }
