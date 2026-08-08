@@ -24,11 +24,14 @@ public class XaeroMiniMapAccess {
         MinimapWorld currentWorld = waypointsManager.getCurrentWorld();
         if (currentWorld == null) return;
 
-        Waypoint waypoint = new Waypoint(pos.getX(), pos.getY(), pos.getZ(),
-                name,
-                name.isEmpty() ? "X" : name.substring(0, 2),
-                WaypointColor.getRandom()
-        );
+        String initials;
+        if (name.isEmpty()) {
+            initials = "X";
+        } else {
+            initials = name.length() > 2 ? name.substring(0, 2) : name;
+        }
+
+        Waypoint waypoint = new Waypoint(pos.getX(), pos.getY(), pos.getZ(), name, initials, WaypointColor.getRandom());
 
         boolean front = !session.getModMain().getHudConfigs().getClientConfigManager().getEffective(MinimapProfiledConfigOptions.NEW_WAYPOINTS_TO_BOTTOM);
 
