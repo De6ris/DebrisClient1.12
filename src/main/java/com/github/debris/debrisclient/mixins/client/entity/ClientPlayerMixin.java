@@ -12,7 +12,6 @@ import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.potion.Potion;
 import net.minecraft.stats.RecipeBook;
 import net.minecraft.stats.StatisticsManager;
-import net.minecraft.util.Session;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

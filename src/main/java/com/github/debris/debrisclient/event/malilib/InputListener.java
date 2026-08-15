@@ -66,7 +66,6 @@ public class InputListener implements IKeybindProvider, IMouseInputHandler, IKey
         return false;
     }
 
-    @SuppressWarnings("RedundantIfStatement")
     public boolean handleButtonDown(int eventButton) {
         if (eventButton == 0) {
 

@@ -6,7 +6,6 @@ import com.github.debris.debrisclient.util.EnchantUtil;
 import com.github.debris.debrisclient.util.ItemUtil;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 
 import java.util.Comparator;
@@ -63,8 +62,8 @@ public class ItemStackComparators {
     }
 
     private static int compareEnchantment(ItemStack c1, ItemStack c2) {
-        Map<Enchantment, Integer> map1 = EnchantmentHelper.getEnchantments(c1);
-        Map<Enchantment, Integer> map2 = EnchantmentHelper.getEnchantments(c2);
+        Map<Enchantment, Integer> map1 = EnchantUtil.getEnchantments(c1);
+        Map<Enchantment, Integer> map2 = EnchantUtil.getEnchantments(c2);
         int compare = Integer.compare(map1.size(), map2.size());
         if (compare != 0) return compare;
         if (map1.size() != 1) return 0;

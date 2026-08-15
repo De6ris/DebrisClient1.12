@@ -1,4 +1,4 @@
-package com.github.debris.debrisclient.mixins.client;
+package com.github.debris.debrisclient.mixins.client.resources;
 
 import com.github.debris.debrisclient.config.DCConfig;
 import net.minecraft.client.resources.Locale;

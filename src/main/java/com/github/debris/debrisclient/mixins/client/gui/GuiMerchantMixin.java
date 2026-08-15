@@ -35,6 +35,7 @@ public abstract class GuiMerchantMixin extends GuiContainer {
     private void onInit(CallbackInfo ci) {
         if (FastWaypoint.isActive()) {
             this.fastWaypoint = FastWaypoint.createButtonVillager(this);
+            this.fastWaypoint.visible = false;
             this.addButton(this.fastWaypoint);
         }
     }

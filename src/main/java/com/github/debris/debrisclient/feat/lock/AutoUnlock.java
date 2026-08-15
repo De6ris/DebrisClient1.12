@@ -6,7 +6,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 public class AutoUnlock {
     private static boolean active = false;
 
-    private static int tryingIndex = -1;
+    private static int tryingIndex = LocksTweak.UNKNOWN;
     private static boolean[] triedPins = null;
 
     public static void enable() {
@@ -15,6 +15,11 @@ public class AutoUnlock {
 
     public static void disable() {
         active = false;
+    }
+
+    public static void clear() {
+        tryingIndex = LocksTweak.UNKNOWN;
+        triedPins = null;
     }
 
     public static void onPin(GuiContainer gui, int currPin, boolean correct, boolean reset) {
@@ -35,27 +40,27 @@ public class AutoUnlock {
 
         int order = password[index];
         int destination;
-        if (order == -1) {
+        if (order == LocksTweak.UNKNOWN) {
             destination = findNear(pins, currentPin, index);
         } else {
             destination = order;
         }
 
-        if (destination == -1) {
-            // Impossible case
+        if (destination == LocksTweak.UNKNOWN) {
+            // Impossible case, but I keep it
             return;
         }
         pin(gui, currentPin, destination);
     }
 
     private static int findNear(boolean[] pins, int currentPin, int index) {
-        if (tryingIndex != index) {
+        if (tryingIndex != index || triedPins == null || triedPins.length != pins.length) {
             // update
             triedPins = new boolean[pins.length];
             tryingIndex = index;
         }
 
-        int destination = -1;
+        int destination = LocksTweak.UNKNOWN;
         int near = Integer.MAX_VALUE;
         for (int pin = 0; pin < pins.length; pin++) {
             if (pins[pin]) continue;// done
@@ -81,5 +86,4 @@ public class AutoUnlock {
         }
         LocksAccess.moveLeft(gui);
     }
-
 }

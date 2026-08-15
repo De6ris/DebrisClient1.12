@@ -2,6 +2,7 @@ package com.github.debris.debrisclient.unsafe.baubles;
 
 import com.github.debris.debrisclient.config.DCConfig;
 import com.github.debris.debrisclient.feat.QualityColor;
+import com.github.debris.debrisclient.feat.QualityLevel;
 import com.github.debris.debrisclient.inventory.section.EnumSection;
 import com.github.debris.debrisclient.unsafe.mod.QualityToolsAccess;
 import com.github.debris.debrisclient.util.StringUtil;
@@ -34,12 +35,12 @@ public class QualityToolsReforgingTask extends AbstractReforgingTask {
     @SuppressWarnings("RedundantIfStatement")
     @Override
     protected boolean isGoodTag(NBTTagCompound tag) {
-        QualityColor target = DCConfig.ReforgingLevel.getEnumValue();
-        if (target != QualityColor.NO_COLOR) {
+        QualityLevel targetLevel = DCConfig.ReforgingLevel.getEnumValue();
+        if (targetLevel != QualityLevel.NO_LEVEL) {
             String color = tag.getString("Color");
-            QualityColor present = QualityColor.parse(color);
-
-            if (present.betterOrEqual(target)) return true;
+            QualityColor present = QualityColor.fromString((color));
+            if (present == QualityColor.UNKNOWN) return true;
+            if (targetLevel.matches(present)) return true;
         }
 
         String name = tag.getString("Name");

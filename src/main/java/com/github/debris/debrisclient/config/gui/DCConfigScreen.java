@@ -54,7 +54,12 @@ public class DCConfigScreen extends GuiConfigsBase {
         List<IConfigBase> mutable = new ArrayList<>(DCConfig.INTEGRATION);
         if (!ModReference.hasMod(ModReference.FORGOTTENITEMS)) mutable.remove(DCConfig.RuneTweak);
         if (!ModReference.hasMod(ModReference.XRAY)) mutable.remove(DCConfig.XRayAutoColorSelection);
-        if (!ModReference.hasMod(ModReference.XAERO_MINI_MAP)) mutable.remove(DCConfig.FastWaypoint);
+        if (!ModReference.hasMod(ModReference.XAERO_MINI_MAP)) {
+            mutable.remove(DCConfig.FastWaypoint);
+        }
+        if (!ModReference.hasMod(ModReference.XAERO_WORLD_MAP)) {
+            mutable.remove(DCConfig.XaeroTranslateBiome);
+        }
         if (!ModReference.hasMod(ModReference.QUALITYTOOLS) || !ModReference.hasMod(ModReference.BOUNTIFULBAUBLES)) {
             mutable.remove(DCConfig.AutoReforging);
             mutable.remove(DCConfig.ReforgingLevel);

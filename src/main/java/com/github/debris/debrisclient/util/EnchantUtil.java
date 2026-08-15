@@ -3,6 +3,8 @@ package com.github.debris.debrisclient.util;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.item.ItemStack;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +12,13 @@ import java.util.Map;
 
 public class EnchantUtil {
     private static final Map<Enchantment, List<Enchantment>> CONFLICT_CACHE = new HashMap<>();
+
+    public static Map<Enchantment, Integer> getEnchantments(ItemStack stack) {
+        Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(stack);
+        // can be null if mod changed
+        map.remove(null);
+        return map;
+    }
 
     public static int calculateEnchantmentCost(Map<Enchantment, Integer> map) {
         int ret = 0;
@@ -59,5 +68,27 @@ public class EnchantUtil {
         return enchantments.entrySet().stream()
                 .map(x -> new EnchantmentData(x.getKey(), x.getValue()))
                 .findFirst().get();
+    }
+
+    public static int getLevelForExperience(int targetXp) {
+        int level = 0;
+
+        while (true) {
+            int xpToNextLevel = getXpToNextLevel(level);
+            if (targetXp < xpToNextLevel) {
+                return level;
+            }
+
+            ++level;
+            targetXp -= xpToNextLevel;
+        }
+    }
+
+    public static int getXpToNextLevel(int level) {
+        if (level >= 30) {
+            return 112 + (level - 30) * 9;
+        } else {
+            return level >= 15 ? 37 + (level - 15) * 5 : 7 + level * 2;
+        }
     }
 }

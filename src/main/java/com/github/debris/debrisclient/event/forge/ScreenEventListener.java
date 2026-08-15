@@ -1,7 +1,6 @@
 package com.github.debris.debrisclient.event.forge;
 
 import com.github.debris.debrisclient.ModReference;
-import com.github.debris.debrisclient.config.DCConfig;
 import com.github.debris.debrisclient.feat.lock.LocksTweak;
 import com.github.debris.debrisclient.inventory.feat.InventoryTweaks;
 import com.github.debris.debrisclient.unsafe.mod.LocksAccess;
@@ -14,7 +13,7 @@ public class ScreenEventListener {
     @SubscribeEvent
     public static void onInitGui(GuiScreenEvent.InitGuiEvent.Post event) {
         GuiScreen gui = event.getGui();
-        if (DCConfig.LocksTweak.getBooleanValue() && ModReference.hasMod(ModReference.LOCKS) && LocksAccess.isLockPickingScreen(gui)) {
+        if (LocksTweak.active() && ModReference.hasMod(ModReference.LOCKS) && LocksAccess.isLockPickingScreen(gui)) {
             event.getButtonList().add(LocksTweak.createButton((GuiContainer) gui));
         }
     }

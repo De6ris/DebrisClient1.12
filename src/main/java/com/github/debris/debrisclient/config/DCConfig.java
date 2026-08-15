@@ -3,6 +3,7 @@ package com.github.debris.debrisclient.config;
 import com.github.debris.debrisclient.DebrisClient;
 import com.github.debris.debrisclient.config.options.ConfigEnum;
 import com.github.debris.debrisclient.feat.QualityColor;
+import com.github.debris.debrisclient.feat.QualityLevel;
 import com.github.debris.debrisclient.inventory.feat.WheelMovingMode;
 import com.github.debris.debrisclient.inventory.sort.SortCategory;
 import com.google.common.collect.ImmutableList;
@@ -66,7 +67,7 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigBoolean AnvilLevelView = ofBoolean("铁砧等级显示", true, "生存可见40级以上");
     public static final ConfigStringList IMBlockerWhiteList = ofStringList("输入法修复白名单", BUILT_IN_SCREENS, "在这些GUI中不会禁用输入法\n建议用按键添加而不是手动编辑");
     public static final ConfigBoolean EnchantPreview = ofBoolean("附魔预览", false, "暂时失效");
-    public static final ConfigBoolean ExtraTooltip = ofBoolean("额外物品提示", true, "需按Shift查看,有以下功能\n附魔书成本,铁砧惩罚,附魔冲突");
+    public static final ConfigBoolean ExtraTooltip = ofBoolean("额外物品提示", true, "需按Shift查看,有以下功能\n附魔书成本,铁砧惩罚,附魔冲突,经验书折合");
 
 
     public static final List<IConfigBase> INTEGRATION;
@@ -82,12 +83,13 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigBoolean XRayAutoColorSelection = ofBoolean("XRay自动取色", true, "");
     public static final ConfigBoolean FastWaypoint = ofBoolean("快速路径点", false, "xaero路径点: 在指路石和村民GUI添加按钮以快速创建");
     public static final ConfigBoolean AutoReforging = ofBoolean("自动重铸功能", false, "baubles&quality tools: 在GUI中添加按钮");
-    public static final ConfigEnum<QualityColor> ReforgingLevel = ofEnum("自动重铸等级:工具品质", QualityColor.BLUE, "其中金色与淡紫色同级\n无颜色表示仅允许白名单");
+    public static final ConfigEnum<QualityLevel> ReforgingLevel = ofEnum("自动重铸等级:工具品质", QualityLevel.BLUE, "其中金色与淡紫色同级");
     public static final ConfigStringList ReforgingWhiteListQT = ofStringList("自动重铸白名单:工具品质", ImmutableList.of("healthy", "quality.lucky.name"), "可查阅语言文件");
     public static final ConfigStringList ReforgingWhiteListBB = ofStringList("自动重铸白名单:丰富的饰品", ImmutableList.of("hearty", "menacing", "violent"), "可查阅语言文件");
     public static final ConfigBoolean DisableSortingOutOfGUI = ofBoolean("禁止在GUI之外整理", false, "InvTweaks");
     public static final ConfigBoolean AutoFish = ofBoolean("自动钓鱼", false, "fishing made better\n含自动续杆\n停止只需切换空手");
     public static final ConfigBoolean LocksTweak = ofBoolean("开锁功能", false);
+    public static final ConfigBoolean XaeroTranslateBiome = ofBoolean("xaero翻译群系", true);
 
     public static final ConfigBoolean StrictMode = ofBoolean("严格模式");
     public static final ConfigBoolean Debug = ofBoolean("调试");
@@ -120,7 +122,7 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigHotkey FreeCam = ofHotkey("灵魂出窍", "", "比tweakeroo好在\n玩家不会浮空\n渲染云不会闪烁\n兼容更多模组");
     public static final ConfigHotkey HoldAttack = ofHotkey("长按左键", "", "比tweakeroo好在关了会停");
     public static final ConfigHotkey HoldUse = ofHotkey("长按右键", "", "比tweakeroo好在关了会停");
-    public static final ConfigHotkey AnvilEnchantPlan = ofHotkey("铁砧附魔规划", "", "手持需附魔物品,将附魔书置于背包\n仅供参考, 不一定最优");
+    public static final ConfigHotkey AnvilEnchantPlan = ofHotkey("附魔规划", "", "手持需附魔物品,将附魔书置于物品栏\n仅供参考, 不一定最优");
     public static final ConfigHotkey FastSearch = ofHotkey("快速搜索", "F", KeybindSettings.GUI, "在RS终端中搜索Jei原料");
     public static final ConfigHotkey ClearSearch = ofHotkey("清空搜索", "C", KeybindSettings.GUI, "清空RS终端的搜索栏");
 
@@ -194,6 +196,7 @@ public class DCConfig implements IConfigHandler {
                 DisableSortingOutOfGUI,
                 AutoFish,
                 LocksTweak,
+                XaeroTranslateBiome,
                 StrictMode,
                 Debug,
                 DebugX,

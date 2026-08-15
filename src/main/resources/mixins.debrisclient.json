@@ -13,7 +13,6 @@
     "client.ClientMixin",
     "client.IClientMixin",
     "client.IPlayerControllerMPMixin",
-    "client.LocaleMixin",
     "client.MovementInputFromOptionsMixin",
     "client.PlayerControllerMixin",
     "client.entity.ClientPlayerMixin",
@@ -34,6 +33,9 @@
     "client.render.ParticleMixin",
     "client.render.RenderGlobalMixin",
     "client.render.RenderManagerMixin",
-    "client.render.RenderPlayerMixin"
+    "client.render.RenderPlayerMixin",
+    "client.resources.ILanguageManagerMixin",
+    "client.resources.ILocaleMixin",
+    "client.resources.LocaleMixin"
   ]
 }

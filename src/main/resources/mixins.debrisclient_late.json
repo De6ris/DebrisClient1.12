@@ -33,6 +33,7 @@
     "xaerominimap.GuiAddWaypointMixin",
     "xaerominimap.InfoDisplaysMixin",
     "xaerominimap.MinimapRendererMixin",
+    "xaeroworldmap.ClientEventsMixin",
     "xaeroworldmap.GuiMapMixin",
     "xray.EventsMixin",
     "xray.GuiAddBlockMixin"

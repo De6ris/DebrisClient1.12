@@ -24,6 +24,7 @@ public class LocksAccess {
         return true;
     }
 
+    // The number of pins unlocked
     public static int getCurrentIndex(GuiContainer gui) {
         return container((LockPickingGui) gui).getCurrentIndex();
     }

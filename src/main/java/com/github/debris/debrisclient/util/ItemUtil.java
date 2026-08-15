@@ -3,6 +3,7 @@ package com.github.debris.debrisclient.util;
 
 import com.github.debris.debrisclient.ModReference;
 import com.github.debris.debrisclient.unsafe.mod.CharmAccess;
+import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockShulkerBox;
 import net.minecraft.inventory.ItemStackHelper;
@@ -11,7 +12,9 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.common.util.Constants;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -48,23 +51,34 @@ public class ItemUtil {
     }
 
     public static List<ItemStack> readShulkerBox(ItemStack itemStack) {
-        return readInventory(itemStack, 27);
+        return readContainer(itemStack, 27, "BlockEntityTag");
     }
 
     public static List<ItemStack> readCharmCrate(ItemStack itemStack) {
-        return readInventory(itemStack, 9);
+        return readContainer(itemStack, 9, ImmutableList.of("BlockEntityTag", "inventory"));
     }
 
-    @SuppressWarnings("ConstantConditions")
-    public static List<ItemStack> readInventory(ItemStack itemStack, int size) {
+    public static List<ItemStack> readContainer(ItemStack itemStack, int size, String path) {
+        return readContainer(itemStack, size, Collections.singletonList(path));
+    }
+
+    @SuppressWarnings("DataFlowIssue")
+    public static List<ItemStack> readContainer(ItemStack itemStack, int size, List<String> path) {
         NonNullList<ItemStack> items = NonNullList.withSize(size, ItemStack.EMPTY);
         if (!itemStack.hasTagCompound()) return items;
-        NBTTagCompound itemStackNBT = itemStack.getTagCompound();
-        if (!itemStackNBT.hasKey("BlockEntityTag")) return items;
-        NBTTagCompound compound = itemStackNBT.getCompoundTag("BlockEntityTag");
-        if (compound.hasKey("inventory", 9)) {
-            ItemStackHelper.loadAllItems(compound, items);
+
+        NBTTagCompound cursor = itemStack.getTagCompound();
+        for (String s : path) {
+            if (!cursor.hasKey(s)) {
+                return items;
+            }
+            cursor = cursor.getCompoundTag(s);
         }
+
+        if (cursor.hasKey("Items", Constants.NBT.TAG_LIST)) {
+            ItemStackHelper.loadAllItems(cursor, items);
+        }
+
         return items;
     }
 

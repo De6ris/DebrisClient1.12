@@ -5,10 +5,10 @@ config.enum.tooltip.available=Available
 config.enum.tooltip.default=Default
 config.enum.tooltip.current=Current
 
-config.enum.quality_color.blue.name=Blue
-config.enum.quality_color.aqua.name=Aqua
-config.enum.quality_color.light_purple.name=Light Purple
-config.enum.quality_color.no_color.name=No Color
+config.enum.quality_level.blue.name=Blue
+config.enum.quality_level.aqua.name=Aqua
+config.enum.quality_level.light_purple.name=Light Purple
+config.enum.quality_level.no_level.name=仅白名单
 
 config.enum.sort_category.creative_inventory.name=Creative Inventory
 config.enum.sort_category.translation_key.name=Translation Key
@@ -23,7 +23,10 @@ config.enum.wheel_moving_mode.invert.name=Invert
 option.debrisclient.showEntityRegistryKey=Show Entity Registry Key
 
 # xaero
+gui.xaero_infodisplay.biome_registry_name=Biome Registry Name
+gui.xaero_infodisplay.biome_translated_name=Biome Translated Name
 gui.xaero_infodisplay.sub_season=Season
+gui.sub_season.info=%s(%d%%)
 
 # serene seasons
 sereneseasons.early_spring.name=Early spring
@@ -39,4 +42,5 @@ sereneseasons.early_winter.name=Early winter
 sereneseasons.mid_winter.name=Mid winter
 sereneseasons.late_winter.name=Late winter
 
-gui.sub_season.info=%s(%d%%)
+result.success=Success
+result.fail=Fail

@@ -32,6 +32,7 @@ public class ModReference {
     public static final String TWEAKEROO = "tweakeroo";
     public static final String WAYSTONES = "waystones";
     public static final String XAERO_MINI_MAP = "xaerominimap";
+    public static final String XAERO_WORLD_MAP = "xaeroworldmap";
     public static final String XRAY = "xray";
 
     public static boolean hasMod(String modId) {

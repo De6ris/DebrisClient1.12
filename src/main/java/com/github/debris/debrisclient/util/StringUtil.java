@@ -12,7 +12,9 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.biome.Biome;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -49,10 +51,13 @@ public class StringUtil {
         return I18n.format(key);
     }
 
+    public static String translate(String key, Object... objects) {
+        return I18n.format(key, objects);
+    }
+
     public static String translateFallback(String key, String fallback) {
         String format = I18n.format(key);
         if (format.equals(key)) {
-            LOGGER.info("missing translation key {}", key);
             return fallback;
         }
         return format;
@@ -132,6 +137,15 @@ public class StringUtil {
             name = TextFormatting.RED + name;
         }
         return level == 1 && enchantment.getMaxLevel() == 1 ? name : name + translate("enchantment.level." + level);
+    }
+
+    public static String translateBiome(Biome biome) {
+        ResourceLocation registryName = biome.getRegistryName();
+        if (registryName != null) {
+            return translateFallback("biome." + registryName + ".name", biome.getBiomeName());
+        } else {
+            return translateFallback("biome." + biome.getBiomeName() + ".name", biome.getBiomeName());
+        }
     }
 
     public static <T extends Enum<T>> String convertEnumClassName(Class<T> clazz) {

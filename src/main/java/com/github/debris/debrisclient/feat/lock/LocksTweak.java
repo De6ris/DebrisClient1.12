@@ -17,6 +17,8 @@ public class LocksTweak {
      */
     private static int[] password = null;
 
+    public static final int UNKNOWN = -1;
+
     public static boolean active() {
         return DCConfig.LocksTweak.getBooleanValue();
     }
@@ -29,9 +31,14 @@ public class LocksTweak {
         AutoUnlock.disable();
         if (inactive()) return;
         if (LocksAccess.isNewLock(gui)) {
-            password = new int[length];
-            Arrays.fill(password, -1);
+            clear(length);
         }
+    }
+
+    private static void clear(int length) {
+        password = new int[length];
+        Arrays.fill(password, UNKNOWN);
+        AutoUnlock.clear();
     }
 
     public static void onPin(GuiContainer gui, int currPin, boolean correct, boolean reset) {

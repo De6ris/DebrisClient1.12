@@ -1,8 +1,13 @@
 package com.github.debris.debrisclient.unsafe.mod;
 
-import com.github.debris.debrisclient.localization.GenericLocalizationKeys;
+import com.github.debris.debrisclient.localization.XaeroText;
+import com.github.debris.debrisclient.util.StringUtil;
+import fi.dy.masa.malilib.util.StringUtils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.biome.Biome;
 import xaero.common.minimap.waypoints.Waypoint;
 import xaero.hud.minimap.BuiltInHudModules;
 import xaero.hud.minimap.MinimapLogs;
@@ -48,7 +53,7 @@ public class XaeroMiniMapAccess {
         InfoDisplay.Builder<Boolean> builder = InfoDisplay.Builder.begin();
         return builder
                 .setId("sub_season")
-                .setName(GenericLocalizationKeys.INFO_DISPLAY_SUB_SEASON.translate())
+                .setName(XaeroText.INFO_DISPLAY_SUB_SEASON.translate())
                 .setDefaultState(Boolean.TRUE)
                 .setCodec(BuiltInConfigValueIOCodecs.BOOLEAN)
                 .setWidgetFactory(InfoDisplayCommonWidgetFactories.OFF_ON)
@@ -71,6 +76,50 @@ public class XaeroMiniMapAccess {
 //                        int subSeasonDuration = seasonState.getSubSeasonDuration();
 //                        double ratio = (double) (seasonState.getSeasonCycleTicks() % subSeasonDuration) / subSeasonDuration;
 //                        compiler.addLine("子季节进度" + ComponentUtil.percentage(ratio));
+                    }
+                })
+                .build();
+    }
+
+    public static InfoDisplay<Boolean> getBiomeTranslatedNameInfo() {
+        InfoDisplay.Builder<Boolean> builder = InfoDisplay.Builder.begin();
+        return builder
+                .setId("biome_translated_name")
+                .setName(XaeroText.INFO_DISPLAY_BIOME_TRANSLATED_NAME.translate())
+                .setDefaultState(Boolean.TRUE)
+                .setCodec(BuiltInConfigValueIOCodecs.BOOLEAN)
+                .setWidgetFactory(InfoDisplayCommonWidgetFactories.OFF_ON)
+                .setCompiler((displayInfo, compiler, session, availableWidth, playerPos) -> {
+                    if (displayInfo.getEffectiveState()) {
+                        Minecraft mc = session.getMc();
+                        Biome biome = mc.world.getChunk(playerPos).getBiome(playerPos, mc.world.getBiomeProvider());
+                        compiler.addLine(StringUtil.translateBiome(biome));
+                    }
+                })
+                .build();
+    }
+
+    public static InfoDisplay<Boolean> getBiomeRegistryNameInfo() {
+        InfoDisplay.Builder<Boolean> builder = InfoDisplay.Builder.begin();
+        return builder
+                .setId("biome_registry_name")
+                .setName(XaeroText.INFO_DISPLAY_BIOME_REGISTRY_NAME.translate())
+                .setDefaultState(Boolean.FALSE)
+                .setCodec(BuiltInConfigValueIOCodecs.BOOLEAN)
+                .setWidgetFactory(InfoDisplayCommonWidgetFactories.OFF_ON)
+                .setCompiler((displayInfo, compiler, session, availableWidth, playerPos) -> {
+                    if (displayInfo.getEffectiveState()) {
+                        Minecraft mc = session.getMc();
+                        Biome biome = mc.world.getChunk(playerPos).getBiome(playerPos, mc.world.getBiomeProvider());
+                        ResourceLocation registryName = biome.getRegistryName();
+                        if (registryName != null) {
+                            if (StringUtils.getStringWidth(registryName.toString()) <= availableWidth) {
+                                compiler.addLine(registryName.toString());
+                            } else {
+                                compiler.addLine(registryName.getNamespace());
+                                compiler.addLine(registryName.getPath());
+                            }
+                        }
                     }
                 })
                 .build();

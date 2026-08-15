@@ -4,6 +4,7 @@ import com.github.debris.debrisclient.ModReference;
 import com.github.debris.debrisclient.config.DCConfig;
 import com.github.debris.debrisclient.gui.button.GuiBetterButton;
 import com.github.debris.debrisclient.unsafe.mod.XaeroMiniMapAccess;
+import com.github.debris.debrisclient.util.EnchantUtil;
 import com.github.debris.debrisclient.util.StringUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -59,7 +60,7 @@ public class FastWaypoint {
         List<EnchantmentData> list = recipes.stream()
                 .map(MerchantRecipe::getItemToSell)
                 .filter(x -> x.getItem() == Items.ENCHANTED_BOOK)
-                .map(EnchantmentHelper::getEnchantments)
+                .map(EnchantUtil::getEnchantments)
                 .flatMap(x -> x.entrySet().stream())
                 .map(x -> new EnchantmentData(x.getKey(), x.getValue()))
                 .collect(Collectors.toList());

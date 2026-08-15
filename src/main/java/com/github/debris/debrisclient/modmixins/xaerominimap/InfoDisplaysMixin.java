@@ -23,5 +23,7 @@ public class InfoDisplaysMixin {
         if (ModReference.hasMod(ModReference.SERENE_SEASONS)) {
             this.manager.add(XaeroMiniMapAccess.getSubSeasonInfo());
         }
+        this.manager.add(XaeroMiniMapAccess.getBiomeTranslatedNameInfo());
+        this.manager.add(XaeroMiniMapAccess.getBiomeRegistryNameInfo());
     }
 }

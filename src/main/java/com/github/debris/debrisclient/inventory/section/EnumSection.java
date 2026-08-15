@@ -12,7 +12,7 @@ public enum EnumSection {
     InventoryWhole {
         @Override
         public ContainerSection get() {
-            return InventoryStorage.get().mergeWith(InventoryHotBar.get());
+            return InventoryHotBar.get().mergeWith(InventoryStorage.get());
         }
     },
 

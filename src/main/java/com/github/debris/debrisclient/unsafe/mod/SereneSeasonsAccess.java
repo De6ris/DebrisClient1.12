@@ -1,6 +1,6 @@
 package com.github.debris.debrisclient.unsafe.mod;
 
-import com.github.debris.debrisclient.localization.GenericLocalizationKeys;
+import com.github.debris.debrisclient.localization.XaeroText;
 import com.github.debris.debrisclient.util.MathUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
@@ -29,7 +29,7 @@ public class SereneSeasonsAccess {
         int subSeasonDuration = seasonState.getSubSeasonDuration();
         double ratio = (double) (seasonState.getSeasonCycleTicks() % subSeasonDuration) / subSeasonDuration;
 
-        return GenericLocalizationKeys.SUB_SEASON_INFO.translate(
+        return XaeroText.SUB_SEASON_INFO.translate(
                 nameOf(seasonState.getSubSeason()),
                 MathUtil.asPercentage(ratio)
         );

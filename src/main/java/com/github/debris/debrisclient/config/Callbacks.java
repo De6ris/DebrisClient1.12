@@ -3,7 +3,7 @@ package com.github.debris.debrisclient.config;
 import com.github.debris.debrisclient.ModReference;
 import com.github.debris.debrisclient.config.gui.DCConfigScreen;
 import com.github.debris.debrisclient.feat.*;
-import com.github.debris.debrisclient.feat.enchant.plan.AnvilEnchantPlan;
+import com.github.debris.debrisclient.feat.enchant.plan.EnchantPlan;
 import com.github.debris.debrisclient.inventory.feat.BrewingBarrelTweak;
 import com.github.debris.debrisclient.inventory.feat.DisenchanterTweak;
 import com.github.debris.debrisclient.inventory.feat.InventoryTweaks;
@@ -71,7 +71,7 @@ public class Callbacks {
         ConfigFactory.setToggleCallback(DCConfig.HoldAttack, (action, key) -> AutoClicker.toggleHoldAttack(client), () -> AutoClicker.isHoldAttacking(client));
         ConfigFactory.setToggleCallback(DCConfig.HoldUse, (action, key) -> AutoClicker.toggleHoldUse(client), () -> AutoClicker.isHoldUsing(client));
 
-        DCConfig.AnvilEnchantPlan.getKeybind().setCallback((action, key) -> AnvilEnchantPlan.run(client));
+        DCConfig.AnvilEnchantPlan.getKeybind().setCallback((action, key) -> EnchantPlan.run(client));
 
         DCConfig.FastSearch.getKeybind().setCallback((action, key) -> SearchTweaks.searchHovered(client));
         DCConfig.ClearSearch.getKeybind().setCallback((action, key) -> SearchTweaks.clear(client));

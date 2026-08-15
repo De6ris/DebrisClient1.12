@@ -13,17 +13,20 @@ import java.util.stream.Collectors;
 
 class EnchantRouter {
     final ItemStack stack;
-    final ArrayList<ItemStack> books;
+    final Map<Enchantment, Integer> existingEnchantments;// not used at present
+    final List<ItemStack> books;// sorted by level cost
 
-    EnchantRouter(ItemStack stack, List<ItemStack> books) {
+    EnchantRouter(ItemStack stack, Map<Enchantment, Integer> existingEnchantments, List<ItemStack> books) {
         this.stack = stack;
+        this.existingEnchantments = existingEnchantments;
         this.books = books.stream()
                 .sorted(getComparator())
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
     private Comparator<ItemStack> getComparator() {
-        return Comparator.comparingInt(book -> -getEffectiveEnchantCost(book));// big comes first
+        Comparator<ItemStack> comparator = Comparator.comparingInt(this::getEffectiveEnchantCost);
+        return comparator.reversed();// big comes first
     }
 
     List<Step> plan(boolean hasUpgrade) {
@@ -36,14 +39,16 @@ class EnchantRouter {
         if (hasUpgrade) {
             int booksAfterUpgrade = booksAsLocal.size() - getBookCountBeforeUpgrade(originalOperations);
             if (booksAfterUpgrade > 0) {
-                return planBoth(booksAfterUpgrade, steps, originalOperations, booksAsLocal);
+                planTwice(booksAfterUpgrade, steps, originalOperations, booksAsLocal);
+                return steps;
             }
         }
 
-        return planSingle(hasUpgrade, originalOperations, booksAsLocal, steps);
+        planOnce(hasUpgrade, originalOperations, booksAsLocal, steps);
+        return steps;
     }
 
-    private List<Step> planSingle(boolean hasUpgrade, int originalOperations, List<ItemStack> booksAsLocal, List<Step> steps) {
+    private void planOnce(boolean hasUpgrade, int originalOperations, List<ItemStack> booksAsLocal, List<Step> steps) {
         int operation = originalOperations;
         while (!booksAsLocal.isEmpty()) {
             CombinedBook combinedBook = planLocal(operation, booksAsLocal);
@@ -56,10 +61,9 @@ class EnchantRouter {
         if (hasUpgrade && operation >= 4) {
             steps.add(new Step(ImmutableList.of(getUpgrade()), 10));
         }
-        return steps;
     }
 
-    private List<Step> planBoth(int booksAfterUpgrade, List<Step> steps, int originalOperations, List<ItemStack> booksAsLocal) {
+    private void planTwice(int booksAfterUpgrade, List<Step> steps, int originalOperations, List<ItemStack> booksAsLocal) {
         int operationsAfterUpgrade = getOperations(booksAfterUpgrade);
 
         int maxPossibleOperation = Math.max(4, operationsAfterUpgrade);
@@ -68,7 +72,7 @@ class EnchantRouter {
         List<Step> latter = new ArrayList<>();
 
         for (int operation = 0; operation < maxPossibleOperation; operation++) {
-            if (originalOperations <= operation) {
+            if (operation >= originalOperations && operation < 4) {
                 CombinedBook combinedBook = planLocal(operation, booksAsLocal);
                 int levelCost = combinedBook.getLevelCost(operation);
                 former.add(new Step(combinedBook.subBooks, levelCost));
@@ -85,7 +89,6 @@ class EnchantRouter {
         steps.addAll(former);
         steps.add(new Step(ImmutableList.of(getUpgrade()), 10));
         steps.addAll(latter);
-        return steps;
     }
 
     private int getOperations(int books) {
@@ -207,7 +210,7 @@ class EnchantRouter {
     }
 
     int getEffectiveEnchantCost(ItemStack book) {
-        return getEffectiveEnchantCost(EnchantmentHelper.getEnchantments(book));
+        return getEffectiveEnchantCost(EnchantUtil.getEnchantments(book));
     }
 
     private int getEffectiveEnchantCost(Map<Enchantment, Integer> map) {
@@ -220,7 +223,7 @@ class EnchantRouter {
     private static ItemStack getUpgrade() {
         ItemStack stack = new ItemStack(Items.ENCHANTED_BOOK);
         HashMap<Enchantment, Integer> map = new HashMap<>();
-        map.put(AnvilEnchantPlan.UPGRADED_POTENTIALS, 1);
+        map.put(EnchantPlan.UPGRADED_POTENTIALS, 1);
         EnchantmentHelper.setEnchantments(map, stack);
         return stack;
     }

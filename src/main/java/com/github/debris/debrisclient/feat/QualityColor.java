@@ -4,11 +4,17 @@ import com.google.common.collect.ImmutableList;
 
 import java.util.List;
 
+// the enum is ordered
 public enum QualityColor {
+    DARK_RED,
+    DARK_GRAY,
+    RED,
+    YELLOW,
     BLUE,
     AQUA,
     LIGHT_PURPLE,
-    NO_COLOR,
+    GOLD,
+    UNKNOWN,
     ;
 
     public static final List<QualityColor> VALUES = ImmutableList.copyOf(values());
@@ -17,19 +23,11 @@ public enum QualityColor {
         return this.ordinal() >= other.ordinal();
     }
 
-    public static String transform(String color) {
-        if ("gold".equals(color)) return "light_purple";
-        return color;
-    }
-
     public static QualityColor fromString(String color) {
         for (QualityColor value : VALUES) {
             if (value.name().toLowerCase().equals(color)) return value;
         }
-        return BLUE;
+        return UNKNOWN;
     }
 
-    public static QualityColor parse(String color) {
-        return fromString(transform(color));
-    }
 }

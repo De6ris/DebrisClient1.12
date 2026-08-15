@@ -16,15 +16,13 @@ public class GuiContainerMixin extends GuiScreen {
     @Inject(method = "keyTyped", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityPlayerSP;closeScreen()V"))
     private void onCloseScreen(char typedChar, int keyCode, CallbackInfo ci) {
         if (DCConfig.BetterHoldingItem.getBooleanValue()) {
-            InventoryTweaks.clearCursor(EnumSection.InventoryWhole.get().reverse());
+            InventoryTweaks.clearCursor(EnumSection.InventoryWhole.get());
         }
     }
 
     @Inject(method = "keyTyped", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/inventory/GuiContainer;checkHotbarKeys(I)Z"), cancellable = true)
     private void onCheckHotbarKeys(char typedChar, int keyCode, CallbackInfo ci) {
-        if (!DCConfig.BetterSwapHandsKey.getBooleanValue()) return;
-        if (this.mc.gameSettings.keyBindSwapHands.getKeyCode() != keyCode) return;
-        if (BetterSwapHands.run((GuiContainer) (Object) this)) {
+        if (BetterSwapHands.shouldCancel((GuiContainer) (Object) this, keyCode)) {
             ci.cancel();
         }
     }

@@ -1,6 +1,7 @@
 package com.github.debris.debrisclient.forge;
 
 import com.github.debris.debrisclient.DebrisClient;
+import com.github.debris.debrisclient.command.ClientCommands;
 import com.github.debris.debrisclient.event.forge.PlaySoundListener;
 import com.github.debris.debrisclient.event.forge.ScreenEventListener;
 import com.github.debris.debrisclient.event.forge.TooltipListener;
@@ -30,5 +31,6 @@ public class ModImpl {
         MinecraftForge.EVENT_BUS.register(PlaySoundListener.class);
         MinecraftForge.EVENT_BUS.register(ScreenEventListener.class);
         InitializationHandler.getInstance().registerInitializationHandler(new InitListener());
+        ClientCommands.register();
     }
 }

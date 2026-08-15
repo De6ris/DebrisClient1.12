@@ -10,10 +10,10 @@ config.enum.tooltip.available=可用值
 config.enum.tooltip.default=默认值
 config.enum.tooltip.current=当前值
 
-config.enum.quality_color.blue.name=蓝
-config.enum.quality_color.aqua.name=青
-config.enum.quality_color.light_purple.name=浅紫
-config.enum.quality_color.no_color.name=无颜色
+config.enum.quality_level.blue.name=蓝
+config.enum.quality_level.aqua.name=青
+config.enum.quality_level.light_purple.name=浅紫
+config.enum.quality_level.no_level.name=仅白名单
 
 config.enum.sort_category.creative_inventory.name=创造模式物品栏
 config.enum.sort_category.translation_key.name=翻译键
@@ -28,7 +28,10 @@ config.enum.wheel_moving_mode.invert.name=反向
 option.debrisclient.showEntityRegistryKey=显示实体注册名
 
 # xaero
+gui.xaero_infodisplay.biome_registry_name=群系注册名
+gui.xaero_infodisplay.biome_translated_name=群系翻译名
 gui.xaero_infodisplay.sub_season=季节
+gui.sub_season.info=%s(%d%%)
 
 # serene seasons
 sereneseasons.early_spring.name=早春
@@ -44,4 +47,5 @@ sereneseasons.early_winter.name=早冬
 sereneseasons.mid_winter.name=中冬
 sereneseasons.late_winter.name=晚冬
 
-gui.sub_season.info=%s(%d%%)
+result.success=成功
+result.fail=失败

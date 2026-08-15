@@ -1,7 +1,7 @@
 package com.github.debris.debrisclient.modmixins.bountifulbaubles;
 
-import com.github.debris.debrisclient.gui.button.GuiBetterButton;
 import com.github.debris.debrisclient.config.DCConfig;
+import com.github.debris.debrisclient.gui.button.GuiBetterButton;
 import com.github.debris.debrisclient.inventory.feat.AutoReforging;
 import cursedflames.bountifulbaubles.block.GuiReforger;
 import net.minecraft.client.gui.GuiButton;
