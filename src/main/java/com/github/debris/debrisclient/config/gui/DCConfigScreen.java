@@ -1,25 +1,20 @@
 package com.github.debris.debrisclient.config.gui;
 
 import com.github.debris.debrisclient.DebrisClient;
-import com.github.debris.debrisclient.ModReference;
 import com.github.debris.debrisclient.config.DCConfig;
 import com.github.debris.debrisclient.inventory.feat.AutoReforging;
 import com.google.common.collect.ImmutableList;
 import fi.dy.masa.malilib.config.gui.ConfigGuiTabBase;
-import fi.dy.masa.malilib.config.options.IConfigBase;
 import fi.dy.masa.malilib.gui.GuiConfigsBase;
 import fi.dy.masa.malilib.gui.interfaces.IConfigGuiTab;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class DCConfigScreen extends GuiConfigsBase {
-    private static final ConfigGuiTabBase VALUE = new ConfigGuiTabBase("值", 100, false, DCConfig.VALUE);
-    private static final ConfigGuiTabBase INTEGRATION = new ConfigGuiTabBase("联动", 100, false, buildIntegration());
-    private static final ConfigGuiTabBase LIST = new ConfigGuiTabBase("列表", 100, false, DCConfig.LIST);
-    private static final ConfigGuiTabBase HOTKEY = new ConfigGuiTabBase("热键", 204, true, DCConfig.HOTKEY);
-    private static final ConfigGuiTabBase YEETS = new ConfigGuiTabBase("禁用", 100, false, DCConfig.YEETS);
-    private static final ConfigGuiTabBase GLOWS = new ConfigGuiTabBase("发光", 100, false, buildGlows());
+    private static final ConfigGuiTabBase VALUE = new ConfigGuiTabBase("值", 100, false, HideConfig.filter(DCConfig.VALUE));
+    private static final ConfigGuiTabBase INTEGRATION = new ConfigGuiTabBase("联动", 100, false, HideConfig.filter(DCConfig.INTEGRATION));
+    private static final ConfigGuiTabBase LIST = new ConfigGuiTabBase("列表", 100, false, HideConfig.filter(DCConfig.LIST));
+    private static final ConfigGuiTabBase HOTKEY = new ConfigGuiTabBase("热键", 204, true, HideConfig.filter(DCConfig.HOTKEY));
+    private static final ConfigGuiTabBase YEETS = new ConfigGuiTabBase("禁用", 100, false, HideConfig.filter(DCConfig.YEETS));
+    private static final ConfigGuiTabBase GLOWS = new ConfigGuiTabBase("发光", 100, false, HideConfig.filter(DCConfig.GLOWS));
 
     private static final ImmutableList<IConfigGuiTab> TABS = ImmutableList.of(
             VALUE,
@@ -45,47 +40,5 @@ public class DCConfigScreen extends GuiConfigsBase {
     @Override
     public void setCurrentTab(IConfigGuiTab tab) {
         DCConfigScreen.tab = tab;
-    }
-
-    /**
-     * Hide those not loaded
-     */
-    private static ImmutableList<IConfigBase> buildIntegration() {
-        List<IConfigBase> mutable = new ArrayList<>(DCConfig.INTEGRATION);
-        if (!ModReference.hasMod(ModReference.FORGOTTENITEMS)) mutable.remove(DCConfig.RuneTweak);
-        if (!ModReference.hasMod(ModReference.XRAY)) mutable.remove(DCConfig.XRayAutoColorSelection);
-        if (!ModReference.hasMod(ModReference.XAERO_MINI_MAP)) {
-            mutable.remove(DCConfig.FastWaypoint);
-        }
-        if (!ModReference.hasMod(ModReference.XAERO_WORLD_MAP)) {
-            mutable.remove(DCConfig.XaeroTranslateBiome);
-        }
-        if (!ModReference.hasMod(ModReference.QUALITYTOOLS) || !ModReference.hasMod(ModReference.BOUNTIFULBAUBLES)) {
-            mutable.remove(DCConfig.AutoReforging);
-            mutable.remove(DCConfig.ReforgingLevel);
-            mutable.remove(DCConfig.ReforgingWhiteListQT);
-            mutable.remove(DCConfig.ReforgingWhiteListBB);
-        }
-        if (!ModReference.hasMod(ModReference.INVTWEAKS)) mutable.remove(DCConfig.DisableSortingOutOfGUI);
-        if (!ModReference.hasMod(ModReference.FISHINGMADEBETTER)) mutable.remove(DCConfig.AutoFish);
-        if (!ModReference.hasMod(ModReference.LOCKS)) mutable.remove(DCConfig.LocksTweak);
-        return ImmutableList.copyOf(mutable);
-    }
-
-    private static ImmutableList<IConfigBase> buildGlows() {
-        List<IConfigBase> mutable = new ArrayList<>(DCConfig.GLOWS);
-        if (!ModReference.hasMod(ModReference.LYCANITESMOBS)) mutable.remove(DCConfig.BossGlowing);
-        if (!ModReference.hasMod(ModReference.ICEANDFIRE)) {
-            mutable.remove(DCConfig.DragonGlowing);
-            mutable.remove(DCConfig.SeaSerpentGlowing);
-            mutable.remove(DCConfig.PixieGlowingIAF);
-        }
-        if (!ModReference.hasMod(ModReference.DEFILED_LANDS)) mutable.remove(DCConfig.GoldenWyrmGlowing);
-        if (!ModReference.hasMod(ModReference.FAMILIAR_FAUNA)) mutable.remove(DCConfig.PixieGlowingFF);
-        if (!ModReference.hasMod(ModReference.QUARK)) mutable.remove(DCConfig.StoneLingGlowing);
-        if (!ModReference.hasMod(ModReference.CHARM)) mutable.remove(DCConfig.SpectreGlowing);
-        if (!ModReference.hasMod(ModReference.SCALING_HEALTH)) mutable.remove(DCConfig.BlightMobGlowing);
-        if (!ModReference.hasMod(ModReference.ARTIFACTS)) mutable.remove(DCConfig.MimicGlowing);
-        return ImmutableList.copyOf(mutable);
     }
 }

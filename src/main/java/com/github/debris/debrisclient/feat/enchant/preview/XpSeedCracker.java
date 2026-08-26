@@ -7,9 +7,15 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.ContainerEnchantment;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.event.ForgeEventFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,12 +23,16 @@ import java.util.Random;
 
 class XpSeedCracker {
     private static final Logger LOGGER = LogManager.getLogger(XpSeedCracker.class);
-    private int previousHigher;
 
+    private static final boolean COMPARE_ENCHANT_LEVEL = false;
+
+    private World world = null;
+    private BlockPos position = null;
+
+    private EnchantData data;
+
+    private int previousHigher;
     private int higher;// higher 28 bits
-    private int[] tableLevel;
-    private int[] clueId;
-    private int[] clueLevel;
 
     private int lower;// lower 4 bits
     private State state = State.PENDING;
@@ -45,15 +55,25 @@ class XpSeedCracker {
         return this.higher | this.lower;
     }
 
-    public void update(int truncatedSeed, int[] tableLevel, int[] clueId, int[] clueLevel) {
+    @SuppressWarnings("StatementWithEmptyBody")
+    public void update(ContainerEnchantment container, World world, ItemStack stack) {
+        this.world = world;
+        if (COMPARE_ENCHANT_LEVEL) {
+            // TODO get real
+        } else {
+            this.position = BlockPos.ORIGIN;
+        }
+
         this.previousHigher = this.higher;
-        this.higher = truncatedSeed;
-        this.tableLevel = tableLevel;
-        this.clueId = clueId;
-        this.clueLevel = clueLevel;
+        this.higher = container.xpSeed;
+
+        if (this.data == null || !this.data.equals(container.enchantLevels, container.enchantClue, container.worldClue)) {
+            this.data = new EnchantData(container.enchantLevels, container.enchantClue, container.worldClue);
+            this.crack(stack);
+        }
     }
 
-    public void crack(ItemStack stack) {
+    private void crack(ItemStack stack) {
         if (this.higher == this.previousHigher) {
             if (state == State.MULTICHOICE) {
                 candidates.removeIf(lower -> !matches(stack, this.higher | lower));
@@ -94,52 +114,58 @@ class XpSeedCracker {
         }
     }
 
-//    private int getPower() {
-//        float power = 0;
-//        for (int j = -1; j <= 1; ++j) {
-//            for (int k = -1; k <= 1; ++k) {
-//                if ((j != 0 || k != 0) && this.world.isAirBlock(this.position.add(k, 0, j)) && this.world.isAirBlock(this.position.add(k, 1, j))) {
-//                    power += net.minecraftforge.common.ForgeHooks.getEnchantPower(world, position.add(k * 2, 0, j * 2));
-//                    power += net.minecraftforge.common.ForgeHooks.getEnchantPower(world, position.add(k * 2, 1, j * 2));
-//                    if (k != 0 && j != 0) {
-//                        power += net.minecraftforge.common.ForgeHooks.getEnchantPower(world, position.add(k * 2, 0, j));
-//                        power += net.minecraftforge.common.ForgeHooks.getEnchantPower(world, position.add(k * 2, 1, j));
-//                        power += net.minecraftforge.common.ForgeHooks.getEnchantPower(world, position.add(k, 0, j * 2));
-//                        power += net.minecraftforge.common.ForgeHooks.getEnchantPower(world, position.add(k, 1, j * 2));
-//                    }
-//                }
-//            }
-//        }
-//        return (int) power;
-//    }
+    private int getPower() {
+        float power = 0;
+        for (int j = -1; j <= 1; ++j) {
+            for (int k = -1; k <= 1; ++k) {
+                if ((j != 0 || k != 0) && this.world.isAirBlock(this.position.add(k, 0, j)) && this.world.isAirBlock(this.position.add(k, 1, j))) {
+                    power += ForgeHooks.getEnchantPower(world, position.add(k * 2, 0, j * 2));
+                    power += ForgeHooks.getEnchantPower(world, position.add(k * 2, 1, j * 2));
+                    if (k != 0 && j != 0) {
+                        power += ForgeHooks.getEnchantPower(world, position.add(k * 2, 0, j));
+                        power += ForgeHooks.getEnchantPower(world, position.add(k * 2, 1, j));
+                        power += ForgeHooks.getEnchantPower(world, position.add(k, 0, j * 2));
+                        power += ForgeHooks.getEnchantPower(world, position.add(k, 1, j * 2));
+                    }
+                }
+            }
+        }
+        return (int) power;
+    }
 
     private boolean matches(ItemStack stack, int trySeed) {
-//        this.rand.setSeed(trySeed);
+        this.rand.setSeed(trySeed);
 
-//        int[] enchantLevels = new int[3];
+        int[] enchantLevels = new int[3];
         int[] enchantClue = new int[3];
         int[] worldClue = new int[3];
 
-//        for (int i = 0; i < 6; i++) {
-//            rand.nextInt();
-//        }// will consume random when computing enchant levels
+        if (COMPARE_ENCHANT_LEVEL) {
+            int power = getPower();
 
-//        for (int i1 = 0; i1 < 3; ++i1) {
-//            enchantLevels[i1] = EnchantmentHelper.calcItemStackEnchantability(this.rand, i1, power, stack);
-//            enchantClue[i1] = -1;
-//            worldClue[i1] = -1;
-//
-//            if (enchantLevels[i1] < i1 + 1) {
-//                enchantLevels[i1] = 0;
-//            }
-//            enchantLevels[i1] = net.minecraftforge.event.ForgeEventFactory.onEnchantmentLevelSet(world, position, i1, power, stack, enchantLevels[i1]);
-//        }// don't know why 10 20 30 goes to 2 5 8 in client
+//            for (int i = 0; i < 6; i++) {
+//                rand.nextInt();
+//            }// will consume random when computing enchant levels
+
+            for (int i1 = 0; i1 < 3; ++i1) {
+                enchantLevels[i1] = EnchantmentHelper.calcItemStackEnchantability(this.rand, i1, power, stack);
+                enchantClue[i1] = -1;
+                worldClue[i1] = -1;
+
+                if (enchantLevels[i1] < i1 + 1) {
+                    enchantLevels[i1] = 0;
+                }
+                enchantLevels[i1] = ForgeEventFactory.onEnchantmentLevelSet(world, position, i1, power, stack, enchantLevels[i1]);
+            }
+        } else {
+            enchantLevels = this.data.enchantLevel;
+        }
 
         for (int j1 = 0; j1 < 3; ++j1) {
-            if (tableLevel[j1] > 0) {
-                List<EnchantmentData> list = this.getEnchantmentList(stack, j1, tableLevel[j1], trySeed);// here the rand is set seed again
+            if (enchantLevels[j1] > 0) {
+                List<EnchantmentData> list = this.getEnchantmentList(stack, j1, enchantLevels[j1], trySeed);// here the rand is set seed again
 
-                if (list != null && !list.isEmpty()) {
+                if (!list.isEmpty()) {
                     EnchantmentData enchantmentdata = list.get(this.rand.nextInt(list.size()));
                     enchantClue[j1] = Enchantment.getEnchantmentID(enchantmentdata.enchantment);
                     worldClue[j1] = enchantmentdata.enchantmentLevel;
@@ -147,9 +173,14 @@ class XpSeedCracker {
             }
         }
 
-        return Arrays.equals(this.clueId, enchantClue) && Arrays.equals(this.clueLevel, worldClue);
+        return this.data.equals(enchantLevels, enchantClue, worldClue);
     }
 
+    public List<EnchantmentData> getEnchantmentList(ItemStack stack, int enchantSlot, int level) {
+        return this.getEnchantmentList(stack, enchantSlot, level, this.getSeed());
+    }
+
+    @NotNull
     private List<EnchantmentData> getEnchantmentList(ItemStack stack, int enchantSlot, int level, int seed) {
         this.rand.setSeed(seed + enchantSlot);
         List<EnchantmentData> list = EnchantmentHelper.buildEnchantmentList(this.rand, stack, level, false);
@@ -159,6 +190,24 @@ class XpSeedCracker {
         }
 
         return list;
+    }
+
+    private static class EnchantData {
+        int[] enchantLevel;
+        int[] clueId;
+        int[] clueLevel;
+
+        private EnchantData(int[] enchantLevel, int[] clueId, int[] clueLevel) {
+            this.enchantLevel = enchantLevel.clone();
+            this.clueId = clueId.clone();
+            this.clueLevel = clueLevel.clone();
+        }
+
+        private boolean equals(int[] enchantLevel, int[] clueId, int[] clueLevel) {
+            return Arrays.equals(enchantLevel, this.enchantLevel)
+                    && Arrays.equals(clueId, this.clueId)
+                    && Arrays.equals(clueLevel, this.clueLevel);
+        }
     }
 
     private enum State {

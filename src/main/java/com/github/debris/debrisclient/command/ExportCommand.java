@@ -27,7 +27,7 @@ public class ExportCommand extends AbstractCommand {
     @Override
     public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         if (args.length == 1) {
-            return Collections.singletonList(LANG);
+            return getListOfStringsMatchingLastWord(args, LANG);
         }
         return Collections.emptyList();
     }

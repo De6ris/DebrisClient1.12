@@ -6,6 +6,7 @@ import com.github.debris.debrisclient.util.ChatUtil;
 import com.github.debris.debrisclient.util.ComponentUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.Locale;
+import net.minecraft.util.text.TextComponentString;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,6 +14,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -28,28 +30,30 @@ public class LanguageFileExport {
         CompletableFuture<Boolean> future = CompletableFuture.supplyAsync(() -> export(properties));
         future.whenComplete((b, t) -> {
             if (b == null) b = false;
-            ChatUtil.setActionBar("导出结果: " + ComponentUtil.successOrFail(b));
+            ChatUtil.setActionBar(new TextComponentString("导出结果: ").appendSibling(ComponentUtil.successOrFail(b)));
         });
         return true;
     }
 
     private static boolean export(Map<String, String> properties) {
-        try (BufferedWriter writer = Files.newBufferedWriter(OUTPUT_DIR)) {
-
+        OUTPUT_DIR.getParent().toFile().mkdirs();
+        try (BufferedWriter writer = Files.newBufferedWriter(OUTPUT_DIR, StandardOpenOption.CREATE)) {
             properties.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(x -> {
                 try {
-                    writer.write(x.getKey() + "=" + x.getValue());
+                    writer.write(x.getKey() + "=" + transform(x.getValue()));
                     writer.newLine();
                 } catch (IOException e) {
                     LOGGER.warn(e);
                 }
             });
-
+            return true;
         } catch (IOException e) {
             LOGGER.warn(e);
             return false;
         }
+    }
 
-        return true;
+    private static String transform(String s) {
+        return s.replace("\n", "\\n");
     }
 }

@@ -85,7 +85,7 @@ dependencies {
     implementation rfg.deobf("curse.maven:xaerolib-${xaerolib_version}")
     implementation rfg.deobf("curse.maven:xaeros-minimap-${xaerosminimap_version}")
     implementation rfg.deobf("curse.maven:xaeros-world-map-${xaerosworldmap_version}")
-    implementation rfg.deobf("curse.maven:advanced-xray-${advancedxray_version}")
+    compileOnly rfg.deobf("curse.maven:advanced-xray-${advancedxray_version}")
     implementation rfg.deobf("curse.maven:hwyla-${hwyla_version}")
 //    implementation rfg.deobf("curse.maven:modularui-${modularui_version}")//can not find
     compileOnly rfg.deobf("curse.maven:morerefinedstorage-${morerefinedstorage_version}")

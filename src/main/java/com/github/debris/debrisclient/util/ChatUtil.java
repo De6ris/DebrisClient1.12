@@ -1,8 +1,8 @@
 package com.github.debris.debrisclient.util;
 
-import fi.dy.masa.malilib.util.InfoUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.ChatType;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 
 public class ChatUtil {
@@ -11,6 +11,10 @@ public class ChatUtil {
     }
 
     public static void setActionBar(String message) {
-        InfoUtils.printActionbarMessage(message);
+        setActionBar(new TextComponentString(message));
+    }
+
+    public static void setActionBar(ITextComponent component) {
+        Minecraft.getMinecraft().ingameGUI.addChatMessage(ChatType.GAME_INFO, component);
     }
 }

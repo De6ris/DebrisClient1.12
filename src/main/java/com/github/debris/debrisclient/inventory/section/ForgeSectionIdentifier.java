@@ -88,7 +88,7 @@ public class ForgeSectionIdentifier extends SectionIdentifier {
             return;
         }
 
-        if (ModReference.hasMod(ModReference.BOUNTIFULBAUBLES) && BountifulBaublesAccess.isReforgingContainer(container)) {
+        if (ModReference.hasMod(ModReference.BOUNTIFUL_BAUBLES) && BountifulBaublesAccess.isReforgingContainer(container)) {
             if (itemHandler.getSlots() == 1) {
                 putSection(EnumSection.BountifulBaublesReforging, theWholeSection);
             } else if (itemHandler instanceof IBaublesItemHandler) {

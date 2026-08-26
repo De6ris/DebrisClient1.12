@@ -19,6 +19,7 @@ public class EntityGlowing {
     private static final List<Predicate<Entity>> ENTRIES = new ArrayList<>();
 
     public static boolean shouldGlow(Entity entity) {
+        if (DCConfig.AllEntitiesGlowing.getBooleanValue()) return true;
         return ENTRIES.stream().anyMatch(x -> x.test(entity));
     }
 
@@ -57,12 +58,12 @@ public class EntityGlowing {
         register(EntityGlowing::isInList);
         register(DCConfig.LibrarianGlowing, EntityGlowing::isLibrarian);
         register(DCConfig.ElderGuardianGlowing, entity -> entity instanceof EntityElderGuardian);
-        register(DCConfig.BossGlowing, ModReference.LYCANITESMOBS, LycanitesmobsAccess::isBoss);
-        register(DCConfig.DragonGlowing, ModReference.ICEANDFIRE, IceAndFireAccess::isDragon);
-        register(DCConfig.SeaSerpentGlowing, ModReference.ICEANDFIRE, IceAndFireAccess::isSeaSerpent);
+        register(DCConfig.BossGlowing, ModReference.LYCANITES_MOBS, LycanitesmobsAccess::isBoss);
+        register(DCConfig.DragonGlowing, ModReference.ICE_AND_FIRE, IceAndFireAccess::isDragon);
+        register(DCConfig.SeaSerpentGlowing, ModReference.ICE_AND_FIRE, IceAndFireAccess::isSeaSerpent);
         register(DCConfig.GoldenWyrmGlowing, ModReference.DEFILED_LANDS, DefiledLandAccess::isGoldenWyrm);
         register(DCConfig.PixieGlowingFF, ModReference.FAMILIAR_FAUNA, FamiliarFaunaAccess::isPixie);
-        register(DCConfig.PixieGlowingIAF, ModReference.ICEANDFIRE, IceAndFireAccess::isPixie);
+        register(DCConfig.PixieGlowingIAF, ModReference.ICE_AND_FIRE, IceAndFireAccess::isPixie);
         register(DCConfig.StoneLingGlowing, ModReference.QUARK, QuarkAccess::isStoneLing);
         register(DCConfig.SpectreGlowing, ModReference.CHARM, CharmAccess::isSpectre);
         register(DCConfig.BlightMobGlowing, ModReference.SCALING_HEALTH, ScalingHealthAccess::isBlight);

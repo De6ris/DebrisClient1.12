@@ -40,10 +40,10 @@ public class AutoReforging {
     @Nullable
     private static AbstractReforgingTask createReforgingTask(Minecraft client) {
         GuiScreen screen = client.currentScreen;
-        if (ModReference.hasMod(ModReference.QUALITYTOOLS) && QualityToolsAccess.canReforge(screen)) {
+        if (ModReference.hasMod(ModReference.QUALITY_TOOLS) && QualityToolsAccess.canReforge(screen)) {
             return new QualityToolsReforgingTask(client);
         }
-        if (ModReference.hasMod(ModReference.BOUNTIFULBAUBLES) && BountifulBaublesAccess.canReforge(screen)) {
+        if (ModReference.hasMod(ModReference.BOUNTIFUL_BAUBLES) && BountifulBaublesAccess.canReforge(screen)) {
             return new BountifulBaublesReforgingTask(client);
         }
         return null;
@@ -51,7 +51,7 @@ public class AutoReforging {
 
     public static void onMouseClicked(Minecraft client, GuiScreen screen, int mouseX, int mouseY, int mouseButton) {
         if (Predicates.notInGame(client)) return;
-        if (mouseButton == 1 && ModReference.hasMod(ModReference.QUALITYTOOLS) && QualityToolsAccess.isReforgingGUI(screen)) {
+        if (mouseButton == 1 && ModReference.hasMod(ModReference.QUALITY_TOOLS) && QualityToolsAccess.isReforgingGUI(screen)) {
             for (GuiButton button : AccessorUtil.getButtonList(screen)) {
                 if (button.id != AutoReforging.BUTTON_ID) continue;
                 if (button.mousePressed(client, mouseX, mouseY)) {
@@ -75,7 +75,7 @@ public class AutoReforging {
     }
 
     public static void makeConfigComments() {
-        if (ModReference.hasMod(ModReference.BOUNTIFULBAUBLES)) {
+        if (ModReference.hasMod(ModReference.BOUNTIFUL_BAUBLES)) {
             List<String> lines = new ArrayList<>();
             lines.add("请从以下关键词中选取:");
             BountifulBaublesAccess.streamQualities()
@@ -88,7 +88,7 @@ public class AutoReforging {
                     .forEach(lines::add);
             DCConfig.ReforgingWhiteListBB.setComment(StringUtils.join(lines, "\n"));
         }
-        if (ModReference.hasMod(ModReference.QUALITYTOOLS) && QualityToolsAccess.ready()) {
+        if (ModReference.hasMod(ModReference.QUALITY_TOOLS) && QualityToolsAccess.ready()) {
             List<String> lines = new ArrayList<>();
             lines.add("请从以下关键词中选取:");
             List<String> entries = QualityToolsAccess.streamQualities()

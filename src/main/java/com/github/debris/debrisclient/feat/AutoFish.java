@@ -52,7 +52,7 @@ public class AutoFish {
     private static boolean isActive(Minecraft client) {
         if (!Predicates.inGameNoGui(client)) return false;
         if (!DCConfig.AutoFish.getBooleanValue()) return false;
-        if (!ModReference.hasMod(ModReference.FISHINGMADEBETTER)) return false;
+        if (!ModReference.hasMod(ModReference.FISHING_MADE_BETTER)) return false;
         return true;
     }
 }

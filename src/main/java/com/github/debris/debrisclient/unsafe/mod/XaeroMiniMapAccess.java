@@ -7,7 +7,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.biome.Biome;
+import org.jetbrains.annotations.NotNull;
 import xaero.common.minimap.waypoints.Waypoint;
 import xaero.hud.minimap.BuiltInHudModules;
 import xaero.hud.minimap.MinimapLogs;
@@ -23,18 +25,27 @@ import xaero.lib.common.config.option.value.io.serialization.BuiltInConfigValueI
 import java.io.IOException;
 
 public class XaeroMiniMapAccess {
-    public static void createWayPoint(int dimensionId, BlockPos pos, String name) {
-        MinimapSession session = BuiltInHudModules.MINIMAP.getCurrentSession();
-        MinimapWorldManager waypointsManager = session.getWorldManager();
-        MinimapWorld currentWorld = waypointsManager.getCurrentWorld();
-        if (currentWorld == null) return;
-
+    @SuppressWarnings("DataFlowIssue")
+    public static String getInitials(@NotNull String name) {
+        name = TextFormatting.getTextWithoutFormattingCodes(name);
         String initials;
         if (name.isEmpty()) {
             initials = "X";
         } else {
             initials = name.length() > 2 ? name.substring(0, 2) : name;
         }
+        return initials;
+    }
+
+    public static void createWayPoint(int dimensionId, BlockPos pos, String name) {
+        createWayPoint(dimensionId, pos, name, getInitials(name));
+    }
+
+    public static void createWayPoint(int dimensionId, BlockPos pos, String name, String initials) {
+        MinimapSession session = BuiltInHudModules.MINIMAP.getCurrentSession();
+        MinimapWorldManager waypointsManager = session.getWorldManager();
+        MinimapWorld currentWorld = waypointsManager.getCurrentWorld();
+        if (currentWorld == null) return;
 
         Waypoint waypoint = new Waypoint(pos.getX(), pos.getY(), pos.getZ(), name, initials, WaypointColor.getRandom());
 

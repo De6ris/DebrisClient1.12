@@ -150,7 +150,7 @@ public class SectionIdentifier {
         }
 
         // it uses vanilla slot
-        if (ModReference.hasMod(ModReference.QUALITYTOOLS) && QualityToolsAccess.isReforgingContainer(container)) {
+        if (ModReference.hasMod(ModReference.QUALITY_TOOLS) && QualityToolsAccess.isReforgingContainer(container)) {
             putSection(EnumSection.QualityToolsReforgingTool, slotList.subList(0, 1));
             putSection(EnumSection.QualityToolsReforgingMaterial, slotList.subList(1, 2));
             return;

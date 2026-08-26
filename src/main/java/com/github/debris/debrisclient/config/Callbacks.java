@@ -53,7 +53,7 @@ public class Callbacks {
         });
 
         DCConfig.RuneTweak.setValueChangeCallback(configBoolean -> {
-            if (ModReference.hasMod(ModReference.FORGOTTENITEMS)) {
+            if (ModReference.hasMod(ModReference.FORGOTTEN_ITEMS)) {
                 ForgottenItemsAccess.syncRuneTweak(configBoolean.getBooleanValue());
             }
         });
