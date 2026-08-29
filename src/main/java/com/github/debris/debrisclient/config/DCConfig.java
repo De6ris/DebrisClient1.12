@@ -5,6 +5,7 @@ import com.github.debris.debrisclient.ModReference;
 import com.github.debris.debrisclient.config.api.MatchType;
 import com.github.debris.debrisclient.config.api.RequiresMod;
 import com.github.debris.debrisclient.config.options.ConfigEnum;
+import com.github.debris.debrisclient.feat.BreakingCooldownMode;
 import com.github.debris.debrisclient.feat.QualityLevel;
 import com.github.debris.debrisclient.inventory.feat.WheelMovingMode;
 import com.github.debris.debrisclient.inventory.sort.SortCategory;
@@ -69,6 +70,7 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigBoolean AnvilLevelView = ofBoolean("铁砧等级显示", true, "生存可见40级以上");
     public static final ConfigBoolean EnchantPreview = ofBoolean("附魔预览", false, "暂时失效");
     public static final ConfigBoolean ExtraTooltip = ofBoolean("额外物品提示", true, "需按Shift查看,有以下功能\n附魔书成本,铁砧惩罚,附魔冲突,经验书折合");
+    public static final ConfigEnum<BreakingCooldownMode> BreakingCooldown = ofEnum("挖掘冷却模式", BreakingCooldownMode.NORMAL);
 
 
     public static final List<IConfigBase> INTEGRATION;
@@ -137,9 +139,9 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigHotkey HoldAttack = ofHotkey("长按左键", "", "比tweakeroo好在关了会停");
     public static final ConfigHotkey HoldUse = ofHotkey("长按右键", "", "比tweakeroo好在关了会停");
     public static final ConfigHotkey AnvilEnchantPlan = ofHotkey("附魔规划", "", "手持需附魔物品,将附魔书置于物品栏\n仅供参考, 不一定最优");
-    @RequiresMod(ModReference.REFINED_STORAGE)
+    @RequiresMod({ModReference.REFINED_STORAGE, ModReference.JEI})
     public static final ConfigHotkey FastSearch = ofHotkey("快速搜索", "F", KeybindSettings.GUI, "在RS终端中搜索Jei原料");
-    @RequiresMod(ModReference.REFINED_STORAGE)
+    @RequiresMod({ModReference.REFINED_STORAGE, ModReference.JEI})
     public static final ConfigHotkey ClearSearch = ofHotkey("清空搜索", "C", KeybindSettings.GUI, "清空RS终端的搜索栏");
 
     public static final ConfigHotkey ModifierMoveAll = ofHotkey("移动全部:修饰键", "SPACE", GUI_RELAXED, "按住时左键会移动当前区域全部");
@@ -163,6 +165,8 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigBoolean DisableSiren = ofBoolean("禁用塞壬效果", false);
     public static final ConfigBoolean CullRidingEntity = ofBoolean("剔除坐骑渲染", false);
     public static final ConfigBoolean DisableSignatureWarning = ofBoolean("禁用签名警告", true, "masa系");
+    @RequiresMod(value = {ModReference.MO_BENDS, ModReference.TRINKETS_AND_BAUBLES}, matchType = MatchType.ANY)
+    public static final ConfigBoolean DisableInternetConnection = ofBoolean("禁用联网", true, "mobends, trinkets and baubles");
     public static final ConfigBoolean MuteAnvil = ofBoolean("铁砧静音", false);
     @RequiresMod(ModReference.LYCANITES_MOBS)
     public static final ConfigBoolean MuteAegis = ofBoolean("宙斯盾静音", false);
@@ -172,6 +176,7 @@ public class DCConfig implements IConfigHandler {
 
     public static final ConfigBoolean SkipCullingGlowingEntity = ofBoolean("跳过剔除发光实体", true, "EntityCulling");
     public static final ConfigBoolean AllEntitiesGlowing = ofBoolean("全部实体发光", false, "小心帧率");
+    public static final ConfigBoolean GlowingEntitySpawnNotify = ofBoolean("发光生物生成提示", false);
     public static final ConfigBoolean LibrarianGlowing = ofBoolean("图书管理员发光", false);
     public static final ConfigBoolean ElderGuardianGlowing = ofBoolean("远古守卫者发光", false);
     @RequiresMod(ModReference.LYCANITES_MOBS)
@@ -207,7 +212,8 @@ public class DCConfig implements IConfigHandler {
                 BetterHoldingItem,
                 AnvilLevelView,
                 EnchantPreview,
-                ExtraTooltip
+                ExtraTooltip,
+                BreakingCooldown
         );
         INTEGRATION = ImmutableList.of(
                 IMBlocker,
@@ -272,12 +278,14 @@ public class DCConfig implements IConfigHandler {
                 DisableSiren,
                 CullRidingEntity,
                 DisableSignatureWarning,
+                DisableInternetConnection,
                 MuteAnvil,
                 MuteAegis
         );
         GLOWS = ImmutableList.of(
                 SkipCullingGlowingEntity,
                 AllEntitiesGlowing,
+                GlowingEntitySpawnNotify,
                 LibrarianGlowing,
                 ElderGuardianGlowing,
                 BossGlowing,

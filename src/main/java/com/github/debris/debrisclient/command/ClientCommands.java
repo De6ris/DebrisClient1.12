@@ -7,5 +7,6 @@ public class ClientCommands {
         ClientCommandHandler instance = ClientCommandHandler.instance;
         instance.registerCommand(new ExportCommand());
         instance.registerCommand(new EnchantPlanCommand());
+        instance.registerCommand(new DCLookCommand());
     }
 }

@@ -19,6 +19,10 @@ config.enum.wheel_moving_mode.none.name=None
 config.enum.wheel_moving_mode.default.name=Default
 config.enum.wheel_moving_mode.invert.name=Invert
 
+config.enum.breaking_cooldown_mode.normal.name=Normal
+config.enum.breaking_cooldown_mode.disable.name=Disable
+config.enum.breaking_cooldown_mode.force.name=Force
+
 # waila
 option.debrisclient.showEntityRegistryKey=Show Entity Registry Key
 

@@ -77,6 +77,8 @@ dependencies {
     compileOnly rfg.deobf("curse.maven:locks-${locks_version}")
     compileOnly rfg.deobf("curse.maven:serene-seasons-${serene_version}")
     compileOnly rfg.deobf("curse.maven:scaling-health-${scalinghealth_version}")
+    compileOnly rfg.deobf("curse.maven:mobends-${mobends_version}")
+    compileOnly rfg.deobf("curse.maven:trinkets-and-baubles-${trinkets_and_baubles_version}")
 
 
     // extra dependencies

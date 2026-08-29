@@ -13,6 +13,7 @@ import java.util.function.Function;
 
 public class SearchTweaks {
     public static boolean searchHovered(Minecraft client) {
+        if (!ModReference.hasMod(ModReference.JEI)) return false;
         return execute(client, textField -> {
             String name = JeiUtil.getStackName(JeiUtil.getHoveredStack());
             if (name == null) return false;
@@ -28,6 +29,7 @@ public class SearchTweaks {
     }
 
     public static boolean clear(Minecraft client) {
+        if (!ModReference.hasMod(ModReference.JEI)) return false;
         return execute(client, textField -> {
             if (textField.getText().isEmpty()) return false;
             textField.setText("");

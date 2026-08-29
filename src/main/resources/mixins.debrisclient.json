@@ -36,6 +36,7 @@
     "client.render.RenderPlayerMixin",
     "client.resources.ILanguageManagerMixin",
     "client.resources.ILocaleMixin",
-    "client.resources.LocaleMixin"
+    "client.resources.LocaleMixin",
+    "client.world.WorldClientMixin"
   ]
 }

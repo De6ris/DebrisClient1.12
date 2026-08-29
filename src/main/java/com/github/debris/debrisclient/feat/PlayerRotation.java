@@ -2,9 +2,14 @@ package com.github.debris.debrisclient.feat;
 
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
 public class PlayerRotation {
+    public static void lookAtBlock(EntityPlayerSP player, BlockPos pos) {
+        lookAtDirection(player, getDirection(player, pos));
+    }
+
     public static void lookAtEntity(EntityPlayerSP player, Entity entity) {
         lookAtDirection(player, getDirection(player, entity));
     }
@@ -26,4 +31,9 @@ public class PlayerRotation {
     private static Vec3d getDirection(Entity from, Entity to) {
         return to.getPositionEyes(1.0F).subtract(from.getPositionEyes(1.0F));
     }
+
+    private static Vec3d getDirection(Entity from, BlockPos to) {
+        return new Vec3d(to).subtract(from.getPositionEyes(1.0F));
+    }
+
 }

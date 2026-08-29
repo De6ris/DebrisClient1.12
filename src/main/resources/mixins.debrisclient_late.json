@@ -22,6 +22,7 @@
     "malilib.GuiListBaseMixin",
     "malilib.WidgetListBaseMixin",
     "malilib.WidgetListConfigOptionsMixin",
+    "mobends.ConnectionManagerMixin",
     "modularui.ModularScreenMixin",
     "potioncore.PotionCoreEventHandlerClientMixin",
     "potioncore.PotionSpinMixin",
@@ -35,6 +36,7 @@
     "xaerominimap.MinimapRendererMixin",
     "xaeroworldmap.ClientEventsMixin",
     "xaeroworldmap.GuiMapMixin",
+    "xat.VIPHandlerMixin",
     "xray.EventsMixin",
     "xray.GuiAddBlockMixin"
   ],

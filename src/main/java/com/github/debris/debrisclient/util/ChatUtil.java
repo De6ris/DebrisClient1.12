@@ -7,7 +7,11 @@ import net.minecraft.util.text.TextComponentString;
 
 public class ChatUtil {
     public static void addLocalChat(Minecraft client, String chat) {
-        client.ingameGUI.addChatMessage(ChatType.CHAT, new TextComponentString(chat));
+        addLocalChat(client, new TextComponentString(chat));
+    }
+
+    public static void addLocalChat(Minecraft client, ITextComponent component) {
+        client.ingameGUI.addChatMessage(ChatType.CHAT, component);
     }
 
     public static void setActionBar(String message) {

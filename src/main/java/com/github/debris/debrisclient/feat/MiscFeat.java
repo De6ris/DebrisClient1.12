@@ -2,14 +2,20 @@ package com.github.debris.debrisclient.feat;
 
 import com.github.debris.debrisclient.config.Callbacks;
 import com.github.debris.debrisclient.config.DCConfig;
+import com.github.debris.debrisclient.localization.FeatureText;
 import com.github.debris.debrisclient.mixins.client.IClientMixin;
 import com.github.debris.debrisclient.util.ChatUtil;
 import com.github.debris.debrisclient.util.Predicates;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderEye;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.event.ClickEvent;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -97,6 +103,23 @@ public class MiscFeat {
                 )
         );
         return true;
+    }
+
+    public static void notifyEntitySpawn(Minecraft mc, Entity entity) {
+        if (DCConfig.GlowingEntitySpawnNotify.getBooleanValue() && EntityGlowing.shouldGlow(entity)) {
+            ITextComponent name = entity.getDisplayName();
+            name.getStyle().setColor(EntityColor.getColor(entity));
+
+            TextComponentString pos = new TextComponentString(String.format("[%.0f,%.0f,%.0f]", entity.posX, entity.posY, entity.posZ));
+            pos.getStyle().setClickEvent(
+                    new ClickEvent(
+                            ClickEvent.Action.SUGGEST_COMMAND,
+                            String.format("/dclook %.0f %.0f %.0f", entity.posX, entity.posY, entity.posZ)
+                    )
+            ).setColor(TextFormatting.AQUA);
+
+            ChatUtil.addLocalChat(mc, FeatureText.ENTITY_SPAWN.formatChinese(name, pos));
+        }
     }
 
     public static boolean debug(Minecraft client) {
