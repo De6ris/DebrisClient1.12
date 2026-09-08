@@ -152,24 +152,25 @@ dependencies {
         implementation "com.cleanroommc:assetmover:${propertyString('asset_mover_version')}"
     }
     if (propertyBool('use_mixins')) {
-        String mixin = modUtils.enableMixins("zone.rong:mixinbooter:${propertyString('mixin_booter_version')}", propertyString('mixin_refmap'))
-
-        // these for mixinbooter 11.13
-        implementation(mixin) {
-            transitive = false
+        String mixin
+        if (propertyBool('use_old_mb')) {
+            mixin = modUtils.enableMixins("zone.rong:mixinbooter:10.2", propertyString('mixin_refmap'))
+            api(mixin) {
+                transitive = false
+            }
+            annotationProcessor 'org.ow2.asm:asm-debug-all:5.2'
+            annotationProcessor 'com.google.guava:guava:32.1.2-jre'
+            annotationProcessor 'com.google.code.gson:gson:2.8.9'
+            annotationProcessor(mixin) {
+                transitive = false
+            }
+        } else {
+            mixin = modUtils.enableMixins("zone.rong:mixinbooter:${propertyString('mixin_booter_version')}", propertyString('mixin_refmap'))
+            implementation(mixin) {
+                transitive = false
+            }
+            annotationProcessor mixin
         }
-        annotationProcessor mixin
-
-        // these for mixinbooter 10.2
-//        api(mixin) {
-//            transitive = false
-//        }
-//        annotationProcessor 'org.ow2.asm:asm-debug-all:5.2'
-//        annotationProcessor 'com.google.guava:guava:32.1.2-jre'
-//        annotationProcessor 'com.google.code.gson:gson:2.8.9'
-//        annotationProcessor(mixin) {
-//            transitive = false
-//        }
 
         add('mixinAgent', mixin) {
             transitive = false
