@@ -1,8 +1,7 @@
-package com.github.debris.debrisclient.config.gui;
+package com.github.debris.debrisclient.config;
 
 import com.github.debris.debrisclient.DebrisClient;
 import com.github.debris.debrisclient.ModReference;
-import com.github.debris.debrisclient.config.DCConfig;
 import com.github.debris.debrisclient.config.api.RequiresMod;
 import fi.dy.masa.malilib.config.options.ConfigBase;
 import fi.dy.masa.malilib.config.options.IConfigBase;

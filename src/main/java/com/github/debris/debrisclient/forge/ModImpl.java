@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
         clientSideOnly = true,
         acceptedMinecraftVersions = "1.12.2",
         dependencies = "required-after:malilib;",
-        guiFactory = "com.github.debris.debrisclient.config.gui.DCGuiFactory")
+        guiFactory = "com.github.debris.debrisclient.config.ConfigScreenFactory")
 public class ModImpl {
     /**
      * <a href="https://cleanroommc.com/wiki/forge-mod-development/event#overview">

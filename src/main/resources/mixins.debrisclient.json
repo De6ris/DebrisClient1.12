@@ -33,6 +33,7 @@
     "client.render.ParticleMixin",
     "client.render.RenderGlobalMixin",
     "client.render.RenderManagerMixin",
+    "client.render.RenderMixin",
     "client.render.RenderPlayerMixin",
     "client.resources.ILanguageManagerMixin",
     "client.resources.ILocaleMixin",

@@ -9,8 +9,8 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 
-public class DCLookCommand extends AbstractCommand {
-    public DCLookCommand() {
+public class LookCommand extends AbstractCommand {
+    public LookCommand() {
         super("dclook");
     }
 

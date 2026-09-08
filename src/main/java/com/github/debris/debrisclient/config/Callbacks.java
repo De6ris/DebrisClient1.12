@@ -1,7 +1,7 @@
 package com.github.debris.debrisclient.config;
 
 import com.github.debris.debrisclient.ModReference;
-import com.github.debris.debrisclient.config.gui.DCConfigScreen;
+import com.github.debris.debrisclient.gui.screen.DCConfigScreen;
 import com.github.debris.debrisclient.feat.*;
 import com.github.debris.debrisclient.feat.enchant.plan.EnchantPlan;
 import com.github.debris.debrisclient.inventory.feat.BrewingBarrelTweak;
@@ -20,7 +20,7 @@ public class Callbacks {
 
     public static void init(Minecraft client) {
         DCConfig.OpenWindow.getKeybind().setCallback((action, key) -> {
-            client.displayGuiScreen(new DCConfigScreen());
+            client.displayGuiScreen(new DCConfigScreen(null));
             return true;
         });
 

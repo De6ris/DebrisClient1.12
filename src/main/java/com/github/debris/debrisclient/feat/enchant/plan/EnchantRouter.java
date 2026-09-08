@@ -3,18 +3,26 @@ package com.github.debris.debrisclient.feat.enchant.plan;
 import com.github.debris.debrisclient.util.AnvilUtil;
 import com.github.debris.debrisclient.util.EnchantUtil;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 class EnchantRouter {
+    public static final int ONE_TOME_LEVEL = 30;
+    public static final int TWO_TOME_LEVEL = 39;
+    public static final int UPGRADE_COST = 10;
     final ItemStack stack;
     final Map<Enchantment, Integer> existingEnchantments;// not used at present
     final List<ItemStack> books;// sorted by level cost
+    final boolean large;
 
     EnchantRouter(ItemStack stack, Map<Enchantment, Integer> existingEnchantments, List<ItemStack> books) {
         this.stack = stack;
@@ -22,6 +30,7 @@ class EnchantRouter {
         this.books = books.stream()
                 .sorted(getComparator())
                 .collect(Collectors.toCollection(ArrayList::new));
+        this.large = this.books.size() > 27;
     }
 
     private Comparator<ItemStack> getComparator() {
@@ -58,21 +67,21 @@ class EnchantRouter {
             operation++;
         }
 
-        if (hasUpgrade && operation >= 4) {
-            steps.add(new Step(ImmutableList.of(getUpgrade()), 10));
+        if (hasUpgrade && operation >= getOperationsBeforeUpgrade()) {
+            steps.add(getUpgradeStep());
         }
     }
 
     private void planTwice(int booksAfterUpgrade, List<Step> steps, int originalOperations, List<ItemStack> booksAsLocal) {
+        int operationsBeforeUpgrade = getOperationsBeforeUpgrade();
         int operationsAfterUpgrade = getOperations(booksAfterUpgrade);
-
-        int maxPossibleOperation = Math.max(4, operationsAfterUpgrade);
+        int maxPossibleOperation = Math.max(operationsBeforeUpgrade, operationsAfterUpgrade);
 
         List<Step> former = new ArrayList<>();
         List<Step> latter = new ArrayList<>();
 
         for (int operation = 0; operation < maxPossibleOperation; operation++) {
-            if (operation >= originalOperations && operation < 4) {
+            if (operation >= originalOperations && operation < operationsBeforeUpgrade) {
                 CombinedBook combinedBook = planLocal(operation, booksAsLocal);
                 int levelCost = combinedBook.getLevelCost(operation);
                 former.add(new Step(combinedBook.subBooks, levelCost));
@@ -87,8 +96,12 @@ class EnchantRouter {
         }
 
         steps.addAll(former);
-        steps.add(new Step(ImmutableList.of(getUpgrade()), 10));
+        steps.add(getUpgradeStep());
         steps.addAll(latter);
+    }
+
+    private int getOperationsBeforeUpgrade() {
+        return this.large ? 5 : 4;
     }
 
     private int getOperations(int books) {
@@ -101,11 +114,13 @@ class EnchantRouter {
     }
 
     private int getBookCountBeforeUpgrade(int operations) {
-        if (operations == 0) return 1 + 2 + 4 + 4;
-        if (operations == 1) return 2 + 4 + 4;
-        if (operations == 2) return 4 + 4;
-        if (operations == 3) return 4;
-        return 0;
+        int count = 0;
+        if (operations == 0) count = 1 + 2 + 4 + 4;
+        if (operations == 1) count = 2 + 4 + 4;
+        if (operations == 2) count = 4 + 4;
+        if (operations == 3) count = 4;
+        if (this.large) count += 4;
+        return count;
     }
 
     private CombinedBook planLocal(int operations, List<ItemStack> books) {
@@ -138,7 +153,7 @@ class EnchantRouter {
             for (int j = i + 1; j < size; j++) {
                 ItemStack book2 = books.get(j);
                 int cost2 = getEffectiveEnchantCost(book2);
-                if (2 + cost1 + cost2 > 30) continue;
+                if (2 + cost1 + cost2 > ONE_TOME_LEVEL) continue;
 
                 twoBooks = ImmutableList.of(book1, book2);
                 break loop;
@@ -180,9 +195,16 @@ class EnchantRouter {
                     for (int l = k + 1; l < size; l++) {
                         ItemStack book4 = books.get(l);
                         int cost4 = getEffectiveEnchantCost(book4);
+                        int sum = 6 + cost1 + cost2 + cost3 + cost4;
+                        if (this.large) {
+                            if (sum > TWO_TOME_LEVEL) continue;
+                            if (TWO_TOME_LEVEL - sum <= 2) {
+                                fourBooks = ImmutableList.of(book1, book2, book3, book4);
+                                break loop;
+                            }
+                        }
 
-                        if (6 + cost1 + cost2 + cost3 + cost4 > 30) continue;
-
+                        if (sum > ONE_TOME_LEVEL) continue;
                         fourBooks = ImmutableList.of(book1, book2, book3, book4);
                         break loop;
                     }
@@ -220,11 +242,12 @@ class EnchantRouter {
         return EnchantUtil.calculateEnchantmentCost(newMap);
     }
 
-    private static ItemStack getUpgrade() {
+    @SuppressWarnings("DataFlowIssue")
+    private static Step getUpgradeStep() {
         ItemStack stack = new ItemStack(Items.ENCHANTED_BOOK);
-        HashMap<Enchantment, Integer> map = new HashMap<>();
-        map.put(EnchantPlan.UPGRADED_POTENTIALS, 1);
+        Map<Enchantment, Integer> map = ImmutableMap.of(EnchantPlan.UPGRADED_POTENTIALS, 1);
         EnchantmentHelper.setEnchantments(map, stack);
-        return stack;
+        return new Step(ImmutableList.of(stack), UPGRADE_COST);
     }
+
 }

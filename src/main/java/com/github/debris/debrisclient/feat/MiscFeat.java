@@ -2,9 +2,10 @@ package com.github.debris.debrisclient.feat;
 
 import com.github.debris.debrisclient.config.Callbacks;
 import com.github.debris.debrisclient.config.DCConfig;
-import com.github.debris.debrisclient.localization.FeatureText;
+import com.github.debris.debrisclient.localization.ChatHudText;
 import com.github.debris.debrisclient.mixins.client.IClientMixin;
 import com.github.debris.debrisclient.util.ChatUtil;
+import com.github.debris.debrisclient.util.CollectionUtil;
 import com.github.debris.debrisclient.util.Predicates;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -16,6 +17,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.ClickEvent;
+import net.minecraft.util.text.event.HoverEvent;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -32,9 +34,8 @@ public class MiscFeat {
         }
         String name = screen.getClass().getName();
         List<String> strings = DCConfig.IMBlockerWhiteList.getStrings();
-        if (strings.contains(name)) return false;
-        strings.add(name);
-        return true;
+
+        return CollectionUtil.maybeAddToList(strings, name);
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -62,14 +63,14 @@ public class MiscFeat {
                 player.sendChatMessage("/gamemode 1");
             }
         } else {
-            ((IClientMixin) client).invokeDebugFeedbackTranslated("无权限更改游戏模式");
+            ((IClientMixin) client).invokeDebugFeedbackTranslated(ChatHudText.GAME_MODE_NOT_PERMITTED.getKey());
         }
         return true;
     }
 
 
     public static boolean copyTPCommand(Minecraft client) {
-        ChatUtil.addLocalChat(client, "已复制TP指令");
+        ChatUtil.addLocalChat(client, ChatHudText.TP_COMMAND_COPIED.translate());
         EntityPlayerSP player = client.player;
         setClipboard(
                 String.format(
@@ -111,14 +112,20 @@ public class MiscFeat {
             name.getStyle().setColor(EntityColor.getColor(entity));
 
             TextComponentString pos = new TextComponentString(String.format("[%.0f,%.0f,%.0f]", entity.posX, entity.posY, entity.posZ));
-            pos.getStyle().setClickEvent(
-                    new ClickEvent(
-                            ClickEvent.Action.SUGGEST_COMMAND,
-                            String.format("/dclook %.0f %.0f %.0f", entity.posX, entity.posY, entity.posZ)
-                    )
-            ).setColor(TextFormatting.AQUA);
+            pos.getStyle()
+                    .setHoverEvent(
+                            new HoverEvent(
+                                    HoverEvent.Action.SHOW_TEXT,
+                                    ChatHudText.COORDINATES_TOOLTIP.translate()
+                            )
+                    ).setClickEvent(
+                            new ClickEvent(
+                                    ClickEvent.Action.RUN_COMMAND,
+                                    String.format("/dclook %.0f %.0f %.0f", entity.posX, entity.posY, entity.posZ)
+                            )
+                    ).setColor(TextFormatting.AQUA);
 
-            ChatUtil.addLocalChat(mc, FeatureText.ENTITY_SPAWN.formatChinese(name, pos));
+            ChatUtil.addLocalChat(mc, ChatHudText.ENTITY_SPAWN.translate(name, pos));
         }
     }
 

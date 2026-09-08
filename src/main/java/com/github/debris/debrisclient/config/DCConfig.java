@@ -176,7 +176,8 @@ public class DCConfig implements IConfigHandler {
 
     public static final ConfigBoolean SkipCullingGlowingEntity = ofBoolean("跳过剔除发光实体", true, "EntityCulling");
     public static final ConfigBoolean AllEntitiesGlowing = ofBoolean("全部实体发光", false, "小心帧率");
-    public static final ConfigBoolean GlowingEntitySpawnNotify = ofBoolean("发光生物生成提示", false);
+    public static final ConfigBoolean GlowingEntitySpawnNotify = ofBoolean("发光实体生成提示", false);
+    public static final ConfigBoolean BountifulGlowingColor = ofBoolean("丰富的发光颜色", false);
     public static final ConfigBoolean LibrarianGlowing = ofBoolean("图书管理员发光", false);
     public static final ConfigBoolean ElderGuardianGlowing = ofBoolean("远古守卫者发光", false);
     @RequiresMod(ModReference.LYCANITES_MOBS)
@@ -286,6 +287,7 @@ public class DCConfig implements IConfigHandler {
                 SkipCullingGlowingEntity,
                 AllEntitiesGlowing,
                 GlowingEntitySpawnNotify,
+                BountifulGlowingColor,
                 LibrarianGlowing,
                 ElderGuardianGlowing,
                 BossGlowing,

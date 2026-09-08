@@ -1,12 +1,14 @@
-package com.github.debris.debrisclient.config.gui;
+package com.github.debris.debrisclient.gui.screen;
 
 import com.github.debris.debrisclient.DebrisClient;
 import com.github.debris.debrisclient.config.DCConfig;
+import com.github.debris.debrisclient.config.HideConfig;
 import com.github.debris.debrisclient.inventory.feat.AutoReforging;
 import com.google.common.collect.ImmutableList;
 import fi.dy.masa.malilib.config.gui.ConfigGuiTabBase;
 import fi.dy.masa.malilib.gui.GuiConfigsBase;
 import fi.dy.masa.malilib.gui.interfaces.IConfigGuiTab;
+import net.minecraft.client.gui.GuiScreen;
 
 public class DCConfigScreen extends GuiConfigsBase {
     private static final ConfigGuiTabBase VALUE = new ConfigGuiTabBase("值", 100, false, HideConfig.filter(DCConfig.VALUE));
@@ -27,8 +29,8 @@ public class DCConfigScreen extends GuiConfigsBase {
 
     private static IConfigGuiTab tab = VALUE;
 
-    public DCConfigScreen() {
-        super(10, 50, DebrisClient.MOD_ID, null, TABS, DebrisClient.MOD_NAME + " configs");
+    public DCConfigScreen(GuiScreen parent) {
+        super(10, 50, DebrisClient.MOD_ID, parent, TABS, DebrisClient.MOD_NAME + " configs");
         AutoReforging.makeConfigComments();
     }
 
