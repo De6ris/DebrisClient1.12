@@ -68,7 +68,8 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigBoolean BetterSwapHandsKey = ofBoolean("更好的副手键", true, "允许在容器中切换");
     public static final ConfigBoolean BetterHoldingItem = ofBoolean("更好的物品拿取", true, "自动在关闭容器时将拿取的物品放回物品栏");
     public static final ConfigBoolean AnvilLevelView = ofBoolean("铁砧等级显示", true, "生存可见40级以上");
-    public static final ConfigBoolean EnchantPreview = ofBoolean("附魔预览", false, "暂时失效");
+    public static final ConfigBoolean EnchantPreview = ofBoolean("附魔预览", false);
+    public static final ConfigBoolean EnchantPreviewParallel = ofBoolean("附魔预览并行加速", true, "多线程执行循环");
     public static final ConfigBoolean ExtraTooltip = ofBoolean("额外物品提示", true, "需按Shift查看,有以下功能\n附魔书成本,铁砧惩罚,附魔冲突,经验书折合");
     public static final ConfigEnum<BreakingCooldownMode> BreakingCooldown = ofEnum("挖掘冷却模式", BreakingCooldownMode.NORMAL);
 
@@ -213,6 +214,7 @@ public class DCConfig implements IConfigHandler {
                 BetterHoldingItem,
                 AnvilLevelView,
                 EnchantPreview,
+                EnchantPreviewParallel,
                 ExtraTooltip,
                 BreakingCooldown
         );

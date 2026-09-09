@@ -1,11 +1,16 @@
 package com.github.debris.debrisclient.feat.enchant.preview;
 
+import com.github.debris.debrisclient.Platform;
 import com.github.debris.debrisclient.config.DCConfig;
+import com.github.debris.debrisclient.util.RayTraceUtil;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
+import it.unimi.dsi.fastutil.ints.IntLists;
+import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ContainerEnchantment;
 import net.minecraft.item.ItemStack;
@@ -17,108 +22,182 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-class XpSeedCracker {
-    private static final Logger LOGGER = LogManager.getLogger(XpSeedCracker.class);
+public class XpSeedCracker {
+    public static final Logger LOGGER = LogManager.getLogger(XpSeedCracker.class);
 
-    private static final boolean COMPARE_ENCHANT_LEVEL = false;
+    public static final int POWER_NOT_AVAILABLE = -1;
+
+    private boolean local = false;
 
     private World world = null;
-    private BlockPos position = null;
+    private BlockPos position = BlockPos.ORIGIN;
 
-    private EnchantData data;
+    private EnchantingTableData data;
 
-    private int previousHigher;
-    private int higher;// higher 28 bits
+    private int power = POWER_NOT_AVAILABLE;
 
-    private int lower;// lower 4 bits
-    private State state = State.PENDING;
+    private int localHigher;// 31 to 16 bits
+
+    private int previousMedium;
+    private int medium;// 15 to 4 bits
+
+    private CrackingState state = CrackingState.PENDING;
     private final Random rand = new Random();
-    private IntList candidates;
+    private final IntList candidates = new IntArrayList();
+
+    private final ParallelSeedChecker parallelChecker = new ParallelSeedChecker();
+
+    XpSeedCracker() {
+    }
 
     public void clear() {
-        this.state = State.PENDING;
+        if (this.state == CrackingState.CRACKING) {
+            this.parallelChecker.maybeCancel();
+            this.setState(CrackingState.PENDING);
+        }
     }
 
     private boolean isDebug() {
         return DCConfig.Debug.getBooleanValue();
     }
 
+    private void setState(CrackingState state) {
+        this.state = state;
+    }
+
+    public CrackingState getState() {
+        return this.state;
+    }
+
+    public int getCandidateSize() {
+        return this.candidates.size();
+    }
+
+    public float getProgress() {
+        return this.parallelChecker.getProgress();
+    }
+
     public boolean isCracked() {
-        return this.state == State.CRACKED;
+        return this.state == CrackingState.CRACKED;
     }
 
     public int getSeed() {
-        return this.higher | this.lower;
+        return this.candidates.get(0);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     public void update(ContainerEnchantment container, World world, ItemStack stack) {
-        this.world = world;
-        if (COMPARE_ENCHANT_LEVEL) {
-            // TODO get real
+        if (this.data == null || !this.data.equals(container.enchantLevels, container.enchantClue, container.worldClue)) {
+            this.data = new EnchantingTableData(container.enchantLevels, container.enchantClue, container.worldClue);
+            if (stack.isEmpty() || stack.isItemEnchanted()) {
+                this.clear();
+                return;
+            }
         } else {
-            this.position = BlockPos.ORIGIN;
+            return;
         }
 
-        this.previousHigher = this.higher;
-        this.higher = container.xpSeed;
+        this.local = Platform.isSinglePlayer();
+        this.world = world;
+        this.power = POWER_NOT_AVAILABLE;
+        Minecraft client = Minecraft.getMinecraft();
+        BlockPos blockPos = RayTraceUtil.getBlockPos(client);
+        if (blockPos != null && client.world.getBlockState(blockPos).getBlock() == Blocks.ENCHANTING_TABLE) {
+            this.position = blockPos;
+            this.power = getPower(world, blockPos);
+        }
 
-        if (this.data == null || !this.data.equals(container.enchantLevels, container.enchantClue, container.worldClue)) {
-            this.data = new EnchantData(container.enchantLevels, container.enchantClue, container.worldClue);
+        this.previousMedium = this.medium;
+        int packetXpSeed = container.xpSeed;
+        if (this.local) {
+            this.localHigher = ((packetXpSeed >> 16) & 0xFFFF) << 16;
+        }
+        this.medium = packetXpSeed & 0x0000FFF0;
+
+        if (this.power != POWER_NOT_AVAILABLE) {
             this.crack(stack);
         }
     }
 
     private void crack(ItemStack stack) {
-        if (this.higher == this.previousHigher) {
-            if (state == State.MULTICHOICE) {
-                candidates.removeIf(lower -> !matches(stack, this.higher | lower));
-                int size = candidates.size();
-                if (size == 0) {
-                    state = State.FAIL;
-                    if (isDebug()) LOGGER.info("0 match, this should not happen");
-                } else if (size == 1) {
-                    state = State.CRACKED;
-                    lower = candidates.get(0);
-                }
+        if (state == CrackingState.CRACKING) {
+            this.parallelChecker.maybeCancel();
+        }
+
+        if (this.medium == this.previousMedium) {
+            if (state == CrackingState.MULTICHOICE) {
+                this.candidates.removeIf(xpSeed -> !matches(stack, xpSeed));
+                this.updateState();
                 return;
             }
-            if (state == State.CRACKED) {
+            if (state == CrackingState.CRACKED && matches(stack, this.getSeed())) {
                 return;// keep the state
             }
         }
 
-        IntList potentials = new IntArrayList();
-        for (int i = 0; i < 16; i++) {
-            int trySeed = this.higher | i;
-            if (matches(stack, trySeed)) {
-                potentials.add(i);
+        IntList potentials = this.candidates;
+        potentials.clear();
+
+        if (this.local) {
+            for (int low = 0; low < 16; low++) {
+                int xpSeed = this.localHigher | medium | low;
+                if (matches(stack, xpSeed)) {
+                    potentials.add(xpSeed);
+                }
             }
+            this.updateState();
+            return;
         }
 
+        if (DCConfig.EnchantPreviewParallel.getBooleanValue()) {
+            this.setState(CrackingState.CRACKING);
+            this.parallelChecker.upload(world, position, stack.copy(), data, power, medium, IntLists.synchronize(potentials), this::updateState);
+            return;
+        }
+
+        this.iterateSerial(stack, potentials);
+    }
+
+    private void iterateSerial(ItemStack stack, IntList potentials) {
+        World world = this.world;
+        BlockPos position = this.position;
+        EnchantingTableData data = this.data;
+        Random rand = this.rand;
+        int power = this.power;
+        int medium = this.medium;
+
+        for (int high = 0; high < 65536; high++) {
+            for (int low = 0; low < 16; low++) {
+                int xpSeed = high << 16 | medium | low;
+                if (matches(world, position, data, stack, rand, power, xpSeed)) {
+                    potentials.add(xpSeed);
+                }
+            }
+        }
+        this.updateState();
+    }
+
+    private void updateState() {
+        IntList potentials = candidates;
         int size = potentials.size();
         if (size == 0) {
-            state = State.FAIL;
+            this.setState(CrackingState.FAIL);
             if (isDebug()) LOGGER.info("0 match, this should not happen");
         } else if (size == 1) {
-            state = State.CRACKED;
-            lower = potentials.get(0);
+            this.setState(CrackingState.CRACKED);
         } else {
-            state = State.MULTICHOICE;
-            candidates = potentials;
+            this.setState(CrackingState.MULTICHOICE);
             if (isDebug()) LOGGER.info("candidates size: {}", potentials.size());
         }
     }
 
-    private int getPower() {
+    private static int getPower(World world, BlockPos position) {
         float power = 0;
         for (int j = -1; j <= 1; ++j) {
             for (int k = -1; k <= 1; ++k) {
-                if ((j != 0 || k != 0) && this.world.isAirBlock(this.position.add(k, 0, j)) && this.world.isAirBlock(this.position.add(k, 1, j))) {
+                if ((j != 0 || k != 0) && world.isAirBlock(position.add(k, 0, j)) && world.isAirBlock(position.add(k, 1, j))) {
                     power += ForgeHooks.getEnchantPower(world, position.add(k * 2, 0, j * 2));
                     power += ForgeHooks.getEnchantPower(world, position.add(k * 2, 1, j * 2));
                     if (k != 0 && j != 0) {
@@ -133,88 +212,58 @@ class XpSeedCracker {
         return (int) power;
     }
 
-    private boolean matches(ItemStack stack, int trySeed) {
-        this.rand.setSeed(trySeed);
+    private boolean matches(ItemStack stack, int xpSeed) {
+        return matches(world, position, this.data, stack, this.rand, this.power, xpSeed);
+    }
 
-        int[] enchantLevels = new int[3];
-        int[] enchantClue = new int[3];
-        int[] worldClue = new int[3];
+    public static boolean matches(World world, BlockPos position, EnchantingTableData data, ItemStack stack, Random rand, int power, int xpSeed) {
+        int[] enchantLevel = data.enchantLevel;
+        int[] clueId = data.clueId;
+        int[] clueLevel = data.clueLevel;
 
-        if (COMPARE_ENCHANT_LEVEL) {
-            int power = getPower();
+        rand.setSeed(xpSeed);
 
-//            for (int i = 0; i < 6; i++) {
-//                rand.nextInt();
-//            }// will consume random when computing enchant levels
-
-            for (int i1 = 0; i1 < 3; ++i1) {
-                enchantLevels[i1] = EnchantmentHelper.calcItemStackEnchantability(this.rand, i1, power, stack);
-                enchantClue[i1] = -1;
-                worldClue[i1] = -1;
-
-                if (enchantLevels[i1] < i1 + 1) {
-                    enchantLevels[i1] = 0;
-                }
-                enchantLevels[i1] = ForgeEventFactory.onEnchantmentLevelSet(world, position, i1, power, stack, enchantLevels[i1]);
+        for (int slot = 0; slot < 3; ++slot) {
+            int level = EnchantmentHelper.calcItemStackEnchantability(rand, slot, power, stack);
+            if (level < slot + 1) {
+                level = 0;
             }
-        } else {
-            enchantLevels = this.data.enchantLevel;
+            level = ForgeEventFactory.onEnchantmentLevelSet(world, position, slot, power, stack, level);
+            if (level != enchantLevel[slot]) {
+                return false;
+            }
         }
 
-        for (int j1 = 0; j1 < 3; ++j1) {
-            if (enchantLevels[j1] > 0) {
-                List<EnchantmentData> list = this.getEnchantmentList(stack, j1, enchantLevels[j1], trySeed);// here the rand is set seed again
-
+        for (int slot = 0; slot < 3; ++slot) {
+            int level = enchantLevel[slot];
+            if (level > 0) {
+                List<EnchantmentData> list = getEnchantmentList(rand, stack, slot, level, xpSeed);// here the rand is set seed again
                 if (!list.isEmpty()) {
-                    EnchantmentData enchantmentdata = list.get(this.rand.nextInt(list.size()));
-                    enchantClue[j1] = Enchantment.getEnchantmentID(enchantmentdata.enchantment);
-                    worldClue[j1] = enchantmentdata.enchantmentLevel;
+                    EnchantmentData clue = list.get(rand.nextInt(list.size()));
+                    if (Enchantment.getEnchantmentID(clue.enchantment) != clueId[slot] || clue.enchantmentLevel != clueLevel[slot]) {
+                        return false;
+                    }
+                } else if (clueId[slot] != -1 || clueLevel[slot] != -1) {
+                    return false;
                 }
             }
         }
-
-        return this.data.equals(enchantLevels, enchantClue, worldClue);
+        return true;
     }
 
     public List<EnchantmentData> getEnchantmentList(ItemStack stack, int enchantSlot, int level) {
-        return this.getEnchantmentList(stack, enchantSlot, level, this.getSeed());
+        return getEnchantmentList(this.rand, stack, enchantSlot, level, this.getSeed());
     }
 
     @NotNull
-    private List<EnchantmentData> getEnchantmentList(ItemStack stack, int enchantSlot, int level, int seed) {
-        this.rand.setSeed(seed + enchantSlot);
-        List<EnchantmentData> list = EnchantmentHelper.buildEnchantmentList(this.rand, stack, level, false);
+    public static List<EnchantmentData> getEnchantmentList(Random rand, ItemStack stack, int enchantSlot, int level, int seed) {
+        rand.setSeed(seed + enchantSlot);
+        List<EnchantmentData> list = EnchantmentHelper.buildEnchantmentList(rand, stack, level, false);
 
         if (stack.getItem() == Items.BOOK && list.size() > 1) {
-            list.remove(this.rand.nextInt(list.size()));
+            list.remove(rand.nextInt(list.size()));
         }
 
         return list;
-    }
-
-    private static class EnchantData {
-        int[] enchantLevel;
-        int[] clueId;
-        int[] clueLevel;
-
-        private EnchantData(int[] enchantLevel, int[] clueId, int[] clueLevel) {
-            this.enchantLevel = enchantLevel.clone();
-            this.clueId = clueId.clone();
-            this.clueLevel = clueLevel.clone();
-        }
-
-        private boolean equals(int[] enchantLevel, int[] clueId, int[] clueLevel) {
-            return Arrays.equals(enchantLevel, this.enchantLevel)
-                    && Arrays.equals(clueId, this.clueId)
-                    && Arrays.equals(clueLevel, this.clueLevel);
-        }
-    }
-
-    private enum State {
-        PENDING,
-        FAIL,
-        MULTICHOICE,
-        CRACKED,
-        ;
     }
 }

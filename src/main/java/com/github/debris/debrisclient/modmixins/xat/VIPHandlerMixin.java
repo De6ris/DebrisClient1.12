@@ -8,9 +8,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import xzeroair.trinkets.vip.VIPHandler;
 
 @Mixin(value = VIPHandler.class, remap = false)
-public class VIPHandlerMixin {
+public abstract class VIPHandlerMixin {
     @Inject(method = "popVIPList", at = @At("HEAD"), remap = false, cancellable = true)
-    private void disable(CallbackInfo ci) {
+    private static void disable(CallbackInfo ci) {
         if (DCConfig.DisableInternetConnection.getBooleanValue()) ci.cancel();
-    }
+    }// static to match pre 0.33
 }
