@@ -27,7 +27,7 @@ public class InventoryUtil {
         drop(slot, true);
     }
 
-    public static void dropStackIfPossible(Slot slot) {
+    public static void maybeDropStack(Slot slot) {
         if (hasItem(slot)) dropStack(slot);
     }
 
@@ -99,7 +99,7 @@ public class InventoryUtil {
         click(index, false, ClickType.QUICK_MOVE);
     }
 
-    public static void quickMoveIfPossible(Slot slot) {
+    public static void maybeQuickMove(Slot slot) {
         if (hasItem(slot)) quickMove(slot);
     }
 
@@ -178,7 +178,7 @@ public class InventoryUtil {
         getSlots().stream().filter(x -> predicate.test(x.getStack())).forEach(InventoryUtil::dropStack);
     }
 
-    public static Optional<Slot> getSlotMouseOver() {
+    public static Optional<Slot> getHoveredSlot() {
         return Optional.ofNullable(getGuiContainer().getSlotUnderMouse());
     }
 

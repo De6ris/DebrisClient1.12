@@ -34,14 +34,14 @@ public class BrewingBarrelTweak {
     }
 
     private static void takeWineItem() {
-        InventoryUtil.quickMoveIfPossible(EnumSection.BrewingBarrelOutputDown.get().getFirstSlot());
+        InventoryUtil.maybeQuickMove(EnumSection.BrewingBarrelOutputDown.get().getFirstSlot());
     }
 
     private static void takeAuxiliary(GuiScreen screen, ContainerSection inventory) {
         Slot up = EnumSection.BrewingBarrelAuxiliaryUp.get().getFirstSlot();
-        InventoryUtil.quickMoveIfPossible(up);
+        InventoryUtil.maybeQuickMove(up);
         Slot down = EnumSection.BrewingBarrelAuxiliaryDown.get().getFirstSlot();
-        InventoryUtil.quickMoveIfPossible(down);
+        InventoryUtil.maybeQuickMove(down);
 
         Optional<Float> optional = getAuxiliaryQuality(screen);
         if (!optional.isPresent()) return;
@@ -54,7 +54,7 @@ public class BrewingBarrelTweak {
 
     private static void takeWineFluid(GuiScreen screen, ContainerSection inventory) {
         Slot outputUp = EnumSection.BrewingBarrelOutputUp.get().getFirstSlot();
-        InventoryUtil.quickMoveIfPossible(outputUp);
+        InventoryUtil.maybeQuickMove(outputUp);
 
         if (outputUp.getHasStack()) return;
 

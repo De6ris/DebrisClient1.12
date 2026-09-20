@@ -131,7 +131,7 @@ public class InputListener implements IKeybindProvider, IMouseInputHandler, IKey
 
         if (ModReference.hasMod(ModReference.RETRO_SOPHISTICATED_BACKPACKS) && RSBackpacksAccess.isBackpackContainer(InventoryUtil.getCurrentContainer())) {
             if (InputUtil.isCtrlDown() && InputUtil.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindDrop.getKeyCode())) {
-                InventoryUtil.getSlotMouseOver().ifPresent(InventoryUtil::dropStackIfPossible);
+                InventoryUtil.getHoveredSlot().ifPresent(InventoryUtil::maybeDropStack);
             }
         }// fix: vanilla hold throwing in this gui won't work, don't know why
     }

@@ -53,7 +53,7 @@ public class InventoryTweaks {
     }
 
     public static void tryMoveSimilar() {
-        InventoryUtil.getSlotMouseOver().ifPresent(slot -> {
+        InventoryUtil.getHoveredSlot().ifPresent(slot -> {
             if (InventoryUtil.hasItem(slot)) {
                 ItemStack template = InventoryUtil.getStack(slot).copy();
                 ContainerSection section = SectionHandler.getSection(slot);
@@ -64,7 +64,7 @@ public class InventoryTweaks {
     }
 
     public static boolean tryThrowSimilar() {
-        Optional<Slot> optional = InventoryUtil.getSlotMouseOver();
+        Optional<Slot> optional = InventoryUtil.getHoveredSlot();
         optional.ifPresent(slot -> {
             if (InventoryUtil.hasItem(slot)) {
                 ItemStack template = InventoryUtil.getStack(slot).copy();

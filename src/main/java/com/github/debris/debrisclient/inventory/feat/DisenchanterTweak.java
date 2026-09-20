@@ -41,7 +41,7 @@ public class DisenchanterTweak {
     }
 
     private static void tryDisenchant() {
-        InventoryUtil.quickMoveIfPossible(EnumSection.DisenchanterThird.get().getFirstSlot());
+        InventoryUtil.maybeQuickMove(EnumSection.DisenchanterThird.get().getFirstSlot());
     }
 
     private static void tryRemoveResidue() {

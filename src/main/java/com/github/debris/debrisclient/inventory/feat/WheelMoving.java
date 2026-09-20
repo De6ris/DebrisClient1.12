@@ -85,7 +85,7 @@ public class WheelMoving {
         if (mode == WheelMovingMode.NONE) return false;
         boolean increase = up;
         if (mode == WheelMovingMode.INVERT) increase = !increase;
-        Optional<Slot> optional = InventoryUtil.getSlotMouseOver();
+        Optional<Slot> optional = InventoryUtil.getHoveredSlot();
         if (optional.isPresent()) {
             scrollSlot(optional.get(), increase);
             return true;

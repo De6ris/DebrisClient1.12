@@ -124,7 +124,7 @@ public class SectionHandler {
     }
 
     public static Optional<ContainerSection> getSectionMouseOver() {
-        Optional<Slot> slotMouseOver = InventoryUtil.getSlotMouseOver();
+        Optional<Slot> slotMouseOver = InventoryUtil.getHoveredSlot();
         return slotMouseOver.map(SectionHandler::getSection);
     }
 

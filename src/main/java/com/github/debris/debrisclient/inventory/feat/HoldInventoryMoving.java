@@ -17,7 +17,7 @@ public class HoldInventoryMoving {
      * @return If I should cancel left-clicking
      */
     public static boolean start() {
-        if (!InventoryUtil.getSlotMouseOver().isPresent()) return false;
+        if (!InventoryUtil.getHoveredSlot().isPresent()) return false;
         if (InventoryUtil.isHoldingItem()) return false;
 
         MODE = detectMode();
@@ -55,7 +55,7 @@ public class HoldInventoryMoving {
     }
 
     private static void run(Mode mode) {
-        Optional<Slot> optional = InventoryUtil.getSlotMouseOver();
+        Optional<Slot> optional = InventoryUtil.getHoveredSlot();
         if (!optional.isPresent()) return;
         Slot slot = optional.get();
         if (LAST_MOVED_SLOT == slot) return;
@@ -67,7 +67,7 @@ public class HoldInventoryMoving {
 
     private static void handle(Slot slot, Mode mode) {
         if (mode == Mode.SINGLE) {
-            InventoryUtil.quickMoveIfPossible(slot);
+            InventoryUtil.maybeQuickMove(slot);
         }
         if (mode == Mode.SIMILAR) {
             InventoryTweaks.tryMoveSimilar();

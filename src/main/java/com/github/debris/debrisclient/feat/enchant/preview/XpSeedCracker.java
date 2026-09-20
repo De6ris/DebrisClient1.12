@@ -37,8 +37,6 @@ public class XpSeedCracker {
 
     private EnchantingTableData data;
 
-    private int power = POWER_NOT_AVAILABLE;
-
     private int localHigher;// 31 to 16 bits
 
     private int previousMedium;
@@ -91,7 +89,7 @@ public class XpSeedCracker {
     public void update(ContainerEnchantment container, World world, ItemStack stack) {
         if (this.data == null || !this.data.equals(container.enchantLevels, container.enchantClue, container.worldClue)) {
             this.data = new EnchantingTableData(container.enchantLevels, container.enchantClue, container.worldClue);
-            if (stack.isEmpty() || stack.isItemEnchanted()) {
+            if (stack.isEmpty() || !stack.isItemEnchantable()) {
                 this.clear();
                 return;
             }
@@ -101,12 +99,12 @@ public class XpSeedCracker {
 
         this.local = Platform.isSinglePlayer();
         this.world = world;
-        this.power = POWER_NOT_AVAILABLE;
+        int power = POWER_NOT_AVAILABLE;
         Minecraft client = Minecraft.getMinecraft();
         BlockPos blockPos = RayTraceUtil.getBlockPos(client);
         if (blockPos != null && client.world.getBlockState(blockPos).getBlock() == Blocks.ENCHANTING_TABLE) {
             this.position = blockPos;
-            this.power = getPower(world, blockPos);
+            power = getPower(world, blockPos);
         }
 
         this.previousMedium = this.medium;
@@ -116,23 +114,23 @@ public class XpSeedCracker {
         }
         this.medium = packetXpSeed & 0x0000FFF0;
 
-        if (this.power != POWER_NOT_AVAILABLE) {
-            this.crack(stack);
+        if (power != POWER_NOT_AVAILABLE) {
+            this.crack(stack, power);
         }
     }
 
-    private void crack(ItemStack stack) {
+    private void crack(ItemStack stack, int power) {
         if (state == CrackingState.CRACKING) {
             this.parallelChecker.maybeCancel();
         }
 
         if (this.medium == this.previousMedium) {
             if (state == CrackingState.MULTICHOICE) {
-                this.candidates.removeIf(xpSeed -> !matches(stack, xpSeed));
+                this.candidates.removeIf(xpSeed -> !matches(stack, power, xpSeed));
                 this.updateState();
                 return;
             }
-            if (state == CrackingState.CRACKED && matches(stack, this.getSeed())) {
+            if (state == CrackingState.CRACKED && matches(stack, power, this.getSeed())) {
                 return;// keep the state
             }
         }
@@ -143,7 +141,7 @@ public class XpSeedCracker {
         if (this.local) {
             for (int low = 0; low < 16; low++) {
                 int xpSeed = this.localHigher | medium | low;
-                if (matches(stack, xpSeed)) {
+                if (matches(stack, power, xpSeed)) {
                     potentials.add(xpSeed);
                 }
             }
@@ -157,15 +155,14 @@ public class XpSeedCracker {
             return;
         }
 
-        this.iterateSerial(stack, potentials);
+        this.iterateSerial(stack, potentials, power);
     }
 
-    private void iterateSerial(ItemStack stack, IntList potentials) {
+    private void iterateSerial(ItemStack stack, IntList potentials, int power) {
         World world = this.world;
         BlockPos position = this.position;
         EnchantingTableData data = this.data;
         Random rand = this.rand;
-        int power = this.power;
         int medium = this.medium;
 
         for (int high = 0; high < 65536; high++) {
@@ -212,8 +209,8 @@ public class XpSeedCracker {
         return (int) power;
     }
 
-    private boolean matches(ItemStack stack, int xpSeed) {
-        return matches(world, position, this.data, stack, this.rand, this.power, xpSeed);
+    private boolean matches(ItemStack stack, int power, int xpSeed) {
+        return matches(world, position, this.data, stack, this.rand, power, xpSeed);
     }
 
     public static boolean matches(World world, BlockPos position, EnchantingTableData data, ItemStack stack, Random rand, int power, int xpSeed) {

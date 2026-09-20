@@ -24,7 +24,7 @@ public class BetterSwapHands {
     }
 
     public static boolean run(Minecraft client) {
-        Optional<Slot> optional = InventoryUtil.getSlotMouseOver();
+        Optional<Slot> optional = InventoryUtil.getHoveredSlot();
         if (!optional.isPresent()) return false;
         Slot slot = optional.get();
 
