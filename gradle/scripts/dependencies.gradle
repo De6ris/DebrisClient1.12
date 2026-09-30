@@ -79,6 +79,7 @@ dependencies {
     compileOnly rfg.deobf("curse.maven:scaling-health-${scalinghealth_version}")
     compileOnly rfg.deobf("curse.maven:mobends-${mobends_version}")
     compileOnly rfg.deobf("curse.maven:trinkets-and-baubles-${trinkets_and_baubles_version}")
+    compileOnly rfg.deobf("curse.maven:so-many-enchantments-${so_many_enchantments_version}")
 
 
     // extra dependencies

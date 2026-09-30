@@ -1,7 +1,9 @@
 package com.github.debris.debrisclient.feat.enchant.preview;
 
+import com.github.debris.debrisclient.ModReference;
 import com.github.debris.debrisclient.Platform;
 import com.github.debris.debrisclient.config.DCConfig;
+import com.github.debris.debrisclient.unsafe.mod.SoManyEnchantmentsAccess;
 import com.github.debris.debrisclient.util.RayTraceUtil;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
@@ -255,6 +257,11 @@ public class XpSeedCracker {
     @NotNull
     public static List<EnchantmentData> getEnchantmentList(Random rand, ItemStack stack, int enchantSlot, int level, int seed) {
         rand.setSeed(seed + enchantSlot);
+
+        if (ModReference.hasMod(ModReference.SO_MANY_ENCHANTMENTS)) {
+            SoManyEnchantmentsAccess.setThreadLocals(Minecraft.getMinecraft().player);
+        }
+
         List<EnchantmentData> list = EnchantmentHelper.buildEnchantmentList(rand, stack, level, false);
 
         if (stack.getItem() == Items.BOOK && list.size() > 1) {

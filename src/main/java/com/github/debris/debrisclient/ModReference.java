@@ -32,6 +32,7 @@ public class ModReference {
     public static final String RUSTIC = "rustic";
     public static final String SCALING_HEALTH = "scalinghealth";
     public static final String SERENE_SEASONS = "sereneseasons";
+    public static final String SO_MANY_ENCHANTMENTS = "somanyenchantments";
     public static final String TRINKETS_AND_BAUBLES = "xat";
     public static final String TWEAKEROO = "tweakeroo";
     public static final String WAYSTONES = "waystones";
