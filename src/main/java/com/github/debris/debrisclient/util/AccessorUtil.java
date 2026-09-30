@@ -1,9 +1,9 @@
 package com.github.debris.debrisclient.util;
 
 import com.github.debris.debrisclient.mixins.client.IClientMixin;
-import com.github.debris.debrisclient.mixins.client.resources.ILocaleMixin;
 import com.github.debris.debrisclient.mixins.client.gui.IGuiScreenMixin;
 import com.github.debris.debrisclient.mixins.client.resources.ILanguageManagerMixin;
+import com.github.debris.debrisclient.mixins.client.resources.ILocaleMixin;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;

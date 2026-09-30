@@ -1,6 +1,5 @@
 package com.github.debris.debrisclient.event.malilib;
 
-import com.github.debris.debrisclient.DebrisClient;
 import com.github.debris.debrisclient.ModReference;
 import com.github.debris.debrisclient.config.DCConfig;
 import com.github.debris.debrisclient.config.InventoryConfig;
@@ -21,6 +20,8 @@ import net.minecraft.client.Minecraft;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class InputListener implements IKeybindProvider, IMouseInputHandler, IKeyboardInputHandler {
     public static final InputListener Instance = new InputListener();
@@ -31,13 +32,18 @@ public class InputListener implements IKeybindProvider, IMouseInputHandler, IKey
 
     @Override
     public List<? extends IHotkey> getAllHotkeys() {
-        return DCConfig.HOTKEY;
+        return Stream.concat(
+                        DCConfig.HOTKEY.stream(),
+                        InventoryConfig.HOTKEY.stream()
+                )
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<KeybindCategory> getHotkeyCategoriesForCombinedView() {
         return ImmutableList.of(
-                new KeybindCategory(DebrisClient.MOD_NAME, "热键", DCConfig.HOTKEY)
+                new KeybindCategory(DCConfig.getInstance().getModName(), "热键", DCConfig.HOTKEY),
+                new KeybindCategory(InventoryConfig.getInstance().getModName(), "热键", InventoryConfig.HOTKEY)
         );
     }
 
@@ -88,7 +94,7 @@ public class InputListener implements IKeybindProvider, IMouseInputHandler, IKey
                 }
             }
 
-            if (InventoryConfig.HoldInventoryMoving.getBooleanValue() && HoldInventoryMoving.start()) {
+            if (HoldInventoryMoving.start()) {
                 return true;
             }
         }

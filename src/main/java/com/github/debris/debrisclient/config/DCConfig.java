@@ -103,7 +103,7 @@ public class DCConfig extends ConfigHandlerImpl {
     public static final List<ConfigHotkey> HOTKEY;
 
     public static final ConfigHotkey OpenConfigScreen = ofHotkey("打开配置屏幕", "D,C");
-    public static final ConfigHotkey OpenInventoryConfigScreen = ofHotkey("打开物品栏配置屏幕", "D,I");
+    public static final ConfigHotkey OpenInventoryConfigScreen = ofHotkey("打开物品栏配置屏幕", "D,I", "相关功能已成为独立模块");
     public static final ConfigHotkey ToggleGameMode = ofHotkey("切换游戏模式", "F3,F4", "仅生存创造切换;旁观可用F3+N");
     public static final ConfigHotkey CopyTPCommand = ofHotkey("复制TP指令", "F3,C");
     public static final ConfigHotkey AddToIMBlockerWhiteList = ofHotkey("添加GUI至输入法修复白名单", "F5", KeybindSettings.GUI, "在GUI中按下");

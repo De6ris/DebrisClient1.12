@@ -11,7 +11,6 @@ import fi.dy.masa.malilib.config.options.IConfigBase;
 import fi.dy.masa.malilib.hotkeys.KeyAction;
 import fi.dy.masa.malilib.hotkeys.KeybindSettings;
 
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +26,6 @@ public class InventoryConfig extends ConfigHandlerImpl {
     public static final ConfigBoolean SortingContainersLast = ofBoolean("整理时容器置于末端", true, "潜影盒, 板条箱");
     public static final ConfigBoolean CachedSorting = ofBoolean("整理时使用缓存算法", true, "相比直接操作, 可减少发包");
     public static final ConfigEnum<SortCategory> ItemSortingOrder = ofEnum("物品整理顺序", SortCategory.CREATIVE_INVENTORY, "1.创造模式物品栏顺序\n2.翻译键顺序\n3.翻译文本顺序\n4.拼音顺序(需要Jech)");
-    public static final ConfigBoolean HoldInventoryMoving = ofBoolean("连续物品移动", false, "允许在按下Shift和左键时不断移动物品");
     public static final ConfigBoolean BetterQuickMoving = ofBoolean("更好的物品移动", false, "允许将物品送上工作台");
     public static final ConfigEnum<WheelMovingMode> WheelMoving = ofEnum("滚轮移动", WheelMovingMode.NONE);
     public static final ConfigBoolean BetterSwapHandsKey = ofBoolean("更好的副手键", false, "允许在容器中切换");
@@ -69,7 +67,7 @@ public class InventoryConfig extends ConfigHandlerImpl {
 
     public static final List<IConfigBase> VALUE;
     public static final List<IConfigBase> LIST;
-    public static final List<IConfigBase> HOTKEY;
+    public static final List<ConfigHotkey> HOTKEY;
 
     static {
         VALUE = ImmutableList.of(
@@ -77,7 +75,6 @@ public class InventoryConfig extends ConfigHandlerImpl {
                 SortingContainersLast,
                 CachedSorting,
                 ItemSortingOrder,
-                HoldInventoryMoving,
                 BetterQuickMoving,
                 WheelMoving,
                 BetterSwapHandsKey,
