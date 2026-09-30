@@ -63,6 +63,10 @@ public class StringUtil {
         return format;
     }
 
+    public static boolean hasTranslationKey(String key) {
+        return I18n.hasKey(key);
+    }
+
     public static List<String> createOptionListTooltip(IConfigOptionList config) {
         IConfigOptionListEntry defaultEntry = config.getDefaultOptionListValue();
         IConfigOptionListEntry currentEntry = config.getOptionListValue();
