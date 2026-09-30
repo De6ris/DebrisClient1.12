@@ -3,6 +3,7 @@ package com.github.debris.debrisclient.event.malilib;
 import com.github.debris.debrisclient.DebrisClient;
 import com.github.debris.debrisclient.ModReference;
 import com.github.debris.debrisclient.config.DCConfig;
+import com.github.debris.debrisclient.config.InventoryConfig;
 import com.github.debris.debrisclient.inventory.feat.HoldInventoryMoving;
 import com.github.debris.debrisclient.inventory.feat.InventoryTweaks;
 import com.github.debris.debrisclient.inventory.feat.WheelMoving;
@@ -72,7 +73,7 @@ public class InputListener implements IKeybindProvider, IMouseInputHandler, IKey
             if (Predicates.notInGuiContainer(Minecraft.getMinecraft()))
                 return false;// the below assuming valid environment
 
-            if (DCConfig.ModifierMoveAll.getKeybind().isKeybindHeld()) {
+            if (InventoryConfig.ModifierMoveAll.getKeybind().isKeybindHeld()) {
                 Optional<ContainerSection> optional = SectionHandler.getSectionMouseOver();
                 if (optional.isPresent()) {
                     optional.get().notEmptyRun(InventoryUtil::quickMove);
@@ -80,20 +81,20 @@ public class InputListener implements IKeybindProvider, IMouseInputHandler, IKey
                 }
             }
 
-            if (DCConfig.ModifierSpreadItem.getKeybind().isKeybindHeld()) {
+            if (InventoryConfig.ModifierSpreadItem.getKeybind().isKeybindHeld()) {
                 if (InventoryTweaks.trySpreading(false)) {
                     this.cancelButtonUp(eventButton);
                     return true;
                 }
             }
 
-            if (DCConfig.HoldInventoryMoving.getBooleanValue() && HoldInventoryMoving.start()) {
+            if (InventoryConfig.HoldInventoryMoving.getBooleanValue() && HoldInventoryMoving.start()) {
                 return true;
             }
         }
 
         if (eventButton == 1) {
-            if (DCConfig.ModifierSpreadItem.getKeybind().isKeybindHeld()) {
+            if (InventoryConfig.ModifierSpreadItem.getKeybind().isKeybindHeld()) {
                 if (InventoryTweaks.trySpreading(true)) {
                     this.cancelButtonUp(eventButton);// will put down one at HandledScreen.mouseReleased if not canceled
                     return true;

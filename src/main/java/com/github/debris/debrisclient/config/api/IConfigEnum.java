@@ -5,6 +5,8 @@ import com.github.debris.debrisclient.config.options.ConfigEnumEntryWrapper;
 import java.util.List;
 
 public interface IConfigEnum<T extends Enum<T>> {
+    void setEnumValue(T value);
+
     T getDefaultEnumValue();
 
     T getEnumValue();

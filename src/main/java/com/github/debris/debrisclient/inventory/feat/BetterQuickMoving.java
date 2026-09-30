@@ -1,6 +1,6 @@
 package com.github.debris.debrisclient.inventory.feat;
 
-import com.github.debris.debrisclient.config.DCConfig;
+import com.github.debris.debrisclient.config.InventoryConfig;
 import com.github.debris.debrisclient.inventory.section.ContainerSection;
 import com.github.debris.debrisclient.inventory.section.EnumSection;
 import com.github.debris.debrisclient.util.InventoryUtil;
@@ -14,7 +14,7 @@ public class BetterQuickMoving {
     public static void run(int slotId, int mouseButton) {
         if (slotId == -1) return;// cases -1 unknown
         if (mouseButton != 0) return;
-        if (!DCConfig.BetterQuickMoving.getBooleanValue()) return;
+        if (!InventoryConfig.BetterQuickMoving.getBooleanValue()) return;
 
         GuiContainer guiContainer = InventoryUtil.getGuiContainer();
         Slot slot = InventoryUtil.getSlots().get(slotId);

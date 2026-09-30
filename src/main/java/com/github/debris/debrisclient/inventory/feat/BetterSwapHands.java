@@ -1,7 +1,7 @@
 package com.github.debris.debrisclient.inventory.feat;
 
 import com.github.debris.debrisclient.ModReference;
-import com.github.debris.debrisclient.config.DCConfig;
+import com.github.debris.debrisclient.config.InventoryConfig;
 import com.github.debris.debrisclient.unsafe.mod.QuarkAccess;
 import com.github.debris.debrisclient.util.InteractionUtil;
 import com.github.debris.debrisclient.util.InventoryUtil;
@@ -17,7 +17,7 @@ import java.util.Optional;
 
 public class BetterSwapHands {
     public static boolean shouldCancel(GuiContainer guiContainer, int keyCode) {
-        if (!DCConfig.BetterSwapHandsKey.getBooleanValue()) return false;
+        if (!InventoryConfig.BetterSwapHandsKey.getBooleanValue()) return false;
         Minecraft client = guiContainer.mc;
         if (client.gameSettings.keyBindSwapHands.getKeyCode() != keyCode) return false;
         return run(client);

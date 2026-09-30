@@ -1,7 +1,7 @@
 package com.github.debris.debrisclient.inventory.feat;
 
 import com.github.debris.debrisclient.ModReference;
-import com.github.debris.debrisclient.config.DCConfig;
+import com.github.debris.debrisclient.config.InventoryConfig;
 import com.github.debris.debrisclient.inventory.section.ContainerSection;
 import com.github.debris.debrisclient.inventory.section.EnumSection;
 import com.github.debris.debrisclient.inventory.section.SectionHandler;
@@ -81,7 +81,7 @@ public class WheelMoving {
     }
 
     public static boolean handleScroll(boolean up, int amount) {
-        WheelMovingMode mode = DCConfig.WheelMoving.getEnumValue();
+        WheelMovingMode mode = InventoryConfig.WheelMoving.getEnumValue();
         if (mode == WheelMovingMode.NONE) return false;
         boolean increase = up;
         if (mode == WheelMovingMode.INVERT) increase = !increase;

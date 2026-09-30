@@ -1,6 +1,6 @@
 package com.github.debris.debrisclient.inventory.sort;
 
-import com.github.debris.debrisclient.config.DCConfig;
+import com.github.debris.debrisclient.config.InventoryConfig;
 import com.github.debris.debrisclient.inventory.feat.InventoryTweaks;
 import com.github.debris.debrisclient.inventory.section.ContainerSection;
 import com.github.debris.debrisclient.inventory.section.EnumSection;
@@ -61,7 +61,7 @@ public class SortInventory {
         Comparator<Slot> slotSorter = (x, y) -> itemStackSorter.compare(x.getStack(), y.getStack());
         BiConsumer<Slot, Slot> swapAction = InventoryUtil::swapSlots;
 
-        if (DCConfig.SortingContainersLast.getBooleanValue()) {
+        if (InventoryConfig.SortingContainersLast.getBooleanValue()) {
             putContainersLast(section);
             splitByContainer(section).forEach(x -> process(x, slotSorter, swapAction));
         } else {
@@ -122,7 +122,7 @@ public class SortInventory {
         int length = slots.length;
         if (length <= 1) return;
 
-        if (DCConfig.CachedSorting.getBooleanValue()) {
+        if (InventoryConfig.CachedSorting.getBooleanValue()) {
             Permutations.ofOptimal(slots, sorter).operate(slots, swapAction);
         } else {
             // direct sorting

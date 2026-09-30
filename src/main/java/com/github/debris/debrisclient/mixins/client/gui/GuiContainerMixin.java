@@ -1,6 +1,6 @@
 package com.github.debris.debrisclient.mixins.client.gui;
 
-import com.github.debris.debrisclient.config.DCConfig;
+import com.github.debris.debrisclient.config.InventoryConfig;
 import com.github.debris.debrisclient.inventory.feat.BetterSwapHands;
 import com.github.debris.debrisclient.inventory.feat.InventoryTweaks;
 import com.github.debris.debrisclient.inventory.section.EnumSection;
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class GuiContainerMixin extends GuiScreen {
     @Inject(method = "keyTyped", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityPlayerSP;closeScreen()V"))
     private void onCloseScreen(char typedChar, int keyCode, CallbackInfo ci) {
-        if (DCConfig.BetterHoldingItem.getBooleanValue()) {
+        if (InventoryConfig.BetterHoldingItem.getBooleanValue()) {
             InventoryTweaks.clearCursor(EnumSection.InventoryWhole.get());
         }
     }

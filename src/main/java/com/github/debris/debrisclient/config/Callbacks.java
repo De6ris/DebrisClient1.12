@@ -1,9 +1,10 @@
 package com.github.debris.debrisclient.config;
 
 import com.github.debris.debrisclient.ModReference;
-import com.github.debris.debrisclient.gui.screen.DCConfigScreen;
 import com.github.debris.debrisclient.feat.*;
 import com.github.debris.debrisclient.feat.enchant.plan.EnchantPlan;
+import com.github.debris.debrisclient.gui.screen.DCConfigScreen;
+import com.github.debris.debrisclient.gui.screen.InventoryConfigScreen;
 import com.github.debris.debrisclient.inventory.feat.BrewingBarrelTweak;
 import com.github.debris.debrisclient.inventory.feat.DisenchanterTweak;
 import com.github.debris.debrisclient.inventory.feat.InventoryTweaks;
@@ -19,38 +20,19 @@ public class Callbacks {
     public static final Logger LOGGER = LogManager.getLogger(Callbacks.class);
 
     public static void init(Minecraft client) {
-        DCConfig.OpenWindow.getKeybind().setCallback((action, key) -> {
+        DCConfig.OpenConfigScreen.getKeybind().setCallback((action, key) -> {
             client.displayGuiScreen(new DCConfigScreen(null));
+            return true;
+        });
+
+        DCConfig.OpenInventoryConfigScreen.getKeybind().setCallback((action, key) -> {
+            client.displayGuiScreen(new InventoryConfigScreen(null));
             return true;
         });
 
         DCConfig.ToggleGameMode.getKeybind().setCallback((action, key) -> MiscFeat.toggleGameMode(client));
 
         DCConfig.CopyTPCommand.getKeybind().setCallback((action, key) -> MiscFeat.copyTPCommand(client));
-
-        DCConfig.SortInventory.getKeybind().setCallback((action, key) -> SortInventory.onKey(client));
-
-        DCConfig.AutoContainerOperation.getKeybind().setCallback((action, key) -> {
-            if (BrewingBarrelTweak.run(client)) {
-                SoundUtil.playClickSound(client);
-                return true;
-            }
-            if (DisenchanterTweak.run(client)) {
-                SoundUtil.playClickSound(client);
-                return true;
-            }
-            return false;
-        });
-
-        DCConfig.ThrowSimilar.getKeybind().setCallback((action, key) -> {
-            if (Predicates.notInGuiContainer(client)) return false;
-            return InventoryTweaks.tryThrowSimilar();
-        });
-
-        DCConfig.ThrowSection.getKeybind().setCallback((action, key) -> {
-            if (Predicates.notInGuiContainer(client)) return false;
-            return InventoryTweaks.tryThrowSection();
-        });
 
         DCConfig.RuneTweak.setValueChangeCallback(configBoolean -> {
             if (ModReference.hasMod(ModReference.FORGOTTEN_ITEMS)) {
@@ -77,6 +59,35 @@ public class Callbacks {
         DCConfig.ClearSearch.getKeybind().setCallback((action, key) -> SearchTweaks.clear(client));
 
         DCConfig.DebugKey.getKeybind().setCallback((action, key) -> MiscFeat.debug(client));
+
+        initInventory(client);
     }
 
+    private static void initInventory(Minecraft client) {
+        InventoryConfig.SwitchPreset.setValueChangeCallback(InventoryPreset::switchPreset);
+
+        InventoryConfig.SortInventory.getKeybind().setCallback((action, key) -> SortInventory.onKey(client));
+
+        InventoryConfig.AutoContainerOperation.getKeybind().setCallback((action, key) -> {
+            if (BrewingBarrelTweak.run(client)) {
+                SoundUtil.playClickSound(client);
+                return true;
+            }
+            if (DisenchanterTweak.run(client)) {
+                SoundUtil.playClickSound(client);
+                return true;
+            }
+            return false;
+        });
+
+        InventoryConfig.ThrowSame.getKeybind().setCallback((action, key) -> {
+            if (Predicates.notInGuiContainer(client)) return false;
+            return InventoryTweaks.tryThrowSimilar();
+        });
+
+        InventoryConfig.ThrowSection.getKeybind().setCallback((action, key) -> {
+            if (Predicates.notInGuiContainer(client)) return false;
+            return InventoryTweaks.tryThrowSection();
+        });
+    }
 }

@@ -1,8 +1,8 @@
 package com.github.debris.debrisclient.event.malilib;
 
-import com.github.debris.debrisclient.DebrisClient;
 import com.github.debris.debrisclient.config.Callbacks;
 import com.github.debris.debrisclient.config.DCConfig;
+import com.github.debris.debrisclient.config.InventoryConfig;
 import fi.dy.masa.malilib.config.ConfigManager;
 import fi.dy.masa.malilib.event.InputEventHandler;
 import fi.dy.masa.malilib.event.TickHandler;
@@ -14,7 +14,8 @@ import net.minecraft.client.Minecraft;
 public class InitListener implements IInitializationHandler {
     @Override
     public void registerModHandlers() {
-        ConfigManager.getInstance().registerConfigHandler(DebrisClient.MOD_ID, DCConfig.getInstance());
+        ConfigManager.getInstance().registerConfigHandler(DCConfig.ID, DCConfig.getInstance());
+        ConfigManager.getInstance().registerConfigHandler(InventoryConfig.ID, InventoryConfig.getInstance());
 
         InputListener inputListener = InputListener.Instance;
         InputEventHandler.getKeybindManager().registerKeybindProvider(inputListener);

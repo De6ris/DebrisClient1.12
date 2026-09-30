@@ -1,6 +1,6 @@
 package com.github.debris.debrisclient.inventory.sort;
 
-import com.github.debris.debrisclient.config.DCConfig;
+import com.github.debris.debrisclient.config.InventoryConfig;
 import com.github.debris.debrisclient.feat.PinYinSupport;
 import com.github.debris.debrisclient.util.StringUtil;
 import net.minecraft.creativetab.CreativeTabs;
@@ -23,7 +23,7 @@ public enum SortCategory {
     }
 
     public static SortCategory getCategory() {
-        return DCConfig.ItemSortingOrder.getEnumValue();
+        return InventoryConfig.ItemSortingOrder.getEnumValue();
     }
 
     /*

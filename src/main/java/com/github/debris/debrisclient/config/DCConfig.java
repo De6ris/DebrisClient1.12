@@ -7,12 +7,8 @@ import com.github.debris.debrisclient.config.api.RequiresMod;
 import com.github.debris.debrisclient.config.options.ConfigEnum;
 import com.github.debris.debrisclient.feat.BreakingCooldownMode;
 import com.github.debris.debrisclient.feat.QualityLevel;
-import com.github.debris.debrisclient.inventory.feat.WheelMovingMode;
-import com.github.debris.debrisclient.inventory.sort.SortCategory;
 import com.google.common.collect.ImmutableList;
-import fi.dy.masa.malilib.config.IConfigHandler;
 import fi.dy.masa.malilib.config.options.*;
-import fi.dy.masa.malilib.hotkeys.KeyAction;
 import fi.dy.masa.malilib.hotkeys.KeybindSettings;
 
 import java.util.LinkedHashMap;
@@ -22,24 +18,16 @@ import java.util.Map;
 import static com.github.debris.debrisclient.config.ConfigFactory.*;
 import static com.github.debris.debrisclient.feat.IMBlocker.BUILT_IN_SCREENS;
 
-public class DCConfig implements IConfigHandler {
+public class DCConfig extends ConfigHandlerImpl {
+    public static final String ID = DebrisClient.MOD_ID;
     private static final DCConfig Instance = new DCConfig();
 
     private DCConfig() {
+        super(ID, DebrisClient.MOD_NAME);
     }
 
     public static DCConfig getInstance() {
         return Instance;
-    }
-
-    @Override
-    public String getModName() {
-        return DebrisClient.MOD_NAME;
-    }
-
-    @Override
-    public String getConfigFileName() {
-        return DebrisClient.MOD_ID + ".json";
     }
 
     @Override
@@ -59,14 +47,6 @@ public class DCConfig implements IConfigHandler {
 
     public static final List<IConfigBase> VALUE;
 
-    public static final ConfigBoolean SortingContainersLast = ofBoolean("整理时容器置于末端", true, "潜影盒, 板条箱");
-    public static final ConfigBoolean CachedSorting = ofBoolean("整理时使用缓存算法", true, "相比直接操作, 可减少发包");
-    public static final ConfigEnum<SortCategory> ItemSortingOrder = ofEnum("物品整理顺序", SortCategory.CREATIVE_INVENTORY, "1.创造模式物品栏顺序\n2.翻译键顺序\n3.翻译文本顺序\n4.拼音顺序(需要Jech)");
-    public static final ConfigBoolean HoldInventoryMoving = ofBoolean("连续物品移动", true, "允许在按下Shift和左键时不断移动物品");
-    public static final ConfigBoolean BetterQuickMoving = ofBoolean("更好的物品移动", true, "允许将物品送上工作台");
-    public static final ConfigEnum<WheelMovingMode> WheelMoving = ofEnum("滚轮移动", WheelMovingMode.NONE);
-    public static final ConfigBoolean BetterSwapHandsKey = ofBoolean("更好的副手键", true, "允许在容器中切换");
-    public static final ConfigBoolean BetterHoldingItem = ofBoolean("更好的物品拿取", true, "自动在关闭容器时将拿取的物品放回物品栏");
     public static final ConfigBoolean AnvilLevelView = ofBoolean("铁砧等级显示", true, "生存可见40级以上");
     public static final ConfigBoolean EnchantPreview = ofBoolean("附魔预览", false);
     public static final ConfigBoolean EnchantPreviewParallel = ofBoolean("附魔预览并行加速", true, "多线程执行循环");
@@ -122,15 +102,10 @@ public class DCConfig implements IConfigHandler {
 
     public static final List<ConfigHotkey> HOTKEY;
 
-    private static final KeybindSettings GUI_RELAXED = KeybindSettings.create(KeybindSettings.Context.GUI, KeyAction.PRESS, true, false, false, false);
-
-    public static final ConfigHotkey OpenWindow = ofHotkey("打开配置", "D,C");
+    public static final ConfigHotkey OpenConfigScreen = ofHotkey("打开配置屏幕", "D,C");
+    public static final ConfigHotkey OpenInventoryConfigScreen = ofHotkey("打开物品栏配置屏幕", "D,I");
     public static final ConfigHotkey ToggleGameMode = ofHotkey("切换游戏模式", "F3,F4", "仅生存创造切换;旁观可用F3+N");
     public static final ConfigHotkey CopyTPCommand = ofHotkey("复制TP指令", "F3,C");
-    public static final ConfigHotkey SortInventory = ofHotkey("整理物品栏", "", KeybindSettings.GUI, "比InvTweaks好用(我认为)");
-    public static final ConfigHotkey AutoContainerOperation = ofHotkey("自动容器操作", "SPACE", KeybindSettings.GUI, "Rustic:酿造桶\nDisenchanter:袪魔台");
-    public static final ConfigHotkey ThrowSimilar = ofHotkey("丢出类似", "LSHIFT,Q", KeybindSettings.GUI, "会丢出当前区域类似物品");
-    public static final ConfigHotkey ThrowSection = ofHotkey("清空区域", "SPACE,Q", KeybindSettings.GUI, "全部丢出");
     public static final ConfigHotkey AddToIMBlockerWhiteList = ofHotkey("添加GUI至输入法修复白名单", "F5", KeybindSettings.GUI, "在GUI中按下");
     public static final ConfigHotkey AlignWithEnderEye = ofHotkey("对齐末影之眼", "");
     public static final ConfigHotkey CopyMeasureData = ofHotkey("复制测量数据", "");
@@ -144,10 +119,6 @@ public class DCConfig implements IConfigHandler {
     public static final ConfigHotkey FastSearch = ofHotkey("快速搜索", "F", KeybindSettings.GUI, "在RS终端中搜索Jei原料");
     @RequiresMod({ModReference.REFINED_STORAGE, ModReference.JEI})
     public static final ConfigHotkey ClearSearch = ofHotkey("清空搜索", "C", KeybindSettings.GUI, "清空RS终端的搜索栏");
-
-    public static final ConfigHotkey ModifierMoveAll = ofHotkey("移动全部:修饰键", "SPACE", GUI_RELAXED, "按住时左键会移动当前区域全部");
-    public static final ConfigHotkey ModifierSpreadItem = ofHotkey("分散物品:修饰键", "LMENU", GUI_RELAXED, "按住时点击会尝试将手中物品均分到点击区域全部槽位");
-    public static final ConfigHotkey ModifierMoveSimilar = ofHotkey("移动类似:修饰键", "LCONTROL", GUI_RELAXED, "按住时左键会移动当前区域类似物品");
 
     public static final ConfigHotkey DebugKey = ofHotkey("调试键", "");
 
@@ -204,14 +175,6 @@ public class DCConfig implements IConfigHandler {
 
     static {
         VALUE = ImmutableList.of(
-                SortingContainersLast,
-                CachedSorting,
-                ItemSortingOrder,
-                HoldInventoryMoving,
-                BetterQuickMoving,
-                WheelMoving,
-                BetterSwapHandsKey,
-                BetterHoldingItem,
                 AnvilLevelView,
                 EnchantPreview,
                 EnchantPreviewParallel,
@@ -249,13 +212,10 @@ public class DCConfig implements IConfigHandler {
                 GlowEntityList
         );
         HOTKEY = ImmutableList.of(
-                OpenWindow,
+                OpenConfigScreen,
+                OpenInventoryConfigScreen,
                 ToggleGameMode,
                 CopyTPCommand,
-                SortInventory,
-                AutoContainerOperation,
-                ThrowSimilar,
-                ThrowSection,
                 AddToIMBlockerWhiteList,
                 AlignWithEnderEye,
                 CopyMeasureData,
@@ -266,10 +226,7 @@ public class DCConfig implements IConfigHandler {
                 AnvilEnchantPlan,
                 FastSearch,
                 ClearSearch,
-                DebugKey,
-                ModifierMoveAll,
-                ModifierSpreadItem,
-                ModifierMoveSimilar
+                DebugKey
         );
         YEETS = ImmutableList.of(
                 NoReducedDebugInfo,

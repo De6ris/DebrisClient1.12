@@ -6,11 +6,11 @@ import com.github.debris.debrisclient.config.HideConfig;
 import com.github.debris.debrisclient.inventory.feat.AutoReforging;
 import com.google.common.collect.ImmutableList;
 import fi.dy.masa.malilib.config.gui.ConfigGuiTabBase;
-import fi.dy.masa.malilib.gui.GuiConfigsBase;
 import fi.dy.masa.malilib.gui.interfaces.IConfigGuiTab;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.text.TextComponentString;
 
-public class DCConfigScreen extends GuiConfigsBase {
+public class DCConfigScreen extends ConfigScreen {
     private static final ConfigGuiTabBase VALUE = new ConfigGuiTabBase("值", 100, false, HideConfig.filter(DCConfig.VALUE));
     private static final ConfigGuiTabBase INTEGRATION = new ConfigGuiTabBase("联动", 100, false, HideConfig.filter(DCConfig.INTEGRATION));
     private static final ConfigGuiTabBase LIST = new ConfigGuiTabBase("列表", 100, false, HideConfig.filter(DCConfig.LIST));
@@ -27,20 +27,9 @@ public class DCConfigScreen extends GuiConfigsBase {
             GLOWS
     );
 
-    private static IConfigGuiTab tab = VALUE;
-
     public DCConfigScreen(GuiScreen parent) {
-        super(10, 50, DebrisClient.MOD_ID, parent, TABS, DebrisClient.MOD_NAME + " configs");
+        super(DCConfig.getInstance(), parent, TABS, new TextComponentString(DebrisClient.MOD_NAME + " configs"));
+        this.tab = VALUE;
         AutoReforging.makeConfigComments();
-    }
-
-    @Override
-    public IConfigGuiTab getCurrentTab() {
-        return tab;
-    }
-
-    @Override
-    public void setCurrentTab(IConfigGuiTab tab) {
-        DCConfigScreen.tab = tab;
     }
 }

@@ -15,6 +15,11 @@ public class ConfigEnum<T extends Enum<T>> extends ConfigOptionList implements I
         this.VALUES = Arrays.stream(defaultValue.getDeclaringClass().getEnumConstants()).collect(Collectors.toList());
     }
 
+    @Override
+    public void setEnumValue(T value) {
+        this.setOptionListValue(ConfigEnumEntryWrapper.of(value));
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public T getDefaultEnumValue() {
