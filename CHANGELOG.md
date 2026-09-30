@@ -7,7 +7,6 @@
 * 使xaero地图的洞穴模式能够识别freecam
 * 快速龙渲染
 * xaero路径点在freecam卡顿
-* 添加原版群系汉化
 
 ---
 
@@ -20,6 +19,12 @@
     * 全部功能默认关闭
     * 点击`切换预设`打开功能
 * `/dcexport`现在能导出未翻译的群系
+* 添加了以下来源群系的翻译(依旧deepseek)
+    * `defiledlands`
+    * `iceandfire`
+    * `srparasites`
+    * `traverse`
+    * `minecraft原版`
 
 ---
 
