@@ -28,7 +28,7 @@ public class EnchantPreview {
     }
 
     public static boolean isCracked() {
-        return isActive() && CRACKER.isCracked();
+        return isActive() && CRACKER.getState() == CrackingState.CRACKED;
     }
 
     public static void render(GuiContainer guiContainer) {

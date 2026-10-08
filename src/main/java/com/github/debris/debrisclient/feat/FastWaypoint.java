@@ -48,7 +48,7 @@ public class FastWaypoint {
     }
 
     public static void createWayPoint(int dimensionId, BlockPos pos, String name) {
-        if (ModReference.hasMod(ModReference.XAERO_MINI_MAP)) {
+        if (ModReference.hasMod(ModReference.XAERO_MINI_MAP) && ModReference.hasMod(ModReference.XAERO_LIB)) {
             XaeroMiniMapAccess.createWayPoint(dimensionId, pos, name);
         }
     }

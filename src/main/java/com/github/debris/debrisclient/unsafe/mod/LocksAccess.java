@@ -2,23 +2,21 @@ package com.github.debris.debrisclient.unsafe.mod;
 
 import melonslise.locks.client.gui.LockPickingGui;
 import melonslise.locks.common.container.LockPickingContainer;
-import melonslise.locks.common.util.Cuboid6i;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 
 public class LocksAccess {
     public static final boolean KEEP_HISTORY = true;
 
-    private static Cuboid6i lockPos = null;
+    private static int LAST_LOCK_ID = -1;
 
     public static boolean isNewLock(GuiContainer gui) {
         if (KEEP_HISTORY) {
-            // not very reliable, currently
-            Cuboid6i box = container((LockPickingGui) gui).lockable.box;
-            if (box.equals(lockPos)) {
+            int id = container((LockPickingGui) gui).lockable.lock.id;
+            if (id == LAST_LOCK_ID) {
                 return false;
             }
-            lockPos = box;
+            LAST_LOCK_ID = id;
             return true;
         }
         return true;

@@ -30,12 +30,6 @@
     "tweakeroo.DisableSignatureWarningMixin",
     "waila.RayTracingMixin",
     "waystones.GuiWaystoneListMixin",
-    "xaerominimap.ClientEventsMixin",
-    "xaerominimap.GuiAddWaypointMixin",
-    "xaerominimap.InfoDisplaysMixin",
-    "xaerominimap.MinimapRendererMixin",
-    "xaeroworldmap.ClientEventsMixin",
-    "xaeroworldmap.GuiMapMixin",
     "xat.VIPHandlerMixin",
     "xray.EventsMixin",
     "xray.GuiAddBlockMixin"

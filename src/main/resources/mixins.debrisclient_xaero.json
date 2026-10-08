@@ -1,0 +1,20 @@
+{
+  "package": "com.github.debris.debrisclient.modmixins",
+  "required": true,
+  "refmap": "mixins.debrisclient.refmap.json",
+  "target": "@env(DEFAULT)",
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "server": [
+  ],
+  "client": [
+    "xaerominimap.ClientEventsMixin",
+    "xaerominimap.GuiAddWaypointMixin",
+    "xaerominimap.InfoDisplaysMixin",
+    "xaerominimap.MinimapRendererMixin",
+    "xaeroworldmap.ClientEventsMixin",
+    "xaeroworldmap.GuiMapMixin"
+  ]
+}

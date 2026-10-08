@@ -30,8 +30,9 @@ public class ParallelSeedChecker {
         }
     }
 
-    public void upload(World world, BlockPos position, ItemStack stack, EnchantingTableData data, int power, int medium, IntList potentials, Runnable finish) {
-        this.future = CompletableFuture.runAsync(() -> iterateParallel(world, position, stack, data, power, medium, potentials)).thenRun(finish);
+    public CompletableFuture<Void> upload(World world, BlockPos position, ItemStack stack, EnchantingTableData data, int power, int medium, IntList potentials) {
+        this.future = CompletableFuture.runAsync(() -> iterateParallel(world, position, stack, data, power, medium, potentials));
+        return this.future;
     }
 
     private void iterateParallel(World world, BlockPos position, ItemStack stack, EnchantingTableData data, int power, int medium, IntList potentials) {

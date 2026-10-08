@@ -80,10 +80,6 @@ public class XpSeedCracker {
         return this.parallelChecker.getProgress();
     }
 
-    public boolean isCracked() {
-        return this.state == CrackingState.CRACKED;
-    }
-
     public int getSeed() {
         return this.candidates.get(0);
     }
@@ -153,19 +149,16 @@ public class XpSeedCracker {
 
         if (DCConfig.EnchantPreviewParallel.getBooleanValue()) {
             this.setState(CrackingState.CRACKING);
-            this.parallelChecker.upload(world, position, stack.copy(), data, power, medium, IntLists.synchronize(potentials), this::updateState);
+            this.parallelChecker.upload(world, position, stack.copy(), data, power, medium, IntLists.synchronize(potentials)).thenRun(this::updateState);
             return;
         }
 
-        this.iterateSerial(stack, potentials, power);
+        this.iterateSerial(world, position, stack, data, power, medium, potentials);
+        this.updateState();
     }
 
-    private void iterateSerial(ItemStack stack, IntList potentials, int power) {
-        World world = this.world;
-        BlockPos position = this.position;
-        EnchantingTableData data = this.data;
+    private void iterateSerial(World world, BlockPos position, ItemStack stack, EnchantingTableData data, int power, int medium, IntList potentials) {
         Random rand = this.rand;
-        int medium = this.medium;
 
         for (int high = 0; high < 65536; high++) {
             for (int low = 0; low < 16; low++) {
@@ -175,7 +168,6 @@ public class XpSeedCracker {
                 }
             }
         }
-        this.updateState();
     }
 
     private void updateState() {

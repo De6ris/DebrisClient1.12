@@ -1,6 +1,7 @@
 package com.github.debris.debrisclient.mixin;
 
 import com.github.debris.debrisclient.DebrisClient;
+import com.github.debris.debrisclient.ModReference;
 import fermiumbooter.FermiumRegistryAPI;
 import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
@@ -14,6 +15,7 @@ public class FermiumMixinInit implements IFMLLoadingPlugin {
     public FermiumMixinInit() {
         FermiumRegistryAPI.enqueueMixin(false, "mixins.debrisclient.json");
         FermiumRegistryAPI.enqueueMixin(true, "mixins.debrisclient_late.json");
+        FermiumRegistryAPI.enqueueMixin(true, "mixins.debrisclient_xaero.json", ModReference.hasMod(ModReference.XAERO_LIB));
     }
 
     @Override
