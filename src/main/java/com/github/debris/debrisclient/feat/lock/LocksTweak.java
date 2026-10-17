@@ -1,14 +1,12 @@
 package com.github.debris.debrisclient.feat.lock;
 
 import com.github.debris.debrisclient.config.DCConfig;
-import com.github.debris.debrisclient.gui.button.GuiBetterButton;
 import com.github.debris.debrisclient.unsafe.mod.LocksAccess;
 import net.minecraft.client.gui.inventory.GuiContainer;
 
 import java.util.Arrays;
 
 public class LocksTweak {
-    public static final int BUTTON_ID = "auto_unlock".hashCode();
 
     /**
      * Say 4,5,1,2,6,0,3: The whole password
@@ -24,7 +22,7 @@ public class LocksTweak {
     }
 
     public static boolean inactive() {
-        return !DCConfig.LocksTweak.getBooleanValue();
+        return !active();
     }
 
     public static void onOpen(GuiContainer gui, int length) {
@@ -33,6 +31,7 @@ public class LocksTweak {
         if (LocksAccess.isNewLock(gui)) {
             clear(length);
         }
+        AutoUnlock.enable();
     }
 
     private static void clear(int length) {
@@ -53,22 +52,6 @@ public class LocksTweak {
     public static void onRender(GuiContainer gui, double[] posX, int mouseX, int mouseY) {
         if (inactive()) return;
         LockHint.renderHint(gui, posX, password);
-    }
-
-    public static GuiBetterButton createButton(GuiContainer gui) {
-        return new GuiBetterButton(
-                BUTTON_ID,
-                gui.getGuiLeft() + 40,
-                gui.getGuiTop() - 16,
-                30,
-                16,
-                "自动"
-        );
-    }
-
-    public static void auto() {
-        if (inactive()) return;
-        AutoUnlock.enable();
     }
 
     public static void onTick(GuiContainer gui, boolean[] pins, int currentPin) {

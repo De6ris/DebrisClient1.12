@@ -20,7 +20,7 @@ public class EnchantUtil {
         return map;
     }
 
-    public static int calculateEnchantmentCost(Map<Enchantment, Integer> map) {
+    public static int getCost(Map<Enchantment, Integer> map) {
         int ret = 0;
         for (Map.Entry<Enchantment, Integer> entry : map.entrySet()) {
             int rawUnitCost = getUnitCost(entry.getKey().getRarity());
@@ -30,7 +30,7 @@ public class EnchantUtil {
         return ret;
     }
 
-    public static int getUnitCost(Enchantment.Rarity rarity) {
+    private static int getUnitCost(Enchantment.Rarity rarity) {
         switch (rarity) {
             case COMMON:
                 return 1;

@@ -239,7 +239,7 @@ class EnchantRouter {
         Map<Enchantment, Integer> newMap = map.entrySet().stream()
                 .filter(x -> x.getKey().canApply(stack))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        return EnchantUtil.calculateEnchantmentCost(newMap);
+        return EnchantUtil.getCost(newMap);
     }
 
     @SuppressWarnings("DataFlowIssue")

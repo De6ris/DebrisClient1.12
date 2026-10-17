@@ -40,7 +40,7 @@ public class TooltipListener {
 
         if (item == Items.ENCHANTED_BOOK) {
             Map<Enchantment, Integer> enchantments = EnchantUtil.getEnchantments(itemStack);
-            toolTip.add(TooltipText.ENCHANTMENT_COST.formatChinese(EnchantUtil.calculateEnchantmentCost(enchantments)));
+            toolTip.add(TooltipText.ENCHANTMENT_COST.formatChinese(EnchantUtil.getCost(enchantments)));
             addConflictEnchantments(enchantments, toolTip);
         }
 
