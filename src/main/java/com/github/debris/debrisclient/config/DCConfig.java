@@ -151,6 +151,7 @@ public class DCConfig extends ConfigHandlerImpl {
     public static final ConfigBoolean GlowingEntitySpawnNotify = ofBoolean("发光实体生成提示", false);
     public static final ConfigBoolean BountifulGlowingColor = ofBoolean("丰富的发光颜色", false);
     public static final ConfigBoolean LibrarianGlowing = ofBoolean("图书管理员发光", false);
+    public static final ConfigBoolean ItemGlowing = ofBoolean("物品发光", false);
     public static final ConfigBoolean ElderGuardianGlowing = ofBoolean("远古守卫者发光", false);
     @RequiresMod(ModReference.LYCANITES_MOBS)
     public static final ConfigBoolean BossGlowing = ofBoolean("Boss发光", false, "Lycanites' mobs");
@@ -248,6 +249,7 @@ public class DCConfig extends ConfigHandlerImpl {
                 GlowingEntitySpawnNotify,
                 BountifulGlowingColor,
                 LibrarianGlowing,
+                ItemGlowing,
                 ElderGuardianGlowing,
                 BossGlowing,
                 DragonGlowing,

@@ -63,7 +63,19 @@ public class InventoryTweaks {
         });
     }
 
-    public static boolean tryThrowSimilar() {
+    public static boolean tryThrow(boolean ctrl) {
+        Optional<Slot> optional = InventoryUtil.getHoveredSlot();
+        if (optional.isPresent()) {
+            Slot slot = optional.get();
+            if (slot.getHasStack()) {
+                InventoryUtil.drop(slot, ctrl);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean tryThrowSame() {
         Optional<Slot> optional = InventoryUtil.getHoveredSlot();
         optional.ifPresent(slot -> {
             if (InventoryUtil.hasItem(slot)) {

@@ -80,9 +80,19 @@ public class Callbacks {
             return false;
         });
 
+        InventoryConfig.ThrowItem.getKeybind().setCallback((action, key) -> {
+            if (Predicates.notInGuiContainer(client)) return false;
+            return InventoryTweaks.tryThrow(false);
+        });
+
+        InventoryConfig.ThrowStack.getKeybind().setCallback((action, key) -> {
+            if (Predicates.notInGuiContainer(client)) return false;
+            return InventoryTweaks.tryThrow(true);
+        });
+
         InventoryConfig.ThrowSame.getKeybind().setCallback((action, key) -> {
             if (Predicates.notInGuiContainer(client)) return false;
-            return InventoryTweaks.tryThrowSimilar();
+            return InventoryTweaks.tryThrowSame();
         });
 
         InventoryConfig.ThrowSection.getKeybind().setCallback((action, key) -> {

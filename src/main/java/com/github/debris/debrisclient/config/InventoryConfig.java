@@ -37,12 +37,14 @@ public class InventoryConfig extends ConfigHandlerImpl {
 
     public static final ConfigHotkey SortInventory = ofHotkey("整理物品栏", "", KeybindSettings.GUI, "比InvTweaks好用(我认为)");
     public static final ConfigHotkey AutoContainerOperation = ofHotkey("自动容器操作", "", KeybindSettings.GUI, "Rustic:酿造桶\nDisenchanter:袪魔台");
-    public static final ConfigHotkey ThrowSame = ofHotkey("丢出类似", "", KeybindSettings.GUI, "会丢出当前区域类似物品");
+    public static final ConfigHotkey ThrowItem = ofHotkey("丢出一个", "", KeybindSettings.GUI, "可自定义触发时机");
+    public static final ConfigHotkey ThrowStack = ofHotkey("丢出一组", "", KeybindSettings.GUI, "可自定义触发时机");
+    public static final ConfigHotkey ThrowSame = ofHotkey("丢出相同", "", KeybindSettings.GUI, "会丢出当前区域相同物品");
     public static final ConfigHotkey ThrowSection = ofHotkey("清空区域", "", KeybindSettings.GUI, "全部丢出");
     public static final ConfigHotkey ModifierMoveStack = ofHotkey("移动一组:修饰键", "", GUI_RELAXED, "按住时左键会移动当前物品");
     public static final ConfigHotkey ModifierMoveAll = ofHotkey("移动全部:修饰键", "", GUI_RELAXED, "按住时左键会移动当前区域全部");
     public static final ConfigHotkey ModifierSpreadItem = ofHotkey("分散物品:修饰键", "", GUI_RELAXED, "按住时点击会尝试将手中物品均分到点击区域全部槽位");
-    public static final ConfigHotkey ModifierMoveSame = ofHotkey("移动类似:修饰键", "", GUI_RELAXED, "按住时左键会移动当前区域类似物品");
+    public static final ConfigHotkey ModifierMoveSame = ofHotkey("移动相同:修饰键", "", GUI_RELAXED, "按住时左键会移动当前区域相同物品");
 
     private static final InventoryConfig Instance = new InventoryConfig();
 
@@ -85,6 +87,8 @@ public class InventoryConfig extends ConfigHandlerImpl {
         HOTKEY = ImmutableList.of(
                 SortInventory,
                 AutoContainerOperation,
+                ThrowItem,
+                ThrowStack,
                 ThrowSame,
                 ThrowSection,
                 ModifierMoveStack,

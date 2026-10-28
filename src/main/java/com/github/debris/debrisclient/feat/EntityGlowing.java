@@ -6,6 +6,7 @@ import com.github.debris.debrisclient.unsafe.mod.*;
 import com.github.debris.debrisclient.util.EntityType;
 import fi.dy.masa.malilib.config.options.ConfigBoolean;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityElderGuardian;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.util.ResourceLocation;
@@ -57,6 +58,7 @@ public class EntityGlowing {
     static {
         register(EntityGlowing::isInList);
         register(DCConfig.LibrarianGlowing, EntityGlowing::isLibrarian);
+        register(DCConfig.ItemGlowing, entity -> entity instanceof EntityItem);
         register(DCConfig.ElderGuardianGlowing, entity -> entity instanceof EntityElderGuardian);
         register(DCConfig.BossGlowing, ModReference.LYCANITES_MOBS, LycanitesmobsAccess::isBoss);
         register(DCConfig.DragonGlowing, ModReference.ICE_AND_FIRE, IceAndFireAccess::isDragon);
