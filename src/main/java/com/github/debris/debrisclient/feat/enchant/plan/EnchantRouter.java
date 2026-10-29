@@ -1,6 +1,6 @@
 package com.github.debris.debrisclient.feat.enchant.plan;
 
-import com.github.debris.debrisclient.util.AnvilUtil;
+import com.github.debris.debrisclient.feat.enchant.EnchantSystem;
 import com.github.debris.debrisclient.util.EnchantUtil;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -19,12 +19,14 @@ class EnchantRouter {
     public static final int ONE_TOME_LEVEL = 30;
     public static final int TWO_TOME_LEVEL = 39;
     public static final int UPGRADE_COST = 10;
+    private final EnchantSystem system;
     final ItemStack stack;
     final Map<Enchantment, Integer> existingEnchantments;// not used at present
     final List<ItemStack> books;// sorted by level cost
     final boolean large;
 
-    EnchantRouter(ItemStack stack, Map<Enchantment, Integer> existingEnchantments, List<ItemStack> books) {
+    EnchantRouter(EnchantSystem system, ItemStack stack, Map<Enchantment, Integer> existingEnchantments, List<ItemStack> books) {
+        this.system = system;
         this.stack = stack;
         this.existingEnchantments = existingEnchantments;
         this.books = books.stream()
@@ -39,7 +41,7 @@ class EnchantRouter {
     }
 
     List<Step> plan(boolean hasUpgrade) {
-        int originalOperations = AnvilUtil.getOperations(stack);
+        int originalOperations = system.asOperation(stack);
 
         List<Step> steps = new ArrayList<>();
 
@@ -61,7 +63,7 @@ class EnchantRouter {
         int operation = originalOperations;
         while (!booksAsLocal.isEmpty()) {
             CombinedBook combinedBook = planLocal(operation, booksAsLocal);
-            int levelCost = combinedBook.getLevelCost(operation);
+            int levelCost = combinedBook.getLevelCost(system, operation);
             steps.add(new Step(combinedBook.subBooks, levelCost));
             booksAsLocal.removeAll(combinedBook.subBooks);
             operation++;
@@ -83,13 +85,13 @@ class EnchantRouter {
         for (int operation = 0; operation < maxPossibleOperation; operation++) {
             if (operation >= originalOperations && operation < operationsBeforeUpgrade) {
                 CombinedBook combinedBook = planLocal(operation, booksAsLocal);
-                int levelCost = combinedBook.getLevelCost(operation);
+                int levelCost = combinedBook.getLevelCost(system, operation);
                 former.add(new Step(combinedBook.subBooks, levelCost));
                 booksAsLocal.removeAll(combinedBook.subBooks);
             }
             if (operation < operationsAfterUpgrade) {
                 CombinedBook combinedBook = planLocal(operation, booksAsLocal);
-                int levelCost = combinedBook.getLevelCost(operation);
+                int levelCost = combinedBook.getLevelCost(system, operation);
                 latter.add(new Step(combinedBook.subBooks, levelCost));
                 booksAsLocal.removeAll(combinedBook.subBooks);
             }

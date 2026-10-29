@@ -9,6 +9,7 @@ public class ModReference {
     public static final String CHARM = "charm";
     public static final String DEFILED_LANDS = "defiledlands";
     public static final String DISENCHANTER = "disenchanter";
+    public static final String ENCHANTMENT_CONTROL = "enchantmentcontrol";
     public static final String ENHANCED_VISUALS = "enhancedvisuals";
     public static final String ENTITY_CULLING = "entityculling";
     public static final String FAMILIAR_FAUNA = "familiarfauna";

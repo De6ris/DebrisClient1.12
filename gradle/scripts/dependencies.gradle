@@ -92,6 +92,7 @@ dependencies {
     implementation rfg.deobf("curse.maven:hwyla-${hwyla_version}")
 //    implementation rfg.deobf("curse.maven:modularui-${modularui_version}")//can not find
     compileOnly rfg.deobf("curse.maven:morerefinedstorage-${morerefinedstorage_version}")
+    runtimeOnly rfg.deobf("curse.maven:betterconfig-${betterconfig_version}")
 
 
     // local dependencies, some not on maven, some failed to download from curse maven

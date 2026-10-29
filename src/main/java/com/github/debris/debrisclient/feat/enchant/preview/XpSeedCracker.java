@@ -185,17 +185,20 @@ public class XpSeedCracker {
     }
 
     private static int getPower(World world, BlockPos position) {
+        boolean ignoreAir = ModReference.hasMod(ModReference.ENCHANTMENT_CONTROL);
         float power = 0;
         for (int j = -1; j <= 1; ++j) {
             for (int k = -1; k <= 1; ++k) {
-                if ((j != 0 || k != 0) && world.isAirBlock(position.add(k, 0, j)) && world.isAirBlock(position.add(k, 1, j))) {
-                    power += ForgeHooks.getEnchantPower(world, position.add(k * 2, 0, j * 2));
-                    power += ForgeHooks.getEnchantPower(world, position.add(k * 2, 1, j * 2));
-                    if (k != 0 && j != 0) {
-                        power += ForgeHooks.getEnchantPower(world, position.add(k * 2, 0, j));
-                        power += ForgeHooks.getEnchantPower(world, position.add(k * 2, 1, j));
-                        power += ForgeHooks.getEnchantPower(world, position.add(k, 0, j * 2));
-                        power += ForgeHooks.getEnchantPower(world, position.add(k, 1, j * 2));
+                if (j != 0 || k != 0) {
+                    if (ignoreAir || world.isAirBlock(position.add(k, 0, j)) && world.isAirBlock(position.add(k, 1, j))) {
+                        power += ForgeHooks.getEnchantPower(world, position.add(k * 2, 0, j * 2));
+                        power += ForgeHooks.getEnchantPower(world, position.add(k * 2, 1, j * 2));
+                        if (k != 0 && j != 0) {
+                            power += ForgeHooks.getEnchantPower(world, position.add(k * 2, 0, j));
+                            power += ForgeHooks.getEnchantPower(world, position.add(k * 2, 1, j));
+                            power += ForgeHooks.getEnchantPower(world, position.add(k, 0, j * 2));
+                            power += ForgeHooks.getEnchantPower(world, position.add(k, 1, j * 2));
+                        }
                     }
                 }
             }

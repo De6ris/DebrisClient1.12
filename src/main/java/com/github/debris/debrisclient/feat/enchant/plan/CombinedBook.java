@@ -1,6 +1,6 @@
 package com.github.debris.debrisclient.feat.enchant.plan;
 
-import com.github.debris.debrisclient.util.AnvilUtil;
+import com.github.debris.debrisclient.feat.enchant.EnchantSystem;
 import net.minecraft.item.ItemStack;
 
 import java.util.List;
@@ -16,11 +16,11 @@ class CombinedBook {
         this.cacheEffectiveEnchantCost = cacheEffectiveEnchantCost;
     }
 
-    int getPunishment() {
-        return AnvilUtil.asPunishment(operations);
+    int getPunishment(EnchantSystem system) {
+        return system.asPunishment(operations);
     }
 
-    int getLevelCost(int operations) {
-        return AnvilUtil.asPunishment(operations) + this.getPunishment() + this.cacheEffectiveEnchantCost;
+    int getLevelCost(EnchantSystem system, int operations) {
+        return system.asPunishment(operations) + this.getPunishment(system) + this.cacheEffectiveEnchantCost;
     }
 }

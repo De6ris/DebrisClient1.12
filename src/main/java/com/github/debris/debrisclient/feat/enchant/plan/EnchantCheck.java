@@ -1,7 +1,7 @@
 package com.github.debris.debrisclient.feat.enchant.plan;
 
+import com.github.debris.debrisclient.feat.enchant.EnchantSystem;
 import com.github.debris.debrisclient.localization.EnchantPlanText;
-import com.github.debris.debrisclient.util.AnvilUtil;
 import com.github.debris.debrisclient.util.EnchantUtil;
 import com.github.debris.debrisclient.util.InventoryUtil;
 import com.github.debris.debrisclient.util.StringUtil;
@@ -69,7 +69,7 @@ class EnchantCheck {
     }
 
     private static List<Slot> filterPunished(List<Slot> bookSlots) {
-        return bookSlots.stream().filter(x -> AnvilUtil.getPunishment(x.getStack()) > 0).collect(Collectors.toList());
+        return bookSlots.stream().filter(x -> EnchantSystem.getPunishment(x.getStack()) > 0).collect(Collectors.toList());
     }
 
     private static Set<Enchantment> findDuplicate(List<Enchantment> effective) {

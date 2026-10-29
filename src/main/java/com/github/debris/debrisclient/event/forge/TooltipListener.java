@@ -1,8 +1,9 @@
 package com.github.debris.debrisclient.event.forge;
 
+import com.github.debris.debrisclient.ModReference;
 import com.github.debris.debrisclient.config.DCConfig;
+import com.github.debris.debrisclient.feat.enchant.EnchantSystem;
 import com.github.debris.debrisclient.localization.TooltipText;
-import com.github.debris.debrisclient.util.AnvilUtil;
 import com.github.debris.debrisclient.util.EnchantUtil;
 import com.github.debris.debrisclient.util.StringUtil;
 import net.minecraft.client.Minecraft;
@@ -50,9 +51,10 @@ public class TooltipListener {
     }
 
     private static void addAnvilPunishTooltip(List<String> toolTip, ItemStack itemStack) {
-        int punishment = AnvilUtil.getPunishment(itemStack);
+        if (ModReference.hasMod(ModReference.ENCHANTMENT_CONTROL)) return;
+        int punishment = EnchantSystem.getPunishment(itemStack);
         if (punishment > 0) {
-            int operations = AnvilUtil.asOperations(punishment);
+            int operations = EnchantSystem.getInstance().asOperation(punishment);
             toolTip.add(TooltipText.ANVIL_PUNISHMENT.formatChinese(punishment, operations));
         }
     }

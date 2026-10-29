@@ -1,5 +1,6 @@
 package com.github.debris.debrisclient.feat.enchant.plan;
 
+import com.github.debris.debrisclient.feat.enchant.EnchantSystem;
 import com.github.debris.debrisclient.inventory.section.ContainerSection;
 import com.github.debris.debrisclient.inventory.section.EnumSection;
 import com.github.debris.debrisclient.localization.EnchantPlanText;
@@ -90,7 +91,7 @@ public class EnchantPlan {
             upgradePresent = false;
         }
 
-        List<Step> steps = new EnchantRouter(stack, existingEnchantments, books).plan(upgradePresent);
+        List<Step> steps = new EnchantRouter(EnchantSystem.getInstance(), stack, existingEnchantments, books).plan(upgradePresent);
         infoResults(client, steps);
 
         return true;
@@ -102,11 +103,11 @@ public class EnchantPlan {
 
     private static List<Enchantment> collectEffectiveEnchantments(ItemStack stack, Map<Enchantment, Integer> existingEnchantments, List<ItemStack> books) {
         return Stream.concat(
-                        existingEnchantments.keySet().stream(),
-                        books.stream().flatMap(
-                                x -> EnchantUtil.getEnchantments(x).keySet().stream()).filter(x -> x.canApply(stack)
-                        )
-                ).collect(Collectors.toList());
+                existingEnchantments.keySet().stream(),
+                books.stream().flatMap(
+                        x -> EnchantUtil.getEnchantments(x).keySet().stream()).filter(x -> x.canApply(stack)
+                )
+        ).collect(Collectors.toList());
     }
 
     static void actionBar(EnchantPlanText text) {
