@@ -13,9 +13,11 @@ import java.util.Map;
 @IFMLLoadingPlugin.MCVersion(ForgeVersion.mcVersion)
 public class FermiumMixinInit implements IFMLLoadingPlugin {
     public FermiumMixinInit() {
-        FermiumRegistryAPI.enqueueMixin(false, "mixins.debrisclient.json");
-        FermiumRegistryAPI.enqueueMixin(true, "mixins.debrisclient_late.json");
-        FermiumRegistryAPI.enqueueMixin(true, "mixins.debrisclient_xaero.json", ModReference.hasMod(ModReference.XAERO_LIB));
+        if (!isDev()) {
+            FermiumRegistryAPI.enqueueMixin(false, "mixins.debrisclient.json");
+            FermiumRegistryAPI.enqueueMixin(true, "mixins.debrisclient_late.json");
+            FermiumRegistryAPI.enqueueMixin(true, "mixins.debrisclient_xaero.json", () -> FermiumRegistryAPI.isModPresent(ModReference.XAERO_LIB));
+        }
     }
 
     @Override
@@ -41,5 +43,9 @@ public class FermiumMixinInit implements IFMLLoadingPlugin {
     @Override
     public String getAccessTransformerClass() {
         return null;
+    }
+
+    private static boolean isDev() {
+        return System.getProperty("sun.java.command", "").contains("GradleStart");
     }
 }
