@@ -59,15 +59,12 @@ public class EnchantUtil {
     }
 
     public static Enchantment getFirstEnchantment(Map<Enchantment, Integer> enchantments) {
-        assert !enchantments.isEmpty();
-        return enchantments.entrySet().stream().findFirst().get().getKey();
+        return CollectionUtil.getFirstEntry(enchantments).getKey();
     }
 
     public static EnchantmentData getFirstEnchantmentData(Map<Enchantment, Integer> enchantments) {
-        assert !enchantments.isEmpty();
-        return enchantments.entrySet().stream()
-                .map(x -> new EnchantmentData(x.getKey(), x.getValue()))
-                .findFirst().get();
+        Map.Entry<Enchantment, Integer> entry = CollectionUtil.getFirstEntry(enchantments);
+        return new EnchantmentData(entry.getKey(), entry.getValue());
     }
 
     public static int getLevelForExperience(int targetXp) {

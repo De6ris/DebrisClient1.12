@@ -42,9 +42,10 @@ public class InventoryConfig extends ConfigHandlerImpl {
     public static final ConfigHotkey ThrowSame = ofHotkey("丢出相同", "", KeybindSettings.GUI, "会丢出当前区域相同物品");
     public static final ConfigHotkey ThrowSection = ofHotkey("清空区域", "", KeybindSettings.GUI, "全部丢出");
     public static final ConfigHotkey ModifierMoveStack = ofHotkey("移动一组:修饰键", "", GUI_RELAXED, "按住时左键会移动当前物品");
-    public static final ConfigHotkey ModifierMoveAll = ofHotkey("移动全部:修饰键", "", GUI_RELAXED, "按住时左键会移动当前区域全部");
-    public static final ConfigHotkey ModifierSpreadItem = ofHotkey("分散物品:修饰键", "", GUI_RELAXED, "按住时点击会尝试将手中物品均分到点击区域全部槽位");
     public static final ConfigHotkey ModifierMoveSame = ofHotkey("移动相同:修饰键", "", GUI_RELAXED, "按住时左键会移动当前区域相同物品");
+    public static final ConfigHotkey ModifierMoveAll = ofHotkey("移动全部:修饰键", "", GUI_RELAXED, "按住时左键会移动当前区域全部物品");
+    public static final ConfigHotkey ModifierPutAway = ofHotkey("收纳物品:修饰键", "", GUI_RELAXED, "按住时左键会将物品收纳到另一区域");
+    public static final ConfigHotkey ModifierSpreadItem = ofHotkey("分散物品:修饰键", "", GUI_RELAXED, "按住时点击会尝试将手中物品均分到点击区域全部槽位");
 
     private static final InventoryConfig Instance = new InventoryConfig();
 
@@ -92,9 +93,10 @@ public class InventoryConfig extends ConfigHandlerImpl {
                 ThrowSame,
                 ThrowSection,
                 ModifierMoveStack,
+                ModifierMoveSame,
                 ModifierMoveAll,
-                ModifierSpreadItem,
-                ModifierMoveSame
+                ModifierPutAway,
+                ModifierSpreadItem
         );
         Instance.load();
     }

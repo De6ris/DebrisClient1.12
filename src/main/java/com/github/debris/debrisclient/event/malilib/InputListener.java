@@ -87,6 +87,12 @@ public class InputListener implements IKeybindProvider, IMouseInputHandler, IKey
                 }
             }
 
+            if (InventoryConfig.ModifierPutAway.getKeybind().isKeybindHeld()) {
+                if (InventoryTweaks.tryPutAway()) {
+                    return true;
+                }
+            }
+
             if (InventoryConfig.ModifierSpreadItem.getKeybind().isKeybindHeld()) {
                 if (InventoryTweaks.trySpreading(false)) {
                     this.cancelButtonUp(eventButton);

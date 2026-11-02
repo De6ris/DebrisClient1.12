@@ -3,14 +3,8 @@ package com.github.debris.debrisclient.inventory.feat;
 import com.github.debris.debrisclient.ModReference;
 import com.github.debris.debrisclient.config.InventoryConfig;
 import com.github.debris.debrisclient.inventory.section.ContainerSection;
-import com.github.debris.debrisclient.inventory.section.EnumSection;
-import com.github.debris.debrisclient.inventory.section.SectionHandler;
 import com.github.debris.debrisclient.unsafe.modularui.ModularSlotHelper;
-import com.github.debris.debrisclient.util.ForgeSlotHelper;
 import com.github.debris.debrisclient.util.InventoryUtil;
-import fi.dy.masa.malilib.util.GuiUtils;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
@@ -20,7 +14,7 @@ import java.util.stream.Stream;
 public class WheelMoving {
     public static void scrollSlot(Slot slot, boolean increase) {
         if (InventoryUtil.isEmpty(slot)) return;
-        Optional<ContainerSection> opposite = getOppositeSection(slot);
+        Optional<ContainerSection> opposite = InventoryTweaks.getMoveDestination(slot);
         if (!opposite.isPresent()) return;
         ContainerSection there = opposite.get();
         ItemStack stack = InventoryUtil.getStack(slot);
@@ -41,42 +35,6 @@ public class WheelMoving {
                 slotStream.findFirst()
                         .ifPresent(x -> InventoryUtil.moveOneItem(x, slot));
             }
-        }
-    }
-
-    private static Optional<ContainerSection> getOppositeSection(Slot slot) {
-        ContainerSection here = SectionHandler.getSection(slot);
-        ContainerSection there;
-
-        GuiScreen screen = GuiUtils.getCurrentScreen();
-
-        if (screen instanceof GuiInventory) {
-            if (here.isOf(EnumSection.InventoryStorage)) {
-                there = EnumSection.InventoryHotBar.get();
-            } else if (here.isOf(EnumSection.InventoryHotBar)) {
-                there = EnumSection.InventoryStorage.get();
-            } else {
-                return Optional.empty();
-            }
-            return Optional.of(there);
-        }
-
-        boolean isPlayerInventory = false;
-
-        if (ForgeSlotHelper.isForgeSlot(slot)) {
-            if (ForgeSlotHelper.isPlayerInventory(ForgeSlotHelper.getItemHandler(slot))) {
-                isPlayerInventory = true;
-            }
-        } else {
-            if (InventoryUtil.isPlayerInventory(slot.inventory)) {
-                isPlayerInventory = true;
-            }
-        }
-
-        if (isPlayerInventory) {
-            return Optional.of(EnumSection.Container.get());
-        } else {
-            return Optional.of(EnumSection.InventoryWhole.get());
         }
     }
 

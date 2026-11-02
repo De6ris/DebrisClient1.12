@@ -22,6 +22,7 @@ public class InventoryPreset {
             InventoryConfig.ModifierMoveSame.getKeybind().setValueFromString("LCONTROL");
             InventoryConfig.ModifierMoveStack.getKeybind().setValueFromString("LSHIFT");
             InventoryConfig.ModifierMoveAll.getKeybind().setValueFromString("SPACE");
+            InventoryConfig.ModifierPutAway.getKeybind().setValueFromString("LMENU");
             InventoryConfig.ThrowSection.getKeybind().setValueFromString("SPACE,Q");
             InventoryConfig.ThrowSame.getKeybind().setValueFromString("LSHIFT,Q");
         } else {
@@ -36,6 +37,7 @@ public class InventoryPreset {
             InventoryConfig.ModifierMoveSame.resetToDefault();
             InventoryConfig.ModifierMoveStack.resetToDefault();
             InventoryConfig.ModifierMoveAll.resetToDefault();
+            InventoryConfig.ModifierPutAway.resetToDefault();
             InventoryConfig.ThrowSection.resetToDefault();
             InventoryConfig.ThrowSame.resetToDefault();
         }
