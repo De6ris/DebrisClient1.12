@@ -1,6 +1,6 @@
 package com.github.debris.debrisclient.unsafe.baubles;
 
-import com.github.debris.debrisclient.mixins.client.gui.IGuiScreenMixin;
+import com.github.debris.debrisclient.util.AccessorUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -69,7 +69,7 @@ public abstract class AbstractReforgingTask implements Runnable {
     protected void sendReforgePacket() {
         GuiScreen screen = this.client.currentScreen;
         if (screen != null) {
-            ((IGuiScreenMixin) screen).invokeActionPerformed(this.dummyButton);
+            AccessorUtil.actionPerformed(screen, this.dummyButton);
         }
     }// assuming the screens will always send packet
 

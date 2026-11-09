@@ -1,6 +1,5 @@
 package com.github.debris.debrisclient.util;
 
-import com.github.debris.debrisclient.mixins.client.IPlayerControllerMPMixin;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.util.EnumFacing;
@@ -14,7 +13,7 @@ public class InteractionUtil {
     public static void setHotBar(int index) {
         Minecraft client = Minecraft.getMinecraft();
         client.player.inventory.currentItem = index;
-        ((IPlayerControllerMPMixin) client.playerController).invokeSyncCurrentPlayItem();
+        AccessorUtil.syncCurrentPlayItem(client.playerController);
     }
 
     public static void swapHands() {

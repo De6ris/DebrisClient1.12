@@ -1,5 +1,5 @@
 {
-  "package": "com.github.debris.debrisclient.modmixins",
+  "package": "com.github.debris.debrisclient.mixins.mod",
   "required": true,
   "refmap": "mixins.debrisclient.refmap.json",
   "target": "@env(DEFAULT)",

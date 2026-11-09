@@ -1,5 +1,5 @@
 {
-  "package": "com.github.debris.debrisclient.modmixins",
+  "package": "com.github.debris.debrisclient.mixins.xaero",
   "required": true,
   "refmap": "mixins.debrisclient.refmap.json",
   "target": "@env(DEFAULT)",
@@ -10,11 +10,11 @@
   "server": [
   ],
   "client": [
-    "xaerominimap.ClientEventsMixin",
-    "xaerominimap.GuiAddWaypointMixin",
-    "xaerominimap.InfoDisplaysMixin",
-    "xaerominimap.MinimapRendererMixin",
-    "xaeroworldmap.ClientEventsMixin",
-    "xaeroworldmap.GuiMapMixin"
+    "GuiAddWaypointMixin",
+    "GuiMapMixin",
+    "InfoDisplaysMixin",
+    "MinimapRendererMixin",
+    "MM_ClientEventsMixin",
+    "WM_ClientEventsMixin"
   ]
 }

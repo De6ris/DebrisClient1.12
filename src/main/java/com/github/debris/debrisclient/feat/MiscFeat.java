@@ -3,7 +3,7 @@ package com.github.debris.debrisclient.feat;
 import com.github.debris.debrisclient.config.Callbacks;
 import com.github.debris.debrisclient.config.DCConfig;
 import com.github.debris.debrisclient.localization.ChatHudText;
-import com.github.debris.debrisclient.mixins.client.IClientMixin;
+import com.github.debris.debrisclient.util.AccessorUtil;
 import com.github.debris.debrisclient.util.ChatUtil;
 import com.github.debris.debrisclient.util.CollectionUtil;
 import com.github.debris.debrisclient.util.Predicates;
@@ -63,7 +63,7 @@ public class MiscFeat {
                 player.sendChatMessage("/gamemode 1");
             }
         } else {
-            ((IClientMixin) client).invokeDebugFeedbackTranslated(ChatHudText.GAME_MODE_NOT_PERMITTED.getKey());
+            AccessorUtil.debugFeedbackTranslated(client, ChatHudText.GAME_MODE_NOT_PERMITTED.getKey());
         }
         return true;
     }
