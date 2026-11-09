@@ -7,6 +7,7 @@ public class ModReference {
     public static final String BAUBLES = "baubles";
     public static final String BOUNTIFUL_BAUBLES = "bountifulbaubles";
     public static final String CHARM = "charm";
+    public static final String CRAFTING_TWEAKS = "craftingtweaks";
     public static final String DEFILED_LANDS = "defiledlands";
     public static final String DISENCHANTER = "disenchanter";
     public static final String ENCHANTMENT_CONTROL = "enchantmentcontrol";

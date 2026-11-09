@@ -84,6 +84,8 @@ public class DCConfig extends ConfigHandlerImpl {
     public static final ConfigBoolean LocksTweak = ofBoolean("开锁功能", false);
     @RequiresMod(ModReference.XAERO_WORLD_MAP)
     public static final ConfigBoolean XaeroTranslateBiome = ofBoolean("xaero翻译群系", true);
+    @RequiresMod(ModReference.CRAFTING_TWEAKS)
+    public static final ConfigBoolean RefillBaublesIgnoreNBT = ofBoolean("craftingtweaks:合成补货时忽略饰品nbt", true, "快速崩解牌");
 
     public static final ConfigBoolean StrictMode = ofBoolean("严格模式");
     public static final ConfigBoolean Debug = ofBoolean("调试");
@@ -200,6 +202,7 @@ public class DCConfig extends ConfigHandlerImpl {
                 AutoFish,
                 LocksTweak,
                 XaeroTranslateBiome,
+                RefillBaublesIgnoreNBT,
                 StrictMode,
                 Debug,
                 DebugX,
