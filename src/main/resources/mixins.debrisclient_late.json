@@ -28,6 +28,7 @@
     "potioncore.PotionCoreEventHandlerClientMixin",
     "potioncore.PotionSpinMixin",
     "qualitytools.GuiReforgingStationMixin",
+    "salutation.AdvancedTabCompleterMixin",
     "tweakeroo.DisableSignatureWarningMixin",
     "waila.RayTracingMixin",
     "waystones.GuiWaystoneListMixin",

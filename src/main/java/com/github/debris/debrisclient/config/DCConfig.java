@@ -85,7 +85,9 @@ public class DCConfig extends ConfigHandlerImpl {
     @RequiresMod(ModReference.XAERO_WORLD_MAP)
     public static final ConfigBoolean XaeroTranslateBiome = ofBoolean("xaero翻译群系", true);
     @RequiresMod(ModReference.CRAFTING_TWEAKS)
-    public static final ConfigBoolean RefillBaublesIgnoreNBT = ofBoolean("craftingtweaks:合成补货时忽略饰品nbt", true, "快速崩解牌");
+    public static final ConfigBoolean RefillBaublesIgnoreNBT = ofBoolean("合成补货时忽略饰品nbt", true, "craftingtweaks;快速崩解牌");
+    @RequiresMod(ModReference.SALUTATION)
+    public static final ConfigBoolean SalutationClientCommandsCompat = ofBoolean("salutation兼容客户端指令", true);
 
     public static final ConfigBoolean StrictMode = ofBoolean("严格模式");
     public static final ConfigBoolean Debug = ofBoolean("调试");
@@ -203,6 +205,7 @@ public class DCConfig extends ConfigHandlerImpl {
                 LocksTweak,
                 XaeroTranslateBiome,
                 RefillBaublesIgnoreNBT,
+                SalutationClientCommandsCompat,
                 StrictMode,
                 Debug,
                 DebugX,

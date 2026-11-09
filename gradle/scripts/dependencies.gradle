@@ -94,6 +94,7 @@ dependencies {
     compileOnly rfg.deobf("curse.maven:morerefinedstorage-${morerefinedstorage_version}")
     runtimeOnly rfg.deobf("curse.maven:betterconfig-${betterconfig_version}")
     compileOnly rfg.deobf("curse.maven:crafting-tweaks-${craftingtweaks_version}")
+    compileOnly rfg.deobf("curse.maven:salutation-${salutation_version}")
 
 
     // local dependencies, some not on maven, some failed to download from curse maven
